@@ -1,1023 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LuciHome — The Global Real Estate Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuciHome — The Global Real Estate Platform</title>
 
-:root {
-  --navy: #0A0F1E;
-  --navy2: #0F1628;
-  --navy3: #151D35;
-  --gold: #C8A96E;
-  --gold2: #E8CFA0;
-  --gold-dim: rgba(200,169,110,0.15);
-  --white: #F5F2EC;
-  --muted: #7A8099;
-  --border: rgba(200,169,110,0.18);
-  --border2: rgba(255,255,255,0.07);
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 
-html { scroll-behavior: smooth; }
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
-body {
-  background: var(--navy);
-  color: var(--white);
-  font-family: 'Outfit', sans-serif;
-  font-weight: 300;
-  overflow-x: hidden;
-}
-
-/* ── NAV ── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 20px 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(10,15,30,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border2);
-}
-.logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: 1px;
-}
-.logo span { color: var(--gold); }
-.nav-cta {
-  background: var(--gold);
-  color: var(--navy);
-  padding: 10px 24px;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  letter-spacing: 0.5px;
-  transition: background 0.2s;
-}
-.nav-cta:hover { background: var(--gold2); }
- 
-.nav-status {
-  font-size: 12px;
-  color: var(--gold);
-  letter-spacing: 0.6px;
-  text-align: center;
-} 
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 120px 60px 80px;
-  overflow: hidden;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200,169,110,0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(76,100,200,0.08) 0%, transparent 60%),
-    linear-gradient(180deg, #0A0F1E 0%, #0D1425 100%);
-}
-
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-}
-
-.hero-content {
-  position: relative;
-  max-width: 680px;
-  animation: fadeUp 0.9s ease both;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--gold-dim);
-  border: 1px solid var(--border);
-  padding: 6px 16px;
-  border-radius: 100px;
-  font-size: 12px;
-  color: var(--gold);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 28px;
-  animation: fadeUp 0.9s 0.1s ease both;
-}
-.hero-label::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3rem, 6vw, 5.2rem);
-  font-weight: 600;
-  line-height: 1.1;
-  margin-bottom: 24px;
-  animation: fadeUp 0.9s 0.2s ease both;
-}
-h1 em {
-  font-style: italic;
-  color: var(--gold);
-}
-
-.hero-sub {
-  font-size: 1.05rem;
-  color: var(--muted);
-  line-height: 1.75;
-  max-width: 520px;
-  margin-bottom: 40px;
-  animation: fadeUp 0.9s 0.3s ease both;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  animation: fadeUp 0.9s 0.4s ease both;
-}
-
-.btn-primary {
-  background: var(--gold);
-  color: var(--navy);
-  padding: 15px 32px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  letter-spacing: 0.5px;
-  transition: all 0.2s;
-  border: none;
-  cursor: pointer;
-}
-.btn-primary:hover {
-  background: var(--gold2);
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--white);
-  padding: 15px 32px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 400;
-  text-decoration: none;
-  letter-spacing: 0.5px;
-  border: 1px solid var(--border2);
-  transition: all 0.2s;
-  cursor: pointer;
-}
-.btn-secondary:hover {
-  border-color: var(--border);
-  color: var(--gold);
-}
-
-.hero-stats {
-  display: flex;
-  gap: 48px;
-  margin-top: 64px;
-  padding-top: 40px;
-  border-top: 1px solid var(--border2);
-  animation: fadeUp 0.9s 0.5s ease both;
-}
-.stat-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.4rem;
-  font-weight: 600;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.stat-label {
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.hero-visual {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 45%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeUp 0.9s 0.3s ease both;
-}
-
-.globe-container {
-  position: relative;
-  width: 480px;
-  height: 480px;
-}
-
-.globe {
-  width: 380px;
-  height: 380px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 35%, rgba(200,169,110,0.12) 0%, transparent 50%),
-    radial-gradient(circle at 70% 70%, rgba(76,100,200,0.08) 0%, transparent 50%),
-    linear-gradient(135deg, #0F1A35 0%, #0A1020 100%);
-  border: 1px solid rgba(200,169,110,0.2);
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow:
-    0 0 80px rgba(200,169,110,0.08),
-    0 0 160px rgba(200,169,110,0.04),
-    inset 0 0 60px rgba(200,169,110,0.03);
-}
-
-.globe-ring {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) rotateX(75deg);
-  width: 420px; height: 420px;
-  border-radius: 50%;
-  border: 1px solid rgba(200,169,110,0.12);
-  animation: rotateRing 20s linear infinite;
-}
-.globe-ring:nth-child(2) {
-  width: 460px; height: 460px;
-  border-color: rgba(200,169,110,0.07);
-  animation-duration: 30s;
-  animation-direction: reverse;
-}
-
-@keyframes rotateRing {
-  from { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
-  to { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
-}
-
-.dot {
-  position: absolute;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 12px var(--gold);
-}
-.dot::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  border: 1px solid rgba(200,169,110,0.4);
-  animation: ripple 2s infinite;
-}
-@keyframes ripple {
-  from { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  to { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
-}
-
-.dot-1 { top: 22%; left: 30%; animation-delay: 0s; }
-.dot-2 { top: 35%; left: 65%; animation-delay: 0.5s; }
-.dot-3 { top: 55%; left: 45%; animation-delay: 1s; }
-.dot-4 { top: 70%; left: 60%; animation-delay: 1.5s; }
-.dot-5 { top: 40%; left: 25%; animation-delay: 0.3s; }
-
-/* ── SECTION BASE ── */
-section {
-  padding: 100px 60px;
-  position: relative;
-}
-
-.section-tag {
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-weight: 500;
-  margin-bottom: 12px;
-}
-
-h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 600;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}
-
-.section-sub {
-  font-size: 1rem;
-  color: var(--muted);
-  line-height: 1.75;
-  max-width: 520px;
-  margin-bottom: 60px;
-}
-
-/* ── PROBLEMS ── */
-.problems {
-  background: var(--navy2);
-  border-top: 1px solid var(--border2);
-  border-bottom: 1px solid var(--border2);
-}
-
-.problems-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border2);
-  border: 1px solid var(--border2);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 60px;
-}
-
-.problem-card {
-  background: var(--navy2);
-  padding: 40px 36px;
-  transition: background 0.3s;
-}
-.problem-card:hover { background: var(--navy3); }
-
-.problem-icon {
-  font-size: 32px;
-  margin-bottom: 20px;
-}
-.problem-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 12px;
-}
-.problem-text {
-  font-size: 0.88rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-/* ── HOW IT WORKS ── */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin-top: 60px;
-  position: relative;
-}
-
-.steps::before {
-  content: '';
-  position: absolute;
-  top: 28px;
-  left: calc(16.66% + 20px);
-  right: calc(16.66% + 20px);
-  height: 1px;
-  background: linear-gradient(90deg, var(--gold), rgba(200,169,110,0.3), var(--gold));
-}
-
-.step {
-  text-align: center;
-  position: relative;
-}
-
-.step-num {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background: var(--gold-dim);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--gold);
-  margin: 0 auto 24px;
-  position: relative;
-  z-index: 1;
-  background: var(--navy);
-}
-
-.step-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 10px;
-}
-.step-text {
-  font-size: 0.87rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-/* ── BENEFITS ── */
-.benefits {
-  background: var(--navy2);
-  border-top: 1px solid var(--border2);
-  border-bottom: 1px solid var(--border2);
-}
-
-.benefits-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.benefit-list {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-.benefit-item {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  padding: 24px;
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  background: var(--navy);
-  transition: border-color 0.3s;
-}
-.benefit-item:hover { border-color: var(--border); }
-
-.benefit-icon {
-  font-size: 24px;
-  min-width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--gold-dim);
-  border-radius: 8px;
-}
-.benefit-title {
-  font-weight: 600;
-  font-size: 0.97rem;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-.benefit-text {
-  font-size: 0.85rem;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-.mockup-card {
-  background: var(--navy3);
-  border: 1px solid var(--border2);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-}
-
-.mockup-header {
-  background: var(--navy2);
-  border-bottom: 1px solid var(--border2);
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.mockup-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-}
-.mockup-body { padding: 24px; }
-
-.mockup-stat-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.mockup-stat {
-  background: var(--navy2);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 16px;
-  text-align: center;
-}
-.mockup-stat-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--gold);
-}
-.mockup-stat-label {
-  font-size: 10px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 2px;
-}
-
-.mockup-listing {
-  background: var(--navy2);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.mockup-img {
-  width: 56px; height: 56px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, rgba(200,169,110,0.2), rgba(76,100,200,0.15));
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-.mockup-listing-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-.mockup-listing-sub {
-  font-size: 11px;
-  color: var(--muted);
-}
-.mockup-listing-price {
-  margin-left: auto;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem;
-  color: var(--gold);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* ── AI ESTIMATOR ── */
-.estimator-box {
-  background: var(--navy3);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 40px;
-  max-width: 560px;
-  margin: 60px auto 0;
-}
-
-.estimator-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 8px;
-  text-align: center;
-}
-.estimator-sub {
-  font-size: 13px;
-  color: var(--muted);
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.est-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-.est-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.est-label {
-  font-size: 11px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.est-input {
-  background: var(--navy2);
-  border: 1px solid var(--border2);
-  border-radius: 6px;
-  padding: 12px 14px;
-  color: var(--white);
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  width: 100%;
-  transition: border-color 0.2s;
-}
-.est-input:focus {
-  outline: none;
-  border-color: var(--gold);
-}
-.est-input::placeholder { color: var(--muted); }
-
-.est-result {
-  margin-top: 24px;
-  background: var(--gold-dim);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.est-result-label {
-  font-size: 12px;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-}
-.est-result-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--white);
-}
-.est-confidence {
-  text-align: right;
-}
-.est-conf-label {
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-.est-conf-bar {
-  width: 80px;
-  height: 4px;
-  background: var(--navy2);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.est-conf-fill {
-  height: 100%;
-  width: 87%;
-  background: var(--gold);
-  border-radius: 2px;
-}
-
-/* ── MARKETS ── */
-.markets-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 60px;
-}
-
-.market-card {
-  background: var(--navy2);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  padding: 24px 20px;
-  text-align: center;
-  transition: all 0.3s;
-  cursor: default;
-}
-.market-card:hover {
-  border-color: var(--border);
-  transform: translateY(-3px);
-  background: var(--navy3);
-}
-.market-flag { font-size: 32px; margin-bottom: 10px; }
-.market-name {
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-.market-status {
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.market-soon { color: var(--muted); }
-
-/* ── FOUNDING ── */
-.founding {
-  background: linear-gradient(135deg, var(--navy2) 0%, var(--navy3) 100%);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.founding-inner {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.founding-perks {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin: 48px 0;
-}
-
-.perk {
-  background: var(--navy);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  padding: 24px 20px;
-  transition: border-color 0.3s;
-}
-.perk:hover { border-color: var(--border); }
-.perk-icon { font-size: 28px; margin-bottom: 12px; }
-.perk-title {
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-.perk-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
-
-.spots-bar {
-  background: var(--navy);
-  border: 1px solid var(--border2);
-  border-radius: 100px;
-  height: 8px;
-  margin: 0 auto 8px;
-  max-width: 300px;
-  overflow: hidden;
-}
-.spots-fill {
-  height: 100%;
-  width: 7%;
-  background: linear-gradient(90deg, var(--gold), var(--gold2));
-  border-radius: 100px;
-}
-.spots-text {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 32px;
-}
-.spots-text strong { color: var(--gold); }
-
-/* ── FORM ── */
-.form-section {
-  background: var(--navy);
-}
-
-.form-wrapper {
-  max-width: 560px;
-  margin: 0 auto;
-  background: var(--navy2);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 48px;
-  margin-top: 60px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.form-field.full { grid-column: 1 / -1; }
-
-.form-label {
-  font-size: 12px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.form-input, .form-select {
-  background: var(--navy);
-  border: 1px solid var(--border2);
-  border-radius: 6px;
-  padding: 13px 16px;
-  color: var(--white);
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  width: 100%;
-  transition: border-color 0.2s;
-  appearance: none;
-}
-.form-input:focus, .form-select:focus {
-  outline: none;
-  border-color: var(--gold);
-}
-.form-input::placeholder { color: var(--muted); }
-.form-select { cursor: pointer; }
-.form-select option { background: var(--navy2); }
-
-.form-submit {
-  width: 100%;
-  background: var(--gold);
-  color: var(--navy);
-  border: none;
-  padding: 16px;
-  border-radius: 6px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  letter-spacing: 0.5px;
-  margin-top: 8px;
-  transition: all 0.2s;
-}
-.form-submit:hover {
-  background: var(--gold2);
-  transform: translateY(-1px);
-}
-
-.form-note {
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-  margin-top: 16px;
-  line-height: 1.6;
-}
-
-/* ── FOOTER ── */
-footer {
-  padding: 40px 60px;
-  border-top: 1px solid var(--border2);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.footer-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--white);
-}
-.footer-logo span { color: var(--gold); }
-.footer-text {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* ── SUCCESS STATE ── */
-.success-msg {
-  display: none;
-  text-align: center;
-  padding: 40px;
-}
-.success-msg.show { display: block; }
-.success-icon { font-size: 48px; margin-bottom: 16px; }
-.success-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  color: var(--gold);
-  margin-bottom: 8px;
-}
-.success-text { font-size: 14px; color: var(--muted); }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  nav { padding: 16px 24px; }
-  section { padding: 70px 24px; }
-  .hero { padding: 100px 24px 60px; flex-direction: column; min-height: auto; }
-  .hero-visual { display: none; }
-  .hero-stats { gap: 28px; flex-wrap: wrap; }
-  .problems-grid { grid-template-columns: 1fr; }
-  .steps { grid-template-columns: 1fr; }
-  .steps::before { display: none; }
-  .benefits-layout { grid-template-columns: 1fr; }
-  .markets-grid { grid-template-columns: repeat(2, 1fr); }
-  .founding-perks { grid-template-columns: 1fr; }
-  .form-grid { grid-template-columns: 1fr; }
-  .form-wrapper { padding: 28px 20px; }
-  footer { flex-direction: column; gap: 12px; text-align: center; }
-  .est-row { grid-template-columns: 1fr; }
-}
-/* ── COOKIE / TERMS BANNER ── */
-.consent-banner {
-  position: fixed;
-  left: 24px;
-  right: 24px;
-  bottom: 24px;
-  z-index: 9999;
-  background: rgba(15, 22, 40, 0.96);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px 24px;
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-  backdrop-filter: blur(18px);
-}
-
-.consent-banner.show {
-  display: flex;
-}
-
-.consent-text {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.6;
-  max-width: 720px;
-}
-
-.consent-text strong {
-  color: var(--white);
-}
-
-.consent-text a {
-  color: var(--gold);
-  text-decoration: none;
-}
-
-.consent-actions {
-  display: flex;
-  gap: 12px;
-  flex-shrink: 0;
-}
-
-.consent-btn {
-  border: none;
-  border-radius: 6px;
-  padding: 11px 20px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.consent-accept {
-  background: var(--gold);
-  color: var(--navy);
-}
-
-.consent-accept:hover {
-  background: var(--gold2);
-}
-
-.consent-reject {
-  background: transparent;
-  color: var(--white);
-  border: 1px solid var(--border2);
-}
-
-.consent-reject:hover {
-  border-color: var(--border);
-  color: var(--gold);
-}
-
-@media (max-width: 700px) {
-  .consent-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-  }
-
-  .consent-actions {
-    width: 100%;
-  }
-
-  .consent-btn {
-    width: 100%;
-  }
-}
-
-
-</style>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
+<body class="agency-page">
 
 <nav>
   <div class="logo">Luci<span>Home</span></div>
@@ -1026,20 +21,30 @@ footer {
     LuciHome is currently in development — launching end of 2026
   </div>
 
-  <a href="#register" class="nav-cta">Join as Partner Agency</a>
+  <a href="agent.html" class="nav-cta">For Agents</a>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
+<section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
 
   <div class="hero-content">
     <div class="hero-label">Now Accepting Founding Agencies</div>
-    <h1>Sell Properties<br><em>Anywhere</em> in<br>the World</h1>
-    <p class="hero-sub">LuciHome connects your agency with international buyers across 50+ countries. One platform. Every market. Unlimited reach.</p>
+
+    <h1>
+      Sell Properties<br>
+      <em>Anywhere</em> in<br>
+      the World
+    </h1>
+
+    <p class="hero-sub">
+      LuciHome connects your agency with international buyers across 50+ countries. One platform. Every market. Unlimited reach.
+    </p>
+
     <div class="hero-actions">
-      <a href="#register" class="btn-primary">Register Your Agency →</a>
+      <a href="register.html" class="btn-primary">
+  Register Your Agency →
+</a>
       <a href="#how-it-works" class="btn-secondary">See How It Works</a>
     </div>
 
@@ -1048,10 +53,12 @@ footer {
         <div class="stat-num">50+</div>
         <div class="stat-label">Countries</div>
       </div>
+
       <div>
         <div class="stat-num">Free</div>
         <div class="stat-label">For Individuals</div>
       </div>
+
       <div>
         <div class="stat-num">AI</div>
         <div class="stat-label">Price Estimator</div>
@@ -1064,6 +71,7 @@ footer {
       <div class="globe"></div>
       <div class="globe-ring"></div>
       <div class="globe-ring"></div>
+
       <div class="dot dot-1"></div>
       <div class="dot dot-2"></div>
       <div class="dot dot-3"></div>
@@ -1071,438 +79,139 @@ footer {
       <div class="dot dot-5"></div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- PROBLEMS -->
 <section class="problems">
   <div class="section-tag">The Problem</div>
-  <h2>International buyers exist.<br>They just can't find your listings.</h2>
-  <p class="section-sub">Every year, millions of people buy property abroad — but the tools to connect them with the right agency don't exist yet.</p>
+
+  <h2>
+    International buyers exist.<br>
+    They just can't find your listings.
+  </h2>
+
+  <p class="section-sub">
+    Every year, millions of people buy property abroad — but the tools to connect them with the right agency don't exist yet.
+  </p>
 
   <div class="problems-grid">
+
     <div class="problem-card">
       <div class="problem-icon">🌐</div>
-      <div class="problem-title">Your listings are invisible internationally</div>
-      <div class="problem-text">Local portals reach local buyers. There is no single platform that connects agencies worldwide with international buyers actively looking to purchase.</div>
+      <div class="problem-title">
+        Your listings are invisible internationally
+      </div>
+      <div class="problem-text">
+        Local portals reach local buyers. There is no single platform that connects agencies worldwide with international buyers actively looking to purchase.
+      </div>
     </div>
+
     <div class="problem-card">
       <div class="problem-icon">💸</div>
-      <div class="problem-title">Buyers don't know what fair price looks like</div>
-      <div class="problem-text">When buying abroad, buyers have no reference point for local prices. This creates hesitation, long negotiation cycles, and lost deals for agencies.</div>
+      <div class="problem-title">
+        Buyers don't know what fair price looks like
+      </div>
+      <div class="problem-text">
+        When buying abroad, buyers have no reference point for local prices. This creates hesitation, long negotiation cycles, and lost deals for agencies.
+      </div>
     </div>
+
     <div class="problem-card">
       <div class="problem-icon">🤝</div>
-      <div class="problem-title">Trust between borders is broken</div>
-      <div class="problem-text">Without verification systems, international buyers distrust foreign agencies. Without trust, there are no cross-border transactions.</div>
+      <div class="problem-title">
+        Trust between borders is broken
+      </div>
+      <div class="problem-text">
+        Without verification systems, international buyers distrust foreign agencies. Without trust, there are no cross-border transactions.
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section id="how-it-works">
+
   <div class="section-tag">How It Works</div>
-  <h2>Three steps to your<br>first international buyer</h2>
-  <p class="section-sub">We handle the complexity — language, currency, verification — so you focus on closing deals.</p>
+
+  <h2>
+    Three steps to your<br>
+    first international buyer
+  </h2>
+
+  <p class="section-sub">
+    We handle the complexity — language, currency, verification — so you focus on closing deals.
+  </p>
 
   <div class="steps">
+
     <div class="step">
       <div class="step-num">01</div>
-      <div class="step-title">Register & Verify</div>
-      <div class="step-text">Create your agency profile in minutes. We verify your license and credentials so international buyers trust you from day one.</div>
+
+      <div class="step-title">
+        Register & Verify
+      </div>
+
+      <div class="step-text">
+        Create your agency profile in minutes. We verify your license and credentials so international buyers trust you from day one.
+      </div>
     </div>
+
     <div class="step">
       <div class="step-num">02</div>
-      <div class="step-title">Publish Your Listings</div>
-      <div class="step-text">Upload your properties once. They appear in multiple languages, with automatic currency conversion, visible to buyers worldwide.</div>
+
+      <div class="step-title">
+        Publish Your Listings
+      </div>
+
+      <div class="step-text">
+        Upload your properties once. They appear in multiple languages, with automatic currency conversion, visible to buyers worldwide.
+      </div>
     </div>
+
     <div class="step">
       <div class="step-num">03</div>
-      <div class="step-title">Receive Qualified Leads</div>
-      <div class="step-text">International buyers contact you directly through the platform. You get their profile, budget, and timeline — before the first conversation.</div>
+
+      <div class="step-title">
+        Receive Qualified Leads
+      </div>
+
+      <div class="step-text">
+        International buyers contact you directly through the platform. You get their profile, budget, and timeline — before the first conversation.
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- BENEFITS -->
-<section class="benefits">
-  <div class="benefits-layout">
-    <div>
-      <div class="section-tag">For Agencies</div>
-      <h2>Everything your agency needs to go global</h2>
-      <p class="section-sub">Built specifically for real estate professionals who want to reach beyond their local market.</p>
-
-      <div class="benefit-list">
-        <div class="benefit-item">
-          <div class="benefit-icon">🌍</div>
-          <div>
-            <div class="benefit-title">International Buyer Reach</div>
-            <div class="benefit-text">Your listings are visible to verified buyers from 50+ countries actively searching for properties in your market.</div>
-          </div>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-icon">📊</div>
-          <div>
-            <div class="benefit-title">Agency Dashboard & CRM</div>
-            <div class="benefit-text">Manage all your listings, leads, and client conversations from one professional dashboard, with analytics and performance reports.</div>
-          </div>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-icon">🤖</div>
-          <div>
-            <div class="benefit-title">AI Price Estimator — Included</div>
-            <div class="benefit-text">Our AI estimates property values based on local market data, regional trends, and comparable sales — available to you and your clients.</div>
-          </div>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-icon">✅</div>
-          <div>
-            <div class="benefit-title">Verified Agency Badge</div>
-            <div class="benefit-text">Your agency is verified and badged, instantly building credibility with international buyers who don't know the local market.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="mockup-card">
-        <div class="mockup-header">
-          <div class="mockup-dot" style="background:#FF5F57"></div>
-          <div class="mockup-dot" style="background:#FFBD2E"></div>
-          <div class="mockup-dot" style="background:#28C840"></div>
-          <span style="font-size:12px; color: var(--muted); margin-left:8px;">Agency Dashboard Demo</span>
-        </div>
-        <div class="mockup-body">
-          <div class="mockup-stat-row">
-            <div class="mockup-stat">
-              <div class="mockup-stat-num">142</div>
-              <div class="mockup-stat-label">Views</div>
-            </div>
-            <div class="mockup-stat">
-              <div class="mockup-stat-num">23</div>
-              <div class="mockup-stat-label">Leads</div>
-            </div>
-            <div class="mockup-stat">
-              <div class="mockup-stat-num">8</div>
-              <div class="mockup-stat-label">Countries</div>
-            </div>
-          </div>
-
-          <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">Active Listings Demo</div>
-
-          <div class="mockup-listing">
-            <div class="mockup-img">🏖️</div>
-            <div>
-              <div class="mockup-listing-title">Sea View Apartment</div>
-              <div class="mockup-listing-sub">Barcelona · 3 beds · 120m²</div>
-            </div>
-            <div class="mockup-listing-price">€485K</div>
-          </div>
-          <div class="mockup-listing">
-            <div class="mockup-img">🏡</div>
-            <div>
-              <div class="mockup-listing-title">Modern Villa</div>
-              <div class="mockup-listing-sub">Marbella · 5 beds · 320m²</div>
-            </div>
-            <div class="mockup-listing-price">€1.2M</div>
-          </div>
-          <div class="mockup-listing">
-            <div class="mockup-img">🏢</div>
-            <div>
-              <div class="mockup-listing-title">City Centre Studio</div>
-              <div class="mockup-listing-sub">Madrid · 1 bed · 45m²</div>
-            </div>
-            <div class="mockup-listing-price">€198K</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AI ESTIMATOR -->
-<section>
-  <div style="text-align:center;">
-    <div class="section-tag">AI Price Estimator</div>
-    <h2>Know exactly what every<br>property is worth</h2>
-    <p class="section-sub" style="margin: 0 auto 0;">Our AI analyses local market data, regional trends, and comparable sales to give buyers and sellers a transparent, data-backed price estimate — for any market we operate in.</p>
-  </div>
-
-  <div class="estimator-box">
-    <div class="estimator-title">Property Self-Evaluation Demo</div>
-    <div class="estimator-sub">Preview how our AI estimator works</div>
-
-    <div class="est-row">
-      <div class="est-field">
-        <div class="est-label">Country</div>
-        <input class="est-input" placeholder="e.g. Spain" readonly>
-      </div>
-      <div class="est-field">
-        <div class="est-label">City / Region</div>
-        <input class="est-input" placeholder="e.g. Barcelona" readonly>
-      </div>
-    </div>
-    <div class="est-row">
-      <div class="est-field">
-        <div class="est-label">Property Type</div>
-        <input class="est-input" placeholder="Apartment" readonly>
-      </div>
-      <div class="est-field">
-        <div class="est-label">Size (m²)</div>
-        <input class="est-input" placeholder="85" readonly>
-      </div>
-    </div>
-
-    <div class="est-result">
-      <div>
-        <div class="est-result-label">Estimated Market Value</div>
-        <div class="est-result-price">€320K – €380K</div>
-      </div>
-      <div class="est-confidence">
-        <div class="est-conf-label">Confidence 87%</div>
-        <div class="est-conf-bar">
-          <div class="est-conf-fill"></div>
-        </div>
-      </div>
-    </div>
-
-    <p style="font-size:12px; color:var(--muted); text-align:center; margin-top:16px;"></p>
-  </div>
-</section>
-
-<!-- MARKETS -->
-<section style="background: var(--navy2); border-top: 1px solid var(--border2);">
-  <div class="section-tag">Launch Markets</div>
-  <h2>Starting with the world's most<br>active international property markets</h2>
-  <p class="section-sub">We're launching in high-demand markets first, with rapid expansion planned across Europe, the Middle East, and Asia.</p>
-
-  <div class="markets-grid">
-    <div class="market-card">
-  <div class="market-flag">🇷🇴</div>
-  <div class="market-name">Romania</div>
-  <div class="market-status">✦ Launch Market</div>
-</div>
-    <div class="market-card">
-      <div class="market-flag">🇪🇸</div>
-      <div class="market-name">Spain</div>
-      <div class="market-status">✦ Launch Market</div>
-    </div>
-    <div class="market-card">
-      <div class="market-flag">🇵🇹</div>
-      <div class="market-name">Portugal</div>
-      <div class="market-status">✦ Launch Market</div>
-    </div>
-    <div class="market-card">
-      <div class="market-flag">🇦🇪</div>
-      <div class="market-name">Dubai / UAE</div>
-      <div class="market-status">✦ Launch Market</div>
-    </div>
-    <div class="market-card">
-      <div class="market-flag">🇩🇪</div>
-      <div class="market-name">Germany</div>
-      <div class="market-status">✦ Launch Market</div>
-    </div>
-    <div class="market-card">
-  <div class="market-flag">🇫🇷</div>
-  <div class="market-name">France</div>
-  <div class="market-status">✦ Launch Market</div>
-</div>
-    <div class="market-card">
-  <div class="market-flag">🇺🇸</div>
-  <div class="market-name">United States</div>
-  <div class="market-status">✦ Launch Market</div>
-</div>
-    <div class="market-card">
-      <div class="market-flag">🇬🇧</div>
-      <div class="market-name">United Kingdom</div>
-      <div class="market-status market-soon">Coming Soon</div>
-    </div>
-    <div class="market-card">
-      <div class="market-flag">🇮🇹</div>
-      <div class="market-name">Italy</div>
-      <div class="market-status market-soon">Coming Soon</div>
-    </div>
-    <div class="market-card">
-      <div class="market-flag">🌍</div>
-      <div class="market-name">50+ Countries</div>
-      <div class="market-status market-soon">2026-2028</div>
-    </div>
-  </div>
-</section>
-
-<!-- FOUNDING AGENCIES -->
-<section class="founding" id="founding">
-  <div class="founding-inner">
-    <div class="section-tag">Founding Agency Program</div>
-    <h2>Be among the first<br>100 agencies worldwide</h2>
-    <p class="section-sub" style="margin: 0 auto 0;">Founding agencies get exclusive benefits that will never be available again. We're building this platform with you — not just for you.</p>
-
-    <div class="founding-perks">
-      <div class="perk">
-        <div class="perk-icon">🎁</div>
-        <div class="perk-title">6 Months Free Access</div>
-        <div class="perk-text">Full platform access at zero cost for the first 6 months. No credit card required.</div>
-      </div>
-      <div class="perk">
-        <div class="perk-icon">⭐</div>
-        <div class="perk-title">Founding Badge</div>
-        <div class="perk-text">Permanent "Founding Agency" badge on your profile, visible to every buyer on the platform.</div>
-      </div>
-      <div class="perk">
-        <div class="perk-icon">💬</div>
-        <div class="perk-title">Shape the Product</div>
-        <div class="perk-text">Direct access to our team. Your feedback directly influences what we build and prioritise.</div>
-      </div>
-    </div>
-
-    <div class="spots-bar">
-      <div class="spots-fill"></div>
-    </div>
-    <div class="spots-text"><strong>7 of 100</strong> founding spots taken</div>
-
-    <a href="#register" class="btn-primary">Claim Your Founding Spot →</a>
-  </div>
-</section>
-
-<!-- REGISTRATION FORM -->
-<section class="form-section" id="register">
-  <div style="text-align:center;">
-    <div class="section-tag">Register Now</div>
-    <h2>Join LuciHome as a<br>Partner Agency</h2>
-    <p class="section-sub" style="margin: 0 auto;">Fill in your details and we'll be in touch within 48 hours to complete your onboarding.</p>
-  </div>
-
-  <form class="form-wrapper" action="https://formspree.io/f/xzdyloeo" method="POST">
-  <div class="form-grid">
-    <div class="form-field">
-      <label class="form-label">Agency Name *</label>
-      <input class="form-input" type="text" name="Agency Name" placeholder="Your Agency Name" required>
-    </div>
-
-    <div class="form-field">
-      <label class="form-label">Country *</label>
-      <select class="form-select" name="Country" required>
-        <option value="">Select Country</option>
-        <option>Spain</option>
-        <option>Portugal</option>
-        <option>United Arab Emirates</option>
-        <option>Germany</option>
-        <option>United Kingdom</option>
-        <option>France</option>
-        <option>Italy</option>
-        <option>Romania</option>
-        <option>United States</option>
-        <option>Other</option>
-      </select>
-    </div>
-
-    <div class="form-field">
-      <label class="form-label">City / Region *</label>
-      <input class="form-input" type="text" name="City / Region" placeholder="e.g. Barcelona" required>
-    </div>
-
-    <div class="form-field">
-      <label class="form-label">Number of Listings</label>
-      <select class="form-select" name="Number of Listings">
-        <option value="">Select Range</option>
-        <option>1 – 10</option>
-        <option>10 – 50</option>
-        <option>50 – 200</option>
-        <option>200+</option>
-      </select>
-    </div>
-
-    <div class="form-field full">
-      <label class="form-label">Contact Email *</label>
-      <input class="form-input" type="email" name="Email" placeholder="contact@youragency.com" required>
-    </div>
-
-    <div class="form-field full">
-      <label class="form-label">Contact Name</label>
-      <input class="form-input" type="text" name="Contact Name" placeholder="Your Name">
-    </div>
-  </div>
-
-  <input type="hidden" name="_subject" value="New LuciHome Partner Agency Registration">
-
-  <button class="form-submit" type="submit">Request Partnership Access →</button>
-
-  <p class="form-note">
-    LuciHome collects agency name,contact name, and email address submitted through our registration form. This data is used solely to contact you about partnership opportunities. We do not sell or share your data with third partie. You may request deletion of your data at any time by emailing contact@lucihome.com .
-  </p>
-</form>
-
-    <div class="success-msg" id="success-msg">
-      <div class="success-icon">✦</div>
-      <div class="success-title">You're on the list.</div>
-      <p class="success-text">Thank you for registering. Our team will reach out within 48 hours to complete your agency onboarding and activate your founding access.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Luci<span>Home</span></div>
-  <div class="footer-text">© 2026 LuciHome · The Global Real Estate Platform · All rights reserved</div>
+  <div class="footer-logo">
+    Luci<span>Home</span>
+  </div>
+
+  <div class="footer-text">
+    © 2026 LuciHome · The Global Real Estate Platform
+  </div>
 </footer>
 
 <div class="consent-banner" id="consentBanner">
+
   <div class="consent-text">
-    <strong>Terms & Privacy Notice.</strong>
-    By using LuciHome, you agree to our Terms and Privacy Policy. We use your submitted information only to contact you about partnership opportunities.
-    <a href="#register">Learn more</a>.
+    <strong>LuciHome uses cookies.</strong>
+    We use essential cookies for the site to function and analytics cookies to understand how it is used.
   </div>
 
   <div class="consent-actions">
-    <button class="consent-btn consent-reject" id="rejectConsent">Reject</button>
-    <button class="consent-btn consent-accept" id="acceptConsent">Accept</button>
+    <button class="consent-btn consent-reject" onclick="closeConsent()">
+      Reject
+    </button>
+
+    <button class="consent-btn consent-accept" onclick="closeConsent()">
+      Accept
+    </button>
   </div>
+
 </div>
 
-<script>
-function handleSubmit() {
-  const name = document.getElementById('agencyName').value;
-  const email = document.getElementById('email').value;
-  const country = document.getElementById('country').value;
+<script src="script.js"></script>
 
-  if (!name || !email || !country) {
-    alert('Please fill in the required fields: Agency Name, Country, and Email.');
-    return;
-  }
-
-  document.getElementById('form-content').style.display = 'none';
-  document.getElementById('success-msg').classList.add('show');
-}
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-// Terms & Privacy consent banner
-document.addEventListener('DOMContentLoaded', function () {
-  const consentBanner = document.getElementById('consentBanner');
-  const acceptConsent = document.getElementById('acceptConsent');
-  const rejectConsent = document.getElementById('rejectConsent');
-
-  const consentChoice = localStorage.getItem('luciHomeConsent');
-
-  if (!consentChoice) {
-    consentBanner.classList.add('show');
-  }
-
-  acceptConsent.addEventListener('click', function () {
-    localStorage.setItem('luciHomeConsent', 'accepted');
-    consentBanner.classList.remove('show');
-  });
-
-  rejectConsent.addEventListener('click', function () {
-    localStorage.setItem('luciHomeConsent', 'rejected');
-    consentBanner.classList.remove('show');
-  });
-});
-</script>
 </body>
 </html>
