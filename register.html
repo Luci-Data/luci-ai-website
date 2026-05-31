@@ -317,109 +317,96 @@
 
     <form id="registerForm">
 
-      <div class="form-grid">
+  <input type="hidden" name="_subject" value="New LuciHome Application">
 
-        <div class="form-field">
-          <label class="form-label">
-            First Name
-          </label>
+  <div class="form-grid">
 
-          <input
-            type="text"
-            class="form-input"
-            placeholder="John"
-            required
-          />
-        </div>
+    <div class="form-field">
+      <label class="form-label">First Name</label>
+      <input
+        type="text"
+        name="first_name"
+        class="form-input"
+        placeholder="John"
+        required
+      />
+    </div>
 
-        <div class="form-field">
-          <label class="form-label">
-            Last Name
-          </label>
+    <div class="form-field">
+      <label class="form-label">Last Name</label>
+      <input
+        type="text"
+        name="last_name"
+        class="form-input"
+        placeholder="Doe"
+        required
+      />
+    </div>
 
-          <input
-            type="text"
-            class="form-input"
-            placeholder="Doe"
-            required
-          />
-        </div>
+    <div class="form-field full">
+      <label class="form-label">Email Address</label>
+      <input
+        type="email"
+        name="email"
+        class="form-input"
+        placeholder="john@example.com"
+        required
+      />
+    </div>
 
-        <div class="form-field full">
-          <label class="form-label">
-            Email Address
-          </label>
+    <div class="form-field">
+      <label class="form-label">Country</label>
+      <input
+        type="text"
+        name="country"
+        class="form-input"
+        placeholder="Spain"
+        required
+      />
+    </div>
 
-          <input
-            type="email"
-            class="form-input"
-            placeholder="john@example.com"
-            required
-          />
-        </div>
+    <div class="form-field">
+      <label class="form-label">City</label>
+      <input
+        type="text"
+        name="city"
+        class="form-input"
+        placeholder="Barcelona"
+        required
+      />
+    </div>
 
-        <div class="form-field">
-          <label class="form-label">
-            Country
-          </label>
+    <div class="form-field full">
+      <label class="form-label">I Am</label>
+      <select name="profile_type" class="form-select" required>
+        <option value="">Select</option>
+        <option value="Individual Agent">Individual Agent</option>
+        <option value="Agency">Agency</option>
+        <option value="Investor">Investor</option>
+        <option value="Property Developer">Property Developer</option>
+      </select>
+    </div>
 
-          <input
-            type="text"
-            class="form-input"
-            placeholder="Spain"
-            required
-          />
-        </div>
+    <div class="form-field full">
+      <label class="form-label">Tell Us About Your Activity</label>
+      <textarea
+        name="activity"
+        class="form-textarea"
+        placeholder="Describe your market, portfolio or goals..."
+      ></textarea>
+    </div>
 
-        <div class="form-field">
-          <label class="form-label">
-            City
-          </label>
+  </div>
 
-          <input
-            type="text"
-            class="form-input"
-            placeholder="Barcelona"
-            required
-          />
-        </div>
+  <button type="submit" class="submit-btn">
+    Submit Application →
+  </button>
 
-        <div class="form-field full">
-          <label class="form-label">
-            I Am
-          </label>
+  <div class="form-note">
+    By submitting this form you agree to be contacted by LuciHome regarding platform access and updates.
+  </div>
 
-          <select class="form-select" required>
-            <option value="">Select</option>
-            <option>Individual Agent</option>
-            <option>Agency</option>
-            <option>Investor</option>
-            <option>Property Developer</option>
-          </select>
-        </div>
-
-        <div class="form-field full">
-          <label class="form-label">
-            Tell Us About Your Activity
-          </label>
-
-          <textarea
-            class="form-textarea"
-            placeholder="Describe your market, portfolio or goals..."
-          ></textarea>
-        </div>
-
-      </div>
-
-      <button type="submit" class="submit-btn">
-        Submit Application →
-      </button>
-
-      <div class="form-note">
-        By submitting this form you agree to be contacted by LuciHome regarding platform access and updates.
-      </div>
-
-    </form>
+</form>
 
     <div class="success-box" id="successBox">
 
@@ -443,24 +430,48 @@
 </section>
 
 <script>
-
   const form = document.getElementById('registerForm');
+  const successBox = document.getElementById('successBox');
 
-  form.addEventListener('submit', function(e){
-
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    form.style.display = 'none';
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
 
-    document
-      .getElementById('successBox')
-      .classList.add('show');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
 
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://formspree.io/f/xeedwrnb', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Formspree error:', errorData);
+        throw new Error('Form submission failed');
+      }
+
+      form.reset();
+      form.style.display = 'none';
+      successBox.classList.add('show');
+
+    } catch (error) {
+      console.error(error);
+      alert('The form could not be submitted. Please try again.');
+
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
   });
-
 </script>
-
-<script src="script.js"></script>
 
 </body>
 </html>
