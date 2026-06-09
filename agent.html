@@ -12,6 +12,74 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
   <link rel="stylesheet" href="style.css"/>
+
+
+  <style>
+    .launch-countdown{
+      margin:32px 0 0;
+      padding:22px;
+      max-width:620px;
+      background:rgba(255,255,255,.86);
+      border:1px solid rgba(200,164,93,.28);
+      border-radius:24px;
+      box-shadow:0 18px 45px rgba(11,19,43,.09);
+    }
+
+    .launch-countdown-title{
+      color:var(--gold);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .launch-countdown-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .launch-countdown-item{
+      padding:16px 10px;
+      border-radius:18px;
+      background:var(--cream);
+      text-align:center;
+      border:1px solid rgba(11,19,43,.06);
+    }
+
+    .launch-countdown-number{
+      display:block;
+      font-family:'Cormorant Garamond',serif;
+      color:var(--navy);
+      font-size:2.4rem;
+      font-weight:700;
+      line-height:1;
+    }
+
+    .launch-countdown-label{
+      display:block;
+      margin-top:7px;
+      color:var(--slate);
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+    }
+
+    .launch-countdown-ended{
+      color:var(--navy);
+      font-weight:800;
+      line-height:1.5;
+    }
+
+    @media(max-width:760px){
+      .launch-countdown-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+  </style>
+
 </head>
 <body class="agent-page">
 
@@ -21,7 +89,7 @@
   </div>
 
   <div class="nav-status">
-    LuciHome is currently in development — launching end of 2026
+    LuciHome is currently in development
   </div>
 
   <a href="index.html" class="nav-cta">
@@ -57,6 +125,35 @@
       <a href="#how-it-works" class="btn-secondary">
         See How It Works
       </a>
+    </div>
+
+
+    <div class="launch-countdown" data-launch-countdown>
+      <div class="launch-countdown-title">
+        Founding Member Access Ends At Launch — June 30, 2026
+      </div>
+
+      <div class="launch-countdown-grid">
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-days>00</span>
+          <span class="launch-countdown-label">Days</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-hours>00</span>
+          <span class="launch-countdown-label">Hours</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-minutes>00</span>
+          <span class="launch-countdown-label">Minutes</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-seconds>00</span>
+          <span class="launch-countdown-label">Seconds</span>
+        </div>
+      </div>
     </div>
 
     <div class="hero-stats">
@@ -405,6 +502,49 @@
 </div>
 
 <script src="script.js"></script>
+
+
+
+<script>
+  (function () {
+    const launchDate = new Date(2026, 5, 30, 0, 0, 0).getTime();
+    const countdown = document.querySelector('[data-launch-countdown]');
+
+    if (!countdown) return;
+
+    const daysElement = countdown.querySelector('[data-countdown-days]');
+    const hoursElement = countdown.querySelector('[data-countdown-hours]');
+    const minutesElement = countdown.querySelector('[data-countdown-minutes]');
+    const secondsElement = countdown.querySelector('[data-countdown-seconds]');
+
+    function pad(value) {
+      return String(value).padStart(2, '0');
+    }
+
+    function updateCountdown() {
+      const now = Date.now();
+      const distance = launchDate - now;
+
+      if (distance <= 0) {
+        countdown.innerHTML = '<div class="launch-countdown-ended">LuciHome Launches Today.</div>';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      daysElement.textContent = pad(days);
+      hoursElement.textContent = pad(hours);
+      minutesElement.textContent = pad(minutes);
+      secondsElement.textContent = pad(seconds);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  })();
+</script>
 
 </body>
 </html>
