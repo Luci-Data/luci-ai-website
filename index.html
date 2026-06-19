@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LuciHome — The Global Real Estate Platform</title>
-  <link rel="icon" type="image/png" href="/logo.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -73,22 +72,73 @@
       line-height:1.5;
     }
 
+    .beta-pill{
+      display:inline-block;
+      margin-top:18px;
+      padding:8px 16px;
+      border-radius:999px;
+      background:rgba(40,200,64,.1);
+      border:1px solid rgba(40,200,64,.3);
+      color:#1c8a3a;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+    }
+ 
+    .nav-dropdown{
+      position:relative;
+    }
+ 
+    .nav-dropdown-trigger{
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+ 
+    .nav-dropdown-menu{
+      position:absolute;
+      top:calc(100% + 10px);
+      right:0;
+      min-width:200px;
+      background:rgba(255,255,255,.98);
+      border:1px solid rgba(11,19,43,.08);
+      border-radius:16px;
+      box-shadow:0 18px 45px rgba(11,19,43,.14);
+      padding:8px;
+      display:none;
+      flex-direction:column;
+      gap:2px;
+      z-index:50;
+    }
+ 
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu{
+      display:flex;
+    }
+ 
+    .nav-dropdown-menu a{
+      padding:10px 14px;
+      border-radius:10px;
+      color:var(--navy);
+      font-size:13px;
+      font-weight:600;
+      text-decoration:none;
+      transition:background .15s ease;
+    }
+ 
+    .nav-dropdown-menu a:hover{
+      background:var(--cream);
+      color:var(--gold);
+    }
+
     @media(max-width:760px){
       .launch-countdown-grid{
         grid-template-columns:repeat(2,1fr);
       }
     }
   </style>
-
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQG0HRP6TD"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-GQG0HRP6TD');
-  </script>
 
 </head>
 <body class="agency-page">
@@ -100,7 +150,16 @@
     LuciHome is currently in development
   </div>
 
-  <a href="agent.html" class="nav-cta">For Agents</a>
+  <div class="nav-dropdown">
+    <button class="nav-cta nav-dropdown-trigger" type="button">
+      For Professionals ▾
+    </button>
+ 
+    <div class="nav-dropdown-menu">
+      <a href="agent.html">For Agents</a>
+      <a href="notaries.html">For Notaries</a>
+      <a href="banks.html">For Banks</a>
+    </div>
 </nav>
 
 <section class="hero">
