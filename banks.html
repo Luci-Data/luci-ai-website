@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>LuciHome for Banks — Financing, Mortgages & the Rate Calculator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="style.css"/>
+
+
+  <style>
+    .launch-countdown{
+      margin:32px 0 0;
+      padding:22px;
+      max-width:620px;
+      background:rgba(255,255,255,.86);
+      border:1px solid rgba(200,164,93,.28);
+      border-radius:24px;
+      box-shadow:0 18px 45px rgba(11,19,43,.09);
+    }
+
+    .launch-countdown-title{
+      color:var(--gold);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .launch-countdown-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .launch-countdown-item{
+      padding:16px 10px;
+      border-radius:18px;
+      background:var(--cream);
+      text-align:center;
+      border:1px solid rgba(11,19,43,.06);
+    }
+
+    .launch-countdown-number{
+      display:block;
+      font-family:'Cormorant Garamond',serif;
+      color:var(--navy);
+      font-size:2.4rem;
+      font-weight:700;
+      line-height:1;
+    }
+
+    .launch-countdown-label{
+      display:block;
+      margin-top:7px;
+      color:var(--slate);
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+    }
+
+    .launch-countdown-ended{
+      color:var(--navy);
+      font-weight:800;
+      line-height:1.5;
+    }
+
+    .beta-pill{
+      display:inline-block;
+      margin-top:18px;
+      padding:8px 16px;
+      border-radius:999px;
+      background:rgba(40,200,64,.1);
+      border:1px solid rgba(40,200,64,.3);
+      color:#1c8a3a;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+    }
+
+    .nav-dropdown{
+      position:relative;
+    }
+
+    .nav-dropdown-trigger{
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .nav-dropdown-menu{
+      position:absolute;
+      top:calc(100% + 10px);
+      right:0;
+      min-width:200px;
+      background:rgba(255,255,255,.98);
+      border:1px solid rgba(11,19,43,.08);
+      border-radius:16px;
+      box-shadow:0 18px 45px rgba(11,19,43,.14);
+      padding:8px;
+      display:none;
+      flex-direction:column;
+      gap:2px;
+      z-index:50;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu{
+      display:flex;
+    }
+
+    .nav-dropdown-menu a{
+      padding:10px 14px;
+      border-radius:10px;
+      color:var(--navy);
+      font-size:13px;
+      font-weight:600;
+      text-decoration:none;
+      transition:background .15s ease;
+    }
+
+    .nav-dropdown-menu a:hover{
+      background:var(--cream);
+      color:var(--gold);
+    }
+
+    /* Mortgage Rate Calculator */
+    .calc-section{
+      padding:100px 24px;
+      background:var(--cream);
+    }
+
+    .calc-layout{
+      max-width:1180px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:56px;
+      align-items:center;
+    }
+
+    .calc-card{
+      background:#fff;
+      border-radius:28px;
+      padding:32px;
+      border:1px solid rgba(11,19,43,.06);
+      box-shadow:0 24px 60px rgba(11,19,43,.10);
+    }
+
+    .calc-row{
+      margin-bottom:20px;
+    }
+
+    .calc-row label{
+      display:flex;
+      justify-content:space-between;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      color:var(--slate);
+      margin-bottom:8px;
+    }
+
+    .calc-row label span{
+      color:var(--navy);
+      font-weight:700;
+      text-transform:none;
+      letter-spacing:0;
+      font-size:13px;
+    }
+
+    .calc-row input[type="range"]{
+      width:100%;
+      accent-color:var(--gold);
+    }
+
+    .calc-result{
+      margin-top:28px;
+      padding:22px;
+      border-radius:18px;
+      background:var(--cream);
+      text-align:center;
+    }
+
+    .calc-result-label{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      color:var(--slate);
+      margin-bottom:6px;
+    }
+
+    .calc-result-num{
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.6rem;
+      font-weight:700;
+      color:var(--navy);
+    }
+
+    .calc-result-sub{
+      margin-top:4px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    @media(max-width:900px){
+      .calc-layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:760px){
+      .launch-countdown-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+  </style>
+
+</head>
+<body class="agent-page">
+
+<nav>
+  <div class="logo">
+    Luci<span>Home</span>
+  </div>
+
+  <div class="nav-status">
+    LuciHome is currently in development
+  </div>
+
+  <div class="nav-dropdown">
+    <button class="nav-cta nav-dropdown-trigger" type="button">
+      For Professionals ▾
+    </button>
+
+    <div class="nav-dropdown-menu">
+      <a href="agent.html">For Agents</a>
+      <a href="index.html">For Agencies</a>
+      <a href="notaries.html">For Notaries</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+
+    <div class="hero-label">
+      In development · Official launch 2026
+    </div>
+
+    <h1>
+      Reach buyers<br>
+      at the exact moment<br>
+      they need <em>financing</em>.
+    </h1>
+
+    <p class="hero-sub">
+      LuciHome puts your bank in front of buyers the second they fall in love with a property. Every listing on the platform includes a built-in mortgage rate calculator — and every calculation is a warm financing lead delivered straight to you.
+    </p>
+
+    <div class="hero-actions">
+      <a href="register.html" class="btn-primary">
+        Join as Founding Bank Partner →
+      </a>
+
+      <a href="#calculator" class="btn-secondary">
+        See the Rate Calculator
+      </a>
+    </div>
+
+    <div class="beta-pill">
+      Free during Beta — No fees until official launch
+    </div>
+
+    <div class="launch-countdown" data-launch-countdown>
+      <div class="launch-countdown-title">
+        Founding Member Access Ends At Launch — June 30, 2026
+      </div>
+
+      <div class="launch-countdown-grid">
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-days>00</span>
+          <span class="launch-countdown-label">Days</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-hours>00</span>
+          <span class="launch-countdown-label">Hours</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-minutes>00</span>
+          <span class="launch-countdown-label">Minutes</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-seconds>00</span>
+          <span class="launch-countdown-label">Seconds</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+
+      <div>
+        <div class="stat-num">50</div>
+        <div class="stat-label">Free spots</div>
+      </div>
+
+      <div>
+        <div class="stat-num">Free</div>
+        <div class="stat-label">During Beta</div>
+      </div>
+
+      <div>
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Countries</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="globe-container">
+      <div class="globe"></div>
+      <div class="globe-ring"></div>
+      <div class="globe-ring"></div>
+
+      <div class="dot dot-1"></div>
+      <div class="dot dot-2"></div>
+      <div class="dot dot-3"></div>
+      <div class="dot dot-4"></div>
+      <div class="dot dot-5"></div>
+    </div>
+  </div>
+</section>
+
+<section class="problems">
+
+  <div class="section-tag">
+    The Problem
+  </div>
+
+  <h2>
+    Buyers decide to finance<br>
+    <em>long before</em> they reach a bank.
+  </h2>
+
+  <p class="section-sub">
+    By the time a mortgage application lands on your desk, the buyer has already shopped around — often with the competition.
+  </p>
+
+  <div class="problems-grid">
+
+    <div class="problem-card">
+      <div class="problem-icon">⏱️</div>
+
+      <div class="problem-title">
+        You arrive too late in the journey
+      </div>
+
+      <div class="problem-text">
+        Buyers research properties and financing options for weeks before ever speaking to a bank. Without presence at that moment, you lose the lead to a faster competitor.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">📉</div>
+
+      <div class="problem-title">
+        No visibility into real buying intent
+      </div>
+
+      <div class="problem-text">
+        Generic ads reach people who may never buy. There is no signal telling you which buyers are actively evaluating a specific property right now.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">🧩</div>
+
+      <div class="problem-title">
+        Disconnected valuation and loan data
+      </div>
+
+      <div class="problem-text">
+        Property price, market valuation, and loan request live in separate systems, slowing down pre-approval and increasing risk on every file.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="how-it-works">
+
+  <div class="section-tag">
+    How It Works
+  </div>
+
+  <h2>
+    From browsing<br>
+    to <em>pre-approved</em>, on autopilot.
+  </h2>
+
+  <p class="section-sub">
+    Three steps that turn property browsing into qualified financing leads for your bank.
+  </p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">01</div>
+
+      <div class="step-title">
+        Set up your mortgage products
+      </div>
+
+      <div class="step-text">
+        Register your institution and load your current rates, loan terms, and eligibility criteria. LuciHome uses them to power live calculations across the platform.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+
+      <div class="step-title">
+        Appear in every rate calculation
+      </div>
+
+      <div class="step-text">
+        Every buyer who uses the built-in mortgage calculator on a listing sees your bank's offer, instantly, next to the property they're already interested in.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+
+      <div class="step-title">
+        Receive the financing lead, pre-qualified
+        </div>
+
+      <div class="step-text">
+        When a buyer requests a quote, you receive their details, the property, the AI-backed valuation, and their estimated monthly payment — ready for pre-approval.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="calc-section" id="calculator">
+
+  <div class="section-tag" style="text-align:center; display:block;">
+    Built-In Tool
+  </div>
+
+  <h2 style="text-align:center;">
+    The Mortgage Rate Calculator<br>
+    that turns <em>browsers</em> into <em>leads</em>
+  </h2>
+
+  <p class="section-sub" style="text-align:center; margin-left:auto; margin-right:auto;">
+    Every property on LuciHome includes a live rate calculator. Buyers estimate their monthly mortgage payment in seconds — and your bank's name is right there when they do.
+  </p>
+
+  <div class="calc-layout" style="margin-top:56px;">
+
+    <div class="calc-card">
+
+      <div class="calc-row">
+        <label>Property Price <span id="calcPriceLabel">€250,000</span></label>
+        <input type="range" id="calcPrice" min="50000" max="2000000" step="5000" value="250000"/>
+      </div>
+
+      <div class="calc-row">
+        <label>Down Payment <span id="calcDownLabel">20%</span></label>
+        <input type="range" id="calcDown" min="0" max="50" step="1" value="20"/>
+      </div>
+
+      <div class="calc-row">
+        <label>Interest Rate <span id="calcRateLabel">4.5%</span></label>
+        <input type="range" id="calcRate" min="1" max="10" step="0.1" value="4.5"/>
+      </div>
+
+      <div class="calc-row">
+        <label>Loan Term <span id="calcTermLabel">25 years</span></label>
+        <input type="range" id="calcTerm" min="5" max="35" step="1" value="25"/>
+      </div>
+
+      <div class="calc-result">
+        <div class="calc-result-label">Estimated Monthly Payment</div>
+        <div class="calc-result-num" id="calcMonthly">€988</div>
+        <div class="calc-result-sub">Estimate only — final offer provided by partner bank</div>
+      </div>
+
+    </div>
+
+    <div>
+
+      <div class="benefit-list">
+
+        <div class="benefit-item">
+          <div class="benefit-icon">📍</div>
+
+          <div>
+            <div class="benefit-title">
+              Embedded directly on every listing
+            </div>
+
+            <div class="benefit-text">
+              No separate app, no extra step. Buyers calculate financing while looking at the exact property they want — at the highest point of intent.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🎯</div>
+
+          <div>
+            <div class="benefit-title">
+              Leads arrive pre-qualified
+            </div>
+
+            <div class="benefit-text">
+              You receive buyer details together with the property, the AI-backed valuation, and the exact terms they calculated — no cold leads, no guesswork.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">⚙️</div>
+
+          <div>
+            <div class="benefit-title">
+              Your rates, your products, your branding
+            </div>
+
+            <div class="benefit-text">
+              You control the rates and loan terms shown to buyers. Update them anytime — the calculator always reflects your current offer.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="benefits">
+
+  <div class="benefits-layout">
+
+    <div>
+
+      <div class="section-tag">
+        For Banks
+      </div>
+
+      <h2>
+        Everything you need to <em>finance with confidence</em>
+      </h2>
+
+      <p class="section-sub">
+        LuciHome is built to bring your bank closer to the moment a buyer decides to finance a property.
+      </p>
+
+      <div class="benefit-list">
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🏦</div>
+
+          <div>
+            <div class="benefit-title">
+              Direct access to active mortgage demand
+            </div>
+
+            <div class="benefit-text">
+              Reach buyers who are already evaluating a specific property and actively comparing financing options — not generic, unqualified traffic.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🤖</div>
+
+          <div>
+            <div class="benefit-title">
+              AI price estimator as a risk benchmark
+            </div>
+
+            <div class="benefit-text">
+              Compare the requested loan amount against an independent, data-driven valuation, helping flag overvalued properties before they become a liability.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🛡️</div>
+
+          <div>
+            <div class="benefit-title">
+              Verified parties across the network
+            </div>
+
+            <div class="benefit-text">
+              Buyers, sellers, and agents are already verified on LuciHome before a financing request reaches you, reducing time spent on identity checks.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🌐</div>
+
+          <div>
+            <div class="benefit-title">
+              Built for cross-border lending
+            </div>
+
+            <div class="benefit-text">
+              International buyers and properties come through the platform with the same level of verification as local deals, simplifying foreign mortgage cases.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+
+      <div class="mockup-card">
+
+        <div class="mockup-header">
+          <div class="mockup-dot" style="background:#FF5F57"></div>
+          <div class="mockup-dot" style="background:#FFBD2E"></div>
+          <div class="mockup-dot" style="background:#28C840"></div>
+
+          <span style="font-size:12px; color: var(--muted); margin-left:8px;">
+            LuciHome · Financing Lead
+          </span>
+        </div>
+
+        <div class="mockup-body">
+
+          <div class="mockup-stat-row">
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">1</div>
+              <div class="mockup-stat-label">Buyer</div>
+            </div>
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">80</div>
+              <div class="mockup-stat-label">% LTV</div>
+            </div>
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">25</div>
+              <div class="mockup-stat-label">Yr Term</div>
+            </div>
+
+          </div>
+
+          <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">
+            Mortgage Request Summary
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">🧾</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                Buyer Identity ✅
+              </div>
+
+              <div class="mockup-listing-sub">
+                Verified · Pre-Qualified
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              OK
+            </div>
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">🏠</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                AI Valuation Match ✅
+              </div>
+
+              <div class="mockup-listing-sub">
+                Requested loan within market range
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              OK
+            </div>
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">💶</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                Calculated Monthly Payment
+              </div>
+
+              <div class="mockup-listing-sub">
+                Based on your current rate
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              €988
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-logo">
+    Luci<span>Home</span>
+  </div>
+
+  <div class="footer-text">
+    © 2026 LuciHome · The Global Real Estate Platform
+  </div>
+</footer>
+
+<div class="consent-banner" id="consentBanner">
+
+  <div class="consent-text">
+    <strong>LuciHome uses cookies.</strong>
+    We use essential cookies for the site to function and analytics cookies to understand how it is used.
+  </div>
+
+  <div class="consent-actions">
+
+    <button class="consent-btn consent-reject" onclick="closeConsent()">
+      Reject
+    </button>
+
+    <button class="consent-btn consent-accept" onclick="closeConsent()">
+      Accept
+    </button>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+
+
+<script>
+  (function () {
+    const launchDate = new Date(2026, 5, 30, 0, 0, 0).getTime();
+    const countdown = document.querySelector('[data-launch-countdown]');
+
+    if (!countdown) return;
+
+    const daysElement = countdown.querySelector('[data-countdown-days]');
+    const hoursElement = countdown.querySelector('[data-countdown-hours]');
+    const minutesElement = countdown.querySelector('[data-countdown-minutes]');
+    const secondsElement = countdown.querySelector('[data-countdown-seconds]');
+
+    function pad(value) {
+      return String(value).padStart(2, '0');
+    }
+
+    function updateCountdown() {
+      const now = Date.now();
+      const distance = launchDate - now;
+
+      if (distance <= 0) {
+        countdown.innerHTML = '<div class="launch-countdown-ended">LuciHome Launches Today.</div>';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      daysElement.textContent = pad(days);
+      hoursElement.textContent = pad(hours);
+      minutesElement.textContent = pad(minutes);
+      secondsElement.textContent = pad(seconds);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  })();
+</script>
+
+<script>
+  (function () {
+    const priceEl = document.getElementById('calcPrice');
+    const downEl = document.getElementById('calcDown');
+    const rateEl = document.getElementById('calcRate');
+    const termEl = document.getElementById('calcTerm');
+
+    if (!priceEl || !downEl || !rateEl || !termEl) return;
+
+    const priceLabel = document.getElementById('calcPriceLabel');
+    const downLabel = document.getElementById('calcDownLabel');
+    const rateLabel = document.getElementById('calcRateLabel');
+    const termLabel = document.getElementById('calcTermLabel');
+    const monthlyEl = document.getElementById('calcMonthly');
+
+    function formatCurrency(value) {
+      return '€' + Math.round(value).toLocaleString('en-US');
+    }
+
+    function calculate() {
+      const price = Number(priceEl.value);
+      const downPct = Number(downEl.value);
+      const annualRate = Number(rateEl.value);
+      const years = Number(termEl.value);
+
+      priceLabel.textContent = formatCurrency(price);
+      downLabel.textContent = downPct + '%';
+      rateLabel.textContent = annualRate.toFixed(1) + '%';
+      termLabel.textContent = years + ' years';
+
+      const loanAmount = price * (1 - downPct / 100);
+      const monthlyRate = annualRate / 100 / 12;
+      const numPayments = years * 12;
+
+      let monthly;
+
+      if (monthlyRate === 0) {
+        monthly = loanAmount / numPayments;
+      } else {
+        monthly = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
+                   (Math.pow(1 + monthlyRate, numPayments) - 1);
+      }
+
+      monthlyEl.textContent = formatCurrency(monthly);
+    }
+
+    [priceEl, downEl, rateEl, termEl].forEach((el) => {
+      el.addEventListener('input', calculate);
+    });
+
+    calculate();
+  })();
+</script>
+
+</body>
+</html>
