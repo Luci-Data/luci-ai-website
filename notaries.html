@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>LuciHome for Notaries — Secure Every Transaction</title>
+  <link rel="icon" type="image/png" href="/logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="style.css"/>
+
+
+  <style>
+    .launch-countdown{
+      margin:32px 0 0;
+      padding:22px;
+      max-width:620px;
+      background:rgba(255,255,255,.86);
+      border:1px solid rgba(200,164,93,.28);
+      border-radius:24px;
+      box-shadow:0 18px 45px rgba(11,19,43,.09);
+    }
+
+    .launch-countdown-title{
+      color:var(--gold);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .launch-countdown-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .launch-countdown-item{
+      padding:16px 10px;
+      border-radius:18px;
+      background:var(--cream);
+      text-align:center;
+      border:1px solid rgba(11,19,43,.06);
+    }
+
+    .launch-countdown-number{
+      display:block;
+      font-family:'Cormorant Garamond',serif;
+      color:var(--navy);
+      font-size:2.4rem;
+      font-weight:700;
+      line-height:1;
+    }
+
+    .launch-countdown-label{
+      display:block;
+      margin-top:7px;
+      color:var(--slate);
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+    }
+
+    .launch-countdown-ended{
+      color:var(--navy);
+      font-weight:800;
+      line-height:1.5;
+    }
+
+    .beta-pill{
+      display:inline-block;
+      margin-top:18px;
+      padding:8px 16px;
+      border-radius:999px;
+      background:rgba(40,200,64,.1);
+      border:1px solid rgba(40,200,64,.3);
+      color:#1c8a3a;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+    }
+ 
+    .nav-dropdown{
+      position:relative;
+    }
+ 
+    .nav-dropdown-trigger{
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+ 
+    .nav-dropdown-menu{
+      position:absolute;
+      top:calc(100% + 10px);
+      right:0;
+      min-width:200px;
+      background:rgba(255,255,255,.98);
+      border:1px solid rgba(11,19,43,.08);
+      border-radius:16px;
+      box-shadow:0 18px 45px rgba(11,19,43,.14);
+      padding:8px;
+      display:none;
+      flex-direction:column;
+      gap:2px;
+      z-index:50;
+    }
+ 
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu{
+      display:flex;
+    }
+ 
+    .nav-dropdown-menu a{
+      padding:10px 14px;
+      border-radius:10px;
+      color:var(--navy);
+      font-size:13px;
+      font-weight:600;
+      text-decoration:none;
+      transition:background .15s ease;
+    }
+ 
+    .nav-dropdown-menu a:hover{
+      background:var(--cream);
+      color:var(--gold);
+    }
+
+    @media(max-width:760px){
+      .launch-countdown-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+  </style>
+
+</head>
+<body class="agent-page">
+
+<nav>
+  <div class="logo">
+    Luci<span>Home</span>
+  </div>
+
+  <div class="nav-status">
+    LuciHome is currently in development
+  </div>
+
+  <div class="nav-dropdown">
+    <button class="nav-cta nav-dropdown-trigger" type="button">
+      For Professionals ▾
+    </button>
+ 
+    <div class="nav-dropdown-menu">
+      <a href="index.html">For Agencies</a>
+      <a href="agent.html">For Agents</a>
+      <a href="banks.html">For Banks</a>
+    </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+
+    <div class="hero-label">
+      In development · Official launch 2026
+    </div>
+
+    <h1>
+      Verify faster.<br>
+      Close safer.<br>
+      <em>Trusted</em> by the network.
+    </h1>
+
+    <p class="hero-sub">
+      LuciHome connects notaries directly to the real estate transactions happening across the network — agents, agencies, and buyers — so every deal you certify is backed by verified data from day one.
+    </p>
+
+    <div class="hero-actions">
+      <a href="register.html" class="btn-primary">
+        Join as Founding Notary →
+      </a>
+
+      <a href="#how-it-works" class="btn-secondary">
+        See How It Works
+      </a>
+    </div>
+
+    <div class="beta-pill">
+      Free during Beta — No fees until official launch
+    </div>
+
+    <div class="launch-countdown" data-launch-countdown>
+      <div class="launch-countdown-title">
+        Founding Member Access Ends At Launch — June 30, 2026
+      </div>
+
+      <div class="launch-countdown-grid">
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-days>00</span>
+          <span class="launch-countdown-label">Days</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-hours>00</span>
+          <span class="launch-countdown-label">Hours</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-minutes>00</span>
+          <span class="launch-countdown-label">Minutes</span>
+        </div>
+
+        <div class="launch-countdown-item">
+          <span class="launch-countdown-number" data-countdown-seconds>00</span>
+          <span class="launch-countdown-label">Seconds</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+
+      <div>
+        <div class="stat-num">100</div>
+        <div class="stat-label">Free spots</div>
+      </div>
+
+      <div>
+        <div class="stat-num">Free</div>
+        <div class="stat-label">During Beta</div>
+      </div>
+
+      <div>
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Countries</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="globe-container">
+      <div class="globe"></div>
+      <div class="globe-ring"></div>
+      <div class="globe-ring"></div>
+
+      <div class="dot dot-1"></div>
+      <div class="dot dot-2"></div>
+      <div class="dot dot-3"></div>
+      <div class="dot dot-4"></div>
+      <div class="dot dot-5"></div>
+    </div>
+  </div>
+</section>
+
+<section class="problems">
+
+  <div class="section-tag">
+    The Problem
+  </div>
+
+  <h2>
+    Transactions arrive on your desk<br>
+    <em>without context</em>.
+  </h2>
+
+  <p class="section-sub">
+    By the time a file reaches a notary, critical information has already been lost, duplicated, or never verified at all.
+  </p>
+
+  <div class="problems-grid">
+
+    <div class="problem-card">
+      <div class="problem-icon">📄</div>
+
+      <div class="problem-title">
+        Incomplete or unverified documentation
+      </div>
+
+      <div class="problem-text">
+        Files arrive from different agents and agencies, in different formats, often missing details that should have been confirmed earlier in the process.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">🔍</div>
+
+      <div class="problem-title">
+        No visibility into the deal history
+      </div>
+
+      <div class="problem-text">
+        You rarely see how a price was negotiated, who was involved, or whether the valuation was realistic — you only see the final paperwork.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">🌍</div>
+
+      <div class="problem-title">
+        Cross-border deals are harder to trust
+      </div>
+      <div class="problem-text">
+        When a buyer or seller is foreign, verifying identity, funds, and intent takes longer — and the tools to do it efficiently don't exist yet.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="how-it-works">
+
+  <div class="section-tag">
+    How It Works
+  </div>
+
+  <h2>
+    One network,<br>
+    <em>verified</em> from the start.
+  </h2>
+
+  <p class="section-sub">
+    Three steps that bring clarity and trust to every file before it reaches your desk.
+  </p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">01</div>
+
+      <div class="step-title">
+        Create your notary profile
+      </div>
+
+      <div class="step-text">
+        Register your office, jurisdiction, and areas of practice. Agents and agencies on LuciHome can route transactions directly to you.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+
+      <div class="step-title">
+        Receive pre-verified transaction files
+      </div>
+
+      <div class="step-text">
+        Buyer and seller identities, listing history, and AI-backed price estimates arrive with the file — already structured and ready for review.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+
+      <div class="step-title">
+        Certify with confidence
+      </div>
+
+      <div class="step-text">
+        Cross-check valuations, track the full negotiation history, and finalize the transaction knowing every party in the chain has been verified by the network.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="benefits">
+
+  <div class="benefits-layout">
+
+    <div>
+
+      <div class="section-tag">
+        For Notaries
+      </div>
+
+      <h2>
+        Everything you need to <em>certify with clarity</em>
+      </h2>
+
+      <p class="section-sub">
+        LuciHome is built to remove guesswork from real estate transactions — for everyone who has to sign off on them.
+      </p>
+
+      <div class="benefit-list">
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🛡️</div>
+
+          <div>
+            <div class="benefit-title">
+              Verified parties across the network
+            </div>
+
+            <div class="benefit-text">
+              Buyers, sellers, and agents are already verified on LuciHome before a file reaches you, reducing the time spent on identity and document checks.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🤖</div>
+
+          <div>
+            <div class="benefit-title">
+              AI price estimator as a reference point
+            </div>
+
+            <div class="benefit-text">
+              Cross-check the agreed transaction price against real market data, helping flag inconsistencies before they become legal complications.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">📊</div>
+
+          <div>
+            <div class="benefit-title">
+              Full transaction history in one place
+            </div>
+
+            <div class="benefit-text">
+              See the listing, the negotiation timeline, and every agent or agency involved — instead of reconstructing the story from scattered documents.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🌐</div>
+
+          <div>
+            <div class="benefit-title">
+              Built for cross-border transactions
+            </div>
+
+            <div class="benefit-text">
+              International buyers and sellers come through the platform with the same level of verification as local clients, simplifying foreign transactions.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+
+      <div class="mockup-card">
+
+        <div class="mockup-header">
+          <div class="mockup-dot" style="background:#FF5F57"></div>
+          <div class="mockup-dot" style="background:#FFBD2E"></div>
+          <div class="mockup-dot" style="background:#28C840"></div>
+
+          <span style="font-size:12px; color: var(--muted); margin-left:8px;">
+            LuciHome · Notary File
+          </span>
+        </div>
+
+        <div class="mockup-body">
+
+          <div class="mockup-stat-row">
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">3</div>
+              <div class="mockup-stat-label">Parties</div>
+            </div>
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">100</div>
+              <div class="mockup-stat-label">% Verified</div>
+            </div>
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">2</div>
+              <div class="mockup-stat-label">Countries</div>
+            </div>
+
+          </div>
+
+          <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">
+            Transaction Summary
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">🧾</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                Buyer Identity ✅
+              </div>
+
+              <div class="mockup-listing-sub">
+                Verified · Foreign National
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              OK
+            </div>
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">🏠</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                AI Valuation Match ✅
+              </div>
+
+              <div class="mockup-listing-sub">
+                Agreed price within market range
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              OK
+            </div>
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">🤝</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                Agent of Record ✅
+              </div>
+
+              <div class="mockup-listing-sub">
+                Radu Constantin · Bucharest
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              RO
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-logo">
+    Luci<span>Home</span>
+  </div>
+
+  <div class="footer-text">
+    © 2026 LuciHome · The Global Real Estate Platform
+  </div>
+</footer>
+
+<div class="consent-banner" id="consentBanner">
+
+  <div class="consent-text">
+    <strong>LuciHome uses cookies.</strong>
+    We use essential cookies for the site to function and analytics cookies to understand how it is used.
+  </div>
+
+  <div class="consent-actions">
+
+    <button class="consent-btn consent-reject" onclick="closeConsent()">
+      Reject
+    </button>
+
+    <button class="consent-btn consent-accept" onclick="closeConsent()">
+      Accept
+    </button>
+
+  </div>
+
+</div>
+
+<script src="scriptnotaries.js"></script>
+
+
+
+<script>
+  (function () {
+    const launchDate = new Date(2026, 5, 30, 0, 0, 0).getTime();
+    const countdown = document.querySelector('[data-launch-countdown]');
+
+    if (!countdown) return;
+
+    const daysElement = countdown.querySelector('[data-countdown-days]');
+    const hoursElement = countdown.querySelector('[data-countdown-hours]');
+    const minutesElement = countdown.querySelector('[data-countdown-minutes]');
+    const secondsElement = countdown.querySelector('[data-countdown-seconds]');
+
+    function pad(value) {
+      return String(value).padStart(2, '0');
+    }
+
+    function updateCountdown() {
+      const now = Date.now();
+      const distance = launchDate - now;
+
+      if (distance <= 0) {
+        countdown.innerHTML = '<div class="launch-countdown-ended">LuciHome Launches Today.</div>';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      daysElement.textContent = pad(days);
+      hoursElement.textContent = pad(hours);
+      minutesElement.textContent = pad(minutes);
+      secondsElement.textContent = pad(seconds);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  })();
+</script>
+
+</body>
+</html>
