@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQG0HRP6TD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GQG0HRP6TD');
+</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Contact LuciHome — Questions & Support</title>
+  <link rel="icon" type="image/png" href="/logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="style.css"/>
+
+</head>
+<body class="agent-page">
+
+<nav>
+  <div class="logo">
+    Luci<span>Home</span>
+  </div>
+
+  <div class="nav-status">
+    LuciHome is currently in development
+  </div>
+
+  <a href="index.html" class="nav-cta">
+    ← Back Home
+  </a>
+</nav>
+
+<section class="contact-hero">
+  <div class="section-tag">Contact</div>
+
+  <h1>
+    Questions or <em>issues</em>?<br>
+    We're here to help.
+  </h1>
+
+  <p class="section-sub" style="max-width:560px; margin:16px auto 0;">
+    This form is meant for questions, issues, or anything you'd like us to know. For partnerships and account setup, registration is the fastest way to get started.
+  </p>
+</section>
+
+<section class="contact-section">
+  <div class="contact-layout">
+
+    <div class="contact-card">
+
+      <div class="contact-card-note">
+        Send us a message and we'll get back to you at the email address you provide.
+      </div>
+
+      <form action="https://formspree.io/f/mojoaajp" method="POST">
+
+        <div class="form-grid-2">
+
+          <div class="form-row">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required/>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@email.com" required/>
+          </div>
+
+        </div>
+
+        <div class="form-row">
+          <label for="role">I am a...</label>
+          <select id="role" name="role">
+            <option value="Agent">Agent</option>
+            <option value="Agency">Agency</option>
+            <option value="Notary">Notary</option>
+            <option value="Bank">Bank</option>
+            <option value="Buyer / Individual">Buyer / Individual</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="What's this about?" required/>
+        </div>
+
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us how we can help..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary form-submit">
+          Send Message →
+        </button>
+
+      </form>
+
+    </div>
+
+    <div>
+
+      <div class="info-block">
+
+        <div class="info-row">
+          <div class="info-icon">✉️</div>
+
+          <div>
+            <div class="info-label">Email</div>
+            <div class="info-value">
+              <a href="mailto:contact@lucihome.com">contact@lucihome.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+
+          <div>
+            <div class="info-label">Location</div>
+            <div class="info-value">Sector 1, Bucharest, Romania</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">💼</div>
+
+          <div>
+            <div class="info-label">LinkedIn</div>
+            <div class="info-value">
+              <a href="https://www.linkedin.com/in/dan-panaghie-359ba1271" target="_blank" rel="noopener">
+                Dan Panaghie
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <iframe
+          class="map-frame"
+          src="https://www.google.com/maps?q=Sector+1,+Bucharest,+Romania&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="contact-bottom-cta">
+    <h3>Prefer to just get started?</h3>
+    <p>Skip the form and register directly as a Founding Member.</p>
+
+    <a href="register.html" class="btn-primary">
+      Register Now →
+    </a>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-logo">
+    Luci<span>Home</span>
+  </div>
+
+  <div class="footer-text">
+    © 2026 LuciHome · The Global Real Estate Platform
+  </div>
+</footer>
+
+<div class="consent-banner" id="consentBanner">
+
+  <div class="consent-text">
+    <strong>LuciHome uses cookies.</strong>
+    We use essential cookies for the site to function and analytics cookies to understand how it is used.
+  </div>
+
+  <div class="consent-actions">
+
+    <button class="consent-btn consent-reject" onclick="closeConsent()">
+      Reject
+    </button>
+
+    <button class="consent-btn consent-accept" onclick="closeConsent()">
+      Accept
+    </button>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
