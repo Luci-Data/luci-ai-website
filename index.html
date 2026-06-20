@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+      <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQG0HRP6TD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -198,32 +198,33 @@
 
 
     <div class="launch-countdown" data-launch-countdown>
-      <div class="launch-countdown-title">
-        Founding Member Access Ends At Launch — June 30, 2026
-      </div>
+  <div class="launch-countdown-title">
+    Founding Member Access Ends At Launch — August 30, 2026
+  </div>
 
-      <div class="launch-countdown-grid">
-        <div class="launch-countdown-item">
-          <span class="launch-countdown-number" data-countdown-days>00</span>
-          <span class="launch-countdown-label">Days</span>
-        </div>
+  <p style="margin:0 0 18px; font-size:13px; color:var(--slate-dark); line-height:1.7;">
+    We've moved our beta launch to bring you an even stronger platform — including new professional categories and a more polished experience overall. Thank you for your patience.
+  </p>
 
-        <div class="launch-countdown-item">
-          <span class="launch-countdown-number" data-countdown-hours>00</span>
-          <span class="launch-countdown-label">Hours</span>
-        </div>
-
-        <div class="launch-countdown-item">
-          <span class="launch-countdown-number" data-countdown-minutes>00</span>
-          <span class="launch-countdown-label">Minutes</span>
-        </div>
-
-        <div class="launch-countdown-item">
-          <span class="launch-countdown-number" data-countdown-seconds>00</span>
-          <span class="launch-countdown-label">Seconds</span>
-        </div>
-      </div>
+  <div class="launch-countdown-grid">
+    <div class="launch-countdown-item">
+      <span class="launch-countdown-number" data-countdown-days>00</span>
+      <span class="launch-countdown-label">Days</span>
     </div>
+    <div class="launch-countdown-item">
+      <span class="launch-countdown-number" data-countdown-hours>00</span>
+      <span class="launch-countdown-label">Hours</span>
+    </div>
+    <div class="launch-countdown-item">
+      <span class="launch-countdown-number" data-countdown-minutes>00</span>
+      <span class="launch-countdown-label">Minutes</span>
+    </div>
+    <div class="launch-countdown-item">
+      <span class="launch-countdown-number" data-countdown-seconds>00</span>
+      <span class="launch-countdown-label">Seconds</span>
+    </div>
+  </div>
+</div>
 
     <div class="hero-stats">
       <div>
@@ -359,33 +360,175 @@
   </div>
 </section>
 
-<footer>
-  <div class="footer-logo">
-    Luci<span>Home</span>
+<!-- Add this CSS to style.css (or in a <style> block) -->
+<style>
+  footer.footer-corporate{
+    margin: 0 72px 32px;
+    padding: 48px 48px 28px;
+    border-radius: 28px;
+    background: var(--navy);
+    color: var(--white);
+    display: block;
+  }
+
+  .footer-top{
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+
+  .footer-brand-text{
+    margin-top: 14px;
+    color: rgba(255,255,255,.6);
+    font-size: 13px;
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-col-title{
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.85);
+    margin-bottom: 16px;
+  }
+
+  .footer-col a{
+    display: block;
+    color: rgba(255,255,255,.62);
+    font-size: 13.5px;
+    text-decoration: none;
+    margin-bottom: 11px;
+    transition: color .15s ease;
+  }
+
+  .footer-col a:hover{
+    color: var(--gold-light);
+  }
+
+  .footer-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-top: 22px;
+  }
+
+  .footer-bottom .footer-text{
+    color: rgba(255,255,255,.5);
+    font-size: 12.5px;
+  }
+
+  .footer-legal-links{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-legal-links a{
+    color: rgba(255,255,255,.55);
+    font-size: 12.5px;
+    text-decoration: none;
+    transition: color .15s ease;
+  }
+
+  .footer-legal-links a:hover{
+    color: var(--gold-light);
+  }
+
+  @media (max-width: 900px){
+    footer.footer-corporate{
+      margin: 0 20px 24px;
+      padding: 36px 24px 24px;
+    }
+
+    .footer-top{
+      grid-template-columns: 1fr 1fr;
+      row-gap: 28px;
+    }
+
+    .footer-bottom{
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<!-- Replace your <footer> block with this -->
+<footer class="footer-corporate">
+
+  <div class="footer-top">
+
+    <div>
+      <div class="footer-logo">
+        Luci<span>Home</span>
+      </div>
+
+      <p class="footer-brand-text">
+        The global real estate platform connecting agents, agencies, notaries, banks, and buyers — in one trusted network.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Platform</div>
+      <a href="agent.html">For Agents</a>
+      <a href="index.html">For Agencies</a>
+      <a href="notaries.html">For Notaries</a>
+      <a href="banks.html">For Banks</a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="contact.html">Contact Us</a>
+      <a href="register.html">Get Started</a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Legal</div>
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+
   </div>
 
-  <div class="footer-text">
-    © 2026 LuciHome · The Global Real Estate Platform
+  <div class="footer-bottom">
+    <div class="footer-text">
+      © 2026 LuciHome · The Global Real Estate Platform
+    </div>
+
+    <div class="footer-legal-links">
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="cookies.html">Cookies</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </div>
+
 </footer>
 
 <div class="consent-banner" id="consentBanner">
-
   <div class="consent-text">
     <strong>LuciHome uses cookies.</strong>
-    We use essential cookies for the site to function and analytics cookies to understand how it is used.
+    We use essential cookies for the site to function and analytics cookies to understand how it is used. Learn more in our
+    <a href="cookies.html" style="color:var(--gold-light); text-decoration:underline;">Cookie Policy</a>,
+    <a href="privacy.html" style="color:var(--gold-light); text-decoration:underline;">Privacy Policy</a>,
+    and <a href="terms.html" style="color:var(--gold-light); text-decoration:underline;">Terms & Conditions</a>.
   </div>
-
   <div class="consent-actions">
     <button class="consent-btn consent-reject" onclick="closeConsent()">
       Reject
     </button>
-
     <button class="consent-btn consent-accept" onclick="closeConsent()">
       Accept
     </button>
   </div>
-
 </div>
 
 <script src="script.js"></script>
@@ -394,40 +537,32 @@
 
 <script>
   (function () {
-    const launchDate = new Date(2026, 5, 30, 0, 0, 0).getTime();
+    const launchDate = new Date(2026, 7, 30, 0, 0, 0).getTime();
     const countdown = document.querySelector('[data-launch-countdown]');
-
     if (!countdown) return;
-
     const daysElement = countdown.querySelector('[data-countdown-days]');
     const hoursElement = countdown.querySelector('[data-countdown-hours]');
     const minutesElement = countdown.querySelector('[data-countdown-minutes]');
     const secondsElement = countdown.querySelector('[data-countdown-seconds]');
-
     function pad(value) {
       return String(value).padStart(2, '0');
     }
-
     function updateCountdown() {
       const now = Date.now();
       const distance = launchDate - now;
-
       if (distance <= 0) {
         countdown.innerHTML = '<div class="launch-countdown-ended">LuciHome Launches Today.</div>';
         return;
       }
-
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((distance / (1000 * 60)) % 60);
       const seconds = Math.floor((distance / 1000) % 60);
-
       daysElement.textContent = pad(days);
       hoursElement.textContent = pad(hours);
       minutesElement.textContent = pad(minutes);
       secondsElement.textContent = pad(seconds);
     }
-
     updateCountdown();
     setInterval(updateCountdown, 1000);
   })();
