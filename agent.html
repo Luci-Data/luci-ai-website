@@ -22,135 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
   <link rel="stylesheet" href="style.css"/>
-
-
-  <style>
-    .launch-countdown{
-      margin:32px 0 0;
-      padding:22px;
-      max-width:620px;
-      background:rgba(255,255,255,.86);
-      border:1px solid rgba(200,164,93,.28);
-      border-radius:24px;
-      box-shadow:0 18px 45px rgba(11,19,43,.09);
-    }
-
-    .launch-countdown-title{
-      color:var(--gold);
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      margin-bottom:14px;
-    }
-
-    .launch-countdown-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-    }
-
-    .launch-countdown-item{
-      padding:16px 10px;
-      border-radius:18px;
-      background:var(--cream);
-      text-align:center;
-      border:1px solid rgba(11,19,43,.06);
-    }
-
-    .launch-countdown-number{
-      display:block;
-      font-family:'Cormorant Garamond',serif;
-      color:var(--navy);
-      font-size:2.4rem;
-      font-weight:700;
-      line-height:1;
-    }
-
-    .launch-countdown-label{
-      display:block;
-      margin-top:7px;
-      color:var(--slate);
-      font-size:10px;
-      font-weight:800;
-      letter-spacing:1.4px;
-      text-transform:uppercase;
-    }
-
-    .launch-countdown-ended{
-      color:var(--navy);
-      font-weight:800;
-      line-height:1.5;
-    }
-
-        .beta-pill{
-      display:inline-block;
-      margin-top:18px;
-      padding:8px 16px;
-      border-radius:999px;
-      background:rgba(40,200,64,.1);
-      border:1px solid rgba(40,200,64,.3);
-      color:#1c8a3a;
-      font-size:11px;
-      font-weight:800;
-      letter-spacing:1.2px;
-      text-transform:uppercase;
-    }
- 
-    .nav-dropdown{
-      position:relative;
-    }
- 
-    .nav-dropdown-trigger{
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-    }
- 
-    .nav-dropdown-menu{
-      position:absolute;
-      top:calc(100% + 10px);
-      right:0;
-      min-width:200px;
-      background:rgba(255,255,255,.98);
-      border:1px solid rgba(11,19,43,.08);
-      border-radius:16px;
-      box-shadow:0 18px 45px rgba(11,19,43,.14);
-      padding:8px;
-      display:none;
-      flex-direction:column;
-      gap:2px;
-      z-index:50;
-    }
- 
-    .nav-dropdown:hover .nav-dropdown-menu,
-    .nav-dropdown:focus-within .nav-dropdown-menu{
-      display:flex;
-    }
- 
-    .nav-dropdown-menu a{
-      padding:10px 14px;
-      border-radius:10px;
-      color:var(--navy);
-      font-size:13px;
-      font-weight:600;
-      text-decoration:none;
-      transition:background .15s ease;
-    }
- 
-    .nav-dropdown-menu a:hover{
-      background:var(--cream);
-      color:var(--gold);
-    }
-
-    @media(max-width:760px){
-      .launch-countdown-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-  </style>
-
+  
 </head>
 <body class="agent-page">
 
@@ -173,6 +45,7 @@
       <a href="notaries.html">For Notaries</a>
       <a href="banks.html">For Banks</a>
     </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -205,6 +78,9 @@
       </a>
     </div>
 
+    <div class="beta-pill">
+      Beta Is 100% Free — Until Official Launch
+    </div>
 
 <div class="launch-countdown" data-launch-countdown>
   <div class="launch-countdown-title">
@@ -320,6 +196,18 @@
 
       <div class="problem-text">
         With few listings of your own, attracting new clients is hard. A vicious cycle — you need volume to grow, but you can't grow without volume.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">🌐</div>
+
+      <div class="problem-title">
+        No way to reach international buyers
+      </div>
+
+      <div class="problem-text">
+        Buyers from other countries are looking for properties in your area right now — but they have no way to find you, and you have no way to be visible to them.
       </div>
     </div>
 
@@ -444,6 +332,34 @@
           </div>
         </div>
 
+        <div class="benefit-item">
+          <div class="benefit-icon">🛡️</div>
+
+          <div>
+            <div class="benefit-title">
+              Verified profile, verified clients
+            </div>
+
+            <div class="benefit-text">
+              Your profile is verified before going live, and every buyer who contacts you through LuciHome has been identity-checked — fewer time-wasters, more serious conversations.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🏦</div>
+
+          <div>
+            <div class="benefit-title">
+              Connected to financing and notaries
+            </div>
+
+            <div class="benefit-text">
+              Your clients can calculate mortgage financing directly on a listing, and once a deal is agreed, the transaction can move straight to a notary on the network — without leaving the platform or losing momentum.
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -549,7 +465,73 @@
 
 </section>
 
+<section>
+  <div class="section-tag">Why So Many Professional Categories</div>
 
+  <h2>
+    A sale doesn't end at "yes."<br>
+    LuciHome covers what comes <em>after</em>.
+  </h2>
+
+  <p class="section-sub">
+    Once a buyer agrees to a deal, the work isn't over — financing has to be arranged, and the transaction has to be legally certified. Most agents handle this by juggling separate banks, separate notaries, and separate paperwork outside their control. LuciHome brings agents, agencies, notaries, and banks into the same ecosystem, so your deal doesn't lose momentum once the buyer says yes.
+  </p>
+
+  <div class="problems-grid">
+
+    <div class="problem-card">
+      <div class="problem-icon">🤝</div>
+      <div class="problem-title">
+        Agents & Agencies
+      </div>
+      <div class="problem-text">
+        Collaborate, share listings, and reach buyers across borders without working alone.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">🏦</div>
+      <div class="problem-title">
+        Banks
+      </div>
+      <div class="problem-text">
+        Your buyers can calculate financing directly on the listing, and get matched to a lender already familiar with the property.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">🛡️</div>
+      <div class="problem-title">
+        Notaries
+      </div>
+      <div class="problem-text">
+        Once a deal closes, it moves to a notary on the network with verified parties and valuation data already in place.
+      </div>
+    </div>
+
+  </div>
+
+  <p class="section-sub" style="margin-top:30px;">
+    For you, this means less time chasing third parties and more time closing your next deal — the whole chain, from first contact to final signature, stays connected.
+  </p>
+</section>
+
+<section>
+  <div class="section-tag">Beta Access</div>
+
+  <h2>
+    The beta is <em>completely free</em>.<br>
+    No catch.
+  </h2>
+
+  <p class="section-sub">
+    From the moment LuciHome's beta goes live until the official launch, every feature is open and free for every agent to explore — your profile, the collaboration network, AI price estimates, everything. There are no hidden tiers and no paywalls during this period.
+  </p>
+
+  <p class="section-sub">
+    After the official launch, free access becomes limited to a fixed number of spots per professional category. Agents who register now as Founding Members are guaranteed one of those spots, regardless of how much interest the platform receives before then.
+  </p>
+</section>
 
 <!-- Add this CSS to style.css (or in a <style> block) -->
 <style>
