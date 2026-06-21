@@ -22,134 +22,6 @@
 
   <link rel="stylesheet" href="style.css"/>
 
-
-  <style>
-    .launch-countdown{
-      margin:32px 0 0;
-      padding:22px;
-      max-width:620px;
-      background:rgba(255,255,255,.86);
-      border:1px solid rgba(200,164,93,.28);
-      border-radius:24px;
-      box-shadow:0 18px 45px rgba(11,19,43,.09);
-    }
-
-    .launch-countdown-title{
-      color:var(--gold);
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      margin-bottom:14px;
-    }
-
-    .launch-countdown-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-    }
-
-    .launch-countdown-item{
-      padding:16px 10px;
-      border-radius:18px;
-      background:var(--cream);
-      text-align:center;
-      border:1px solid rgba(11,19,43,.06);
-    }
-
-    .launch-countdown-number{
-      display:block;
-      font-family:'Cormorant Garamond',serif;
-      color:var(--navy);
-      font-size:2.4rem;
-      font-weight:700;
-      line-height:1;
-    }
-
-    .launch-countdown-label{
-      display:block;
-      margin-top:7px;
-      color:var(--slate);
-      font-size:10px;
-      font-weight:800;
-      letter-spacing:1.4px;
-      text-transform:uppercase;
-    }
-
-    .launch-countdown-ended{
-      color:var(--navy);
-      font-weight:800;
-      line-height:1.5;
-    }
-
-    .beta-pill{
-      display:inline-block;
-      margin-top:18px;
-      padding:8px 16px;
-      border-radius:999px;
-      background:rgba(40,200,64,.1);
-      border:1px solid rgba(40,200,64,.3);
-      color:#1c8a3a;
-      font-size:11px;
-      font-weight:800;
-      letter-spacing:1.2px;
-      text-transform:uppercase;
-    }
- 
-    .nav-dropdown{
-      position:relative;
-    }
- 
-    .nav-dropdown-trigger{
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-    }
- 
-    .nav-dropdown-menu{
-      position:absolute;
-      top:calc(100% + 10px);
-      right:0;
-      min-width:200px;
-      background:rgba(255,255,255,.98);
-      border:1px solid rgba(11,19,43,.08);
-      border-radius:16px;
-      box-shadow:0 18px 45px rgba(11,19,43,.14);
-      padding:8px;
-      display:none;
-      flex-direction:column;
-      gap:2px;
-      z-index:50;
-    }
- 
-    .nav-dropdown:hover .nav-dropdown-menu,
-    .nav-dropdown:focus-within .nav-dropdown-menu{
-      display:flex;
-    }
- 
-    .nav-dropdown-menu a{
-      padding:10px 14px;
-      border-radius:10px;
-      color:var(--navy);
-      font-size:13px;
-      font-weight:600;
-      text-decoration:none;
-      transition:background .15s ease;
-    }
- 
-    .nav-dropdown-menu a:hover{
-      background:var(--cream);
-      color:var(--gold);
-    }
-
-    @media(max-width:760px){
-      .launch-countdown-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-  </style>
-
 </head>
 <body class="agency-page">
 
@@ -170,6 +42,7 @@
       <a href="notaries.html">For Notaries</a>
       <a href="banks.html">For Banks</a>
     </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -196,6 +69,9 @@
       <a href="#how-it-works" class="btn-secondary">See How It Works</a>
     </div>
 
+    <div class="beta-pill">
+      Beta Is 100% Free — Until Official Launch
+    </div>
 
     <div class="launch-countdown" data-launch-countdown>
   <div class="launch-countdown-title">
@@ -358,6 +234,268 @@
     </div>
 
   </div>
+</section>
+
+<section class="benefits">
+
+  <div class="benefits-layout">
+
+    <div>
+
+      <div class="section-tag">
+        For Agencies
+      </div>
+
+      <h2>
+        Everything your agency needs to <em>operate globally</em>
+      </h2>
+
+      <p class="section-sub">
+        LuciHome isn't just another listing portal. It's the operating layer that connects your agency to buyers, agents, and the full transaction chain — in every market you want to reach.
+      </p>
+
+      <div class="benefit-list">
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🌍</div>
+
+          <div>
+            <div class="benefit-title">
+              One listing, global visibility
+            </div>
+
+            <div class="benefit-text">
+              Publish a property once and it becomes visible to buyers across 50+ countries, automatically translated and converted to local currency — no extra work for your team.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🤝</div>
+
+          <div>
+            <div class="benefit-title">
+              Built-in agent collaboration network
+            </div>
+
+            <div class="benefit-text">
+              Connect with independent agents on LuciHome who can bring buyers to your listings, or refer your properties into their own local networks — expanding your reach without expanding your headcount.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🤖</div>
+
+          <div>
+            <div class="benefit-title">
+              AI price estimator for every listing
+            </div>
+
+            <div class="benefit-text">
+              Give international buyers an instant, data-backed reference point for fair market value, reducing hesitation and shortening negotiation cycles.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🛡️</div>
+
+          <div>
+            <div class="benefit-title">
+              Verified identity, on both sides
+            </div>
+
+            <div class="benefit-text">
+              Your agency is verified before going live, and buyers contacting you through LuciHome are identity-checked — so every conversation starts from a place of trust.
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon">🏦</div>
+
+          <div>
+            <div class="benefit-title">
+              Connected to financing and notaries</div>
+
+            <div class="benefit-text">
+              Buyers can calculate mortgage financing directly on your listings, and once a deal closes, the transaction can move straight to a notary on the network — all without leaving the platform.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+
+      <div class="mockup-card">
+
+        <div class="mockup-header">
+          <div class="mockup-dot" style="background:#FF5F57"></div>
+          <div class="mockup-dot" style="background:#FFBD2E"></div>
+          <div class="mockup-dot" style="background:#28C840"></div>
+
+          <span style="font-size:12px; color: var(--muted); margin-left:8px;">
+            LuciHome · Agency Dashboard
+          </span>
+        </div>
+
+        <div class="mockup-body">
+
+          <div class="mockup-stat-row">
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">42</div>
+              <div class="mockup-stat-label">Listings</div>
+            </div>
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">17</div>
+              <div class="mockup-stat-label">Leads</div>
+            </div>
+
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">8</div>
+              <div class="mockup-stat-label">Countries</div>
+            </div>
+
+          </div>
+
+          <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">
+            Recent International Leads
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">🏡</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                James Whitfield ✅
+              </div>
+
+              <div class="mockup-listing-sub">
+                London → Lisbon · Verified Buyer
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              UK
+            </div>
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">🏢</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                Amira Haddad ✅
+              </div>
+
+              <div class="mockup-listing-sub">
+                Dubai → Bucharest · Budget Confirmed
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              AE
+            </div>
+          </div>
+
+          <div class="mockup-listing">
+            <div class="mockup-img">🌍</div>
+
+            <div>
+              <div class="mockup-listing-title">
+                Lucas Ferreira ✅
+              </div>
+
+              <div class="mockup-listing-sub">
+                Miami → Lisbon · Pre-Qualified
+              </div>
+            </div>
+
+            <div class="mockup-listing-price">
+              US
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section>
+  <div class="section-tag">Why So Many Professional Categories</div>
+
+  <h2>
+    Real estate isn't just listings.<br>
+    It's an <em>entire chain</em> of trust.
+  </h2>
+
+  <p class="section-sub">
+    A property sale doesn't end when a buyer says yes. It moves through financing, legal verification, and paperwork — often handled by completely disconnected systems. LuciHome is built to bring agencies, agents, notaries, and banks into one place, because that's how a real transaction actually works.
+  </p>
+
+  <div class="problems-grid">
+
+    <div class="problem-card">
+      <div class="problem-icon">🏢</div>
+      <div class="problem-title">
+        Agencies & Agents
+      </div>
+      <div class="problem-text">
+        List properties, collaborate across borders, and reach buyers your agency could never reach alone.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">🛡️</div>
+      <div class="problem-title">
+        Notaries
+      </div>
+      <div class="problem-text">
+        Receive transaction files with verified parties and AI-backed valuations already in place, ready for certification.
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-icon">🏦</div>
+      <div class="problem-title">
+        Banks
+      </div>
+      <div class="problem-text">
+        Reach buyers at the exact moment they're calculating financing for a property they've already chosen.
+      </div>
+    </div>
+
+  </div>
+
+  <p class="section-sub" style="margin-top:30px;">
+    For your agency, this means a buyer's journey — from first seeing your listing, to financing, to the final signature — happens inside one connected ecosystem, instead of being scattered across five different tools and three different companies.
+  </p>
+</section>
+
+<section>
+  <div class="section-tag">Beta Access</div>
+
+  <h2>
+    The beta is <em>completely free</em>.<br>
+    No catch.
+  </h2>
+
+  <p class="section-sub">
+    From the moment LuciHome's beta goes live until the official launch, every feature is open and free for every agency to explore — full listing tools, the agent network, AI price estimates, everything. There are no hidden tiers and no paywalls during this period.
+  </p>
+
+  <p class="section-sub">
+    After the official launch, free access becomes limited to a fixed number of spots per professional category. Agencies that register now as Founding Members are guaranteed one of those spots, regardless of how much interest the platform receives before then.
+  </p>
 </section>
 
 <!-- Add this CSS to style.css (or in a <style> block) -->
