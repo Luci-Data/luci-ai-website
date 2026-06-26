@@ -2812,3 +2812,201 @@ footer.footer-corporate {
       }
 
     }
+
+        .article-hero{
+      padding:150px 24px 0;
+      max-width:780px;
+      margin:0 auto;
+    }
+
+    .article-hero .section-tag{
+      display:inline-block;
+    }
+
+    .article-hero h1{
+      font-size:clamp(2.4rem,5vw,3.6rem);
+      margin-top:16px;
+      margin-bottom:22px;
+      letter-spacing:-1.2px;
+      max-width:none;
+    }
+
+    .article-meta{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      padding-bottom:28px;
+      border-bottom:1px solid rgba(11,19,43,.08);
+    }
+
+    .article-tag{
+      padding:5px 14px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      background:rgba(200,164,93,.12);
+      color:var(--gold);
+    }
+
+    .article-date,
+    .article-read-time{
+      font-size:12.5px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    /* Brain icon thumbnail */
+    .article-thumb{
+      max-width:780px;
+      margin:40px auto;
+      height:320px;
+      border-radius:28px;
+      background:var(--navy);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .article-thumb::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(200,164,93,.22), transparent 50%),
+        radial-gradient(circle at 75% 65%, rgba(25,52,109,.5), transparent 50%);
+    }
+
+    .article-thumb-icon{
+      position:relative;
+      z-index:1;
+      font-size:5rem;
+      line-height:1;
+      filter:drop-shadow(0 0 24px rgba(200,164,93,.4));
+      animation:think 3s ease-in-out infinite;
+    }
+
+    .article-thumb-caption{
+      position:relative;
+      z-index:1;
+      margin-top:16px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:2.5px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.45);
+    }
+
+    @keyframes think{
+      0%, 100%{ transform:translateY(0) rotate(-2deg); }
+      50%{ transform:translateY(-8px) rotate(2deg); }
+    }
+
+    .article-body{
+      max-width:780px;
+      margin:0 auto;
+      padding:0 24px 80px;
+      color:var(--slate-dark);
+      font-size:16px;
+      line-height:1.9;
+    }
+
+    .article-body p{ margin-bottom:22px; }
+
+    .article-body h2{
+      font-size:1.7rem;
+      max-width:none;
+      margin-top:48px;
+      margin-bottom:18px;
+      letter-spacing:-.6px;
+    }
+
+    .article-body blockquote{
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.5rem;
+      font-weight:600;
+      line-height:1.45;
+      color:var(--navy);
+      border-left:3px solid var(--gold);
+      padding:4px 0 4px 24px;
+      margin:36px 0;
+    }
+
+    .stat-inline{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:rgba(200,164,93,.1);
+      border:1px solid rgba(200,164,93,.22);
+      border-radius:6px;
+      padding:2px 10px;
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.1rem;
+      font-weight:700;
+      color:var(--gold);
+    }
+
+    .article-cta{
+      max-width:780px;
+      margin:0 auto;
+      padding:0 24px 80px;
+    }
+
+    .article-cta-box{
+      background:var(--navy);
+      border-radius:26px;
+      padding:40px 44px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:28px;
+      flex-wrap:wrap;
+    }
+
+    .article-cta-text h3{
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.7rem;
+      font-weight:700;
+      color:#fff;
+      margin-bottom:6px;
+    }
+
+    .article-cta-text p{
+      color:rgba(255,255,255,.65);
+      font-size:13.5px;
+      line-height:1.6;
+      margin:0;
+    }
+
+    .article-nav{
+      max-width:780px;
+      margin:0 auto;
+      padding:0 24px 100px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-top:1px solid rgba(11,19,43,.08);
+      padding-top:32px;
+    }
+
+    .article-nav a{
+      font-size:13px;
+      font-weight:700;
+      color:var(--navy);
+      text-decoration:none;
+      transition:color .2s ease;
+    }
+
+    .article-nav a:hover{ color:var(--gold); }
+
+    @media(max-width:760px){
+      .article-cta-box{
+        flex-direction:column;
+        padding:28px;
+      }
+    }
