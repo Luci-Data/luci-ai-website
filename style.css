@@ -456,6 +456,10 @@ h1 em {
   text-align: center;
 }
 
+.launch-countdown p {
+  color: #ffffff !important;
+}
+
 .launch-countdown-grid {
   display: grid;
   grid-template-columns: repeat(4,1fr);
