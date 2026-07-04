@@ -1576,3 +1576,543 @@ footer.footer-corporate {
   .form-grid { grid-template-columns: 1fr; }
   .register-title { font-size: 2rem; }
 }
+
+/* ================================================================
+   DEVELOPERS PAGE — NEW SECTIONS (added, nothing above was changed)
+   New component anatomy per section: interview-style cards, diamond
+   rail timeline, framed profile visual, bento AI grid, quote banner,
+   tag-cloud audience, hexagon reputation list, hub/spoke ecosystem,
+   annotated story rail, native accordion FAQ.
+   ================================================================ */
+
+/* ── COLLABORATION — interview-style Q&A cards ──────────────────── */
+.collab-section { background: var(--off); }
+
+.collab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-3);
+}
+
+.collab-card {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  border-left: 4px solid var(--p2);
+  box-shadow: 0 2px 0 rgba(17,63,103,0.04), 0 20px 40px rgba(17,63,103,0.06);
+  transition: transform 0.25s var(--ease-out), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.collab-card:hover {
+  transform: translateY(-6px);
+  border-left-color: var(--p3);
+  box-shadow: 0 2px 0 rgba(17,63,103,0.05), 0 28px 56px rgba(17,63,103,0.12);
+}
+
+.collab-q {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--p4);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.collab-a {
+  font-size: var(--t-sm);
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+
+/* ── JOURNEY — diamond-marker vertical rail ──────────────────────── */
+.journey-section { background: var(--white); }
+
+.journey-rail {
+  position: relative;
+  max-width: 720px;
+  padding-left: var(--sp-2);
+}
+
+.journey-rail::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 19px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--p2), var(--p3), var(--p2));
+}
+
+.journey-item {
+  position: relative;
+  display: flex;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-5);
+}
+
+.journey-item:last-child { padding-bottom: 0; }
+
+.journey-marker {
+  position: relative;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--p4);
+  border: 3px solid var(--white);
+  box-shadow: 0 0 0 1px var(--p2), 0 10px 22px rgba(17,63,103,0.22);
+  transform: rotate(45deg);
+  z-index: 1;
+}
+
+.journey-marker span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-45deg);
+  color: var(--white);
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.journey-content { padding-top: 4px; }
+
+.journey-title {
+  font-size: var(--t-lg);
+  font-weight: 700;
+  color: var(--p4);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.journey-text {
+  font-size: var(--t-sm);
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+/* ── DEVELOPER PROFILE — framed visual + checklist (dark) ────────── */
+.profile-section { background: var(--p4); }
+.profile-section .section-tag { color: var(--p2); }
+.profile-section h2 { color: var(--white); }
+.profile-section .section-sub { color: rgba(255,255,255,0.6); }
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-6);
+  align-items: center;
+}
+
+.profile-image-frame {
+  padding: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--r-lg);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+}
+
+.profile-image-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-md);
+}
+
+.profile-checklist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+}
+
+.profile-check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 15px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--r-sm);
+  color: var(--white);
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+
+.profile-check-mark {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--p2);
+  color: var(--p4);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── AI SECTION — bento grid ─────────────────────────────────────── */
+.ai-section { background: var(--white); }
+
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+
+.ai-tile {
+  background: var(--off);
+  border: 1px solid rgba(17,63,103,0.08);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s ease;
+}
+
+.ai-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(17,63,103,0.12);
+}
+
+.ai-tile:first-child {
+  grid-column: span 2;
+  background: linear-gradient(135deg, var(--p4), var(--p3));
+}
+
+.ai-tile:first-child .ai-tile-title,
+.ai-tile:first-child .ai-tile-text { color: var(--white); }
+.ai-tile:first-child .ai-tile-text { color: rgba(255,255,255,0.7); }
+
+.ai-tile-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(135deg, var(--p3), var(--p4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: var(--sp-2);
+}
+
+.ai-tile:first-child .ai-tile-icon { background: rgba(255,255,255,0.15); }
+
+.ai-tile-title {
+  font-size: var(--t-md);
+  font-weight: 700;
+  color: var(--p4);
+  margin-bottom: 6px;
+}
+
+.ai-tile-text {
+  font-size: var(--t-sm);
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+/* ── QUOTE BANNER — emotional statement ──────────────────────────── */
+.quote-banner {
+  background: linear-gradient(135deg, var(--p4), var(--p3));
+  text-align: center;
+  padding: var(--sp-6) var(--sp-5);
+}
+
+.quote-banner blockquote {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.25;
+  color: var(--white);
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.quote-banner cite {
+  display: block;
+  font-style: normal;
+  font-size: var(--t-sm);
+  color: var(--p1);
+  margin-top: var(--sp-3);
+  letter-spacing: 0.02em;
+}
+
+/* ── BUYERS — tag-cloud audience chips ───────────────────────────── */
+.buyers-section { background: var(--off); }
+
+.buyers-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.buyer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: var(--r-full);
+  border: 1.5px solid var(--p2);
+  background: var(--white);
+  color: var(--p4);
+  font-weight: 600;
+  font-size: var(--t-md);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.buyer-chip.large { font-size: var(--t-lg); padding: 18px 28px; border-color: var(--p3); }
+
+.buyer-chip:hover {
+  background: var(--p4);
+  border-color: var(--p4);
+  color: var(--white);
+  transform: translateY(-3px);
+}
+
+/* ── REPUTATION — hexagon icon list ──────────────────────────────── */
+.reputation-section { background: var(--p1); }
+
+.reputation-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-6);
+  align-items: center;
+}
+
+.reputation-statement {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--p4);
+  line-height: 1.2;
+  margin-bottom: var(--sp-3);
+}
+
+.reputation-lead {
+  font-size: var(--t-md);
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+
+.reputation-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.reputation-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.reputation-hex {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  background: var(--p4);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.reputation-label {
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--p4);
+}
+
+/* ── ECOSYSTEM — hub and spoke ────────────────────────────────────── */
+.ecosystem-section { background: var(--p4); text-align: center; }
+.ecosystem-section .section-tag { color: var(--p2); display: block; }
+.ecosystem-section h2 { color: var(--white); margin-inline: auto; }
+.ecosystem-section .section-sub { color: rgba(255,255,255,0.6); margin-inline: auto; text-align: center; }
+
+.ecosystem-hub {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--p4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin: var(--sp-5) auto var(--sp-4);
+  border: 4px solid var(--p2);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  padding: 12px;
+}
+
+.ecosystem-nodes {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-3) var(--sp-2);
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: var(--sp-4);
+}
+
+.ecosystem-nodes::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+}
+
+.ecosystem-node {
+  position: relative;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--r-md);
+  padding: 14px 20px;
+  color: var(--white);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.ecosystem-node::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.2);
+}
+
+/* ── STORY — annotated example rail ──────────────────────────────── */
+.story-section { background: var(--white); }
+
+.story-card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--off);
+  border: 1px solid rgba(17,63,103,0.08);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+}
+
+.story-lead {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--p4);
+  margin-bottom: var(--sp-3);
+}
+
+.story-line {
+  position: relative;
+  padding: 14px 0 14px 26px;
+  margin-left: 6px;
+  border-left: 2px solid var(--p2);
+  font-size: var(--t-md);
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+
+.story-line::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--p3);
+}
+
+.story-line:last-child {
+  border-left: 2px solid var(--p3);
+  font-weight: 700;
+  color: var(--p4);
+}
+
+.story-line:last-child::before { background: var(--p4); }
+
+/* ── FAQ — native accordion ───────────────────────────────────────── */
+.faq-section { background: var(--off); }
+
+.faq-list {
+  max-width: 800px;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(17,63,103,0.12);
+  padding: var(--sp-2) 0;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  font-size: var(--t-lg);
+  font-weight: 700;
+  color: var(--p4);
+  padding: 8px 0;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--p3);
+  color: var(--p3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] summary::after { content: "–"; transform: rotate(180deg); }
+
+.faq-answer {
+  padding: 4px 0 12px;
+  font-size: var(--t-sm);
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+
+/* ── RESPONSIVE — new sections ────────────────────────────────────── */
+@media (max-width: 1050px) {
+  .collab-grid { grid-template-columns: 1fr; }
+  .profile-layout, .reputation-layout { grid-template-columns: 1fr; }
+  .profile-checklist { grid-template-columns: 1fr 1fr; }
+  .ai-grid { grid-template-columns: 1fr 1fr; }
+  .ai-tile:first-child { grid-column: span 2; }
+}
+
+@media (max-width: 760px) {
+  .collab-grid { grid-template-columns: 1fr; }
+  .ai-grid { grid-template-columns: 1fr; }
+  .ai-tile:first-child { grid-column: span 1; }
+  .profile-checklist { grid-template-columns: 1fr; }
+  .buyer-chip.large { font-size: var(--t-md); padding: 14px 22px; }
+  .ecosystem-nodes::before { display: none; }
+  .ecosystem-node::before { display: none; }
+  .journey-rail::before { left: 19px; }
+}
