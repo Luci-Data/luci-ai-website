@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LuciHome — Agent Workspace </title>
+<link rel="icon" type="image/png" href="/lucihome.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+/* ==========================================================================
+   LUCIHOME AGENT WORKSPACE — DEMO
+   Direction: "Control room for a global real-estate network."
+   Dark operations-console surface, hairline structure, monospace data,
+   a live cross-border ticker as the signature element. No login, no backend.
+   ========================================================================== */
+:root{
+  --bg:#0a0e1a;
+  --bg-1:#0e1424;
+  --bg-2:#131b30;
+  --bg-3:#182142;
+  --line:rgba(160,172,214,0.14);
+  --line-soft:rgba(160,172,214,0.08);
+  --line-strong:rgba(160,172,214,0.30);
+  --text:#e9ecf8;
+  --text-dim:#8d97b8;
+  --text-faint:#5b6485;
+  --accent:#aab3ec;
+  --accent-deep:#6672b8;
+  --gold:#e3ae53;
+  --gold-dim:rgba(227,174,83,0.14);
+  --mint:#3fd399;
+  --mint-dim:rgba(63,211,153,0.14);
+  --coral:#ff7a7a;
+  --coral-dim:rgba(255,122,122,0.14);
+  --r-xs:4px; --r-sm:8px; --r-md:12px;
+  --mono:"IBM Plex Mono", monospace;
+  --sans:"Outfit", sans-serif;
+  --serif:"Cormorant Garamond", serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;}
+html,body{margin:0; padding:0; height:100%;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(170,179,236,0.06) 1px, transparent 1px);
+  background-size:26px 26px;
+}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer;}
+h1,h2,h3{margin:0; font-family:var(--serif); font-weight:700; color:var(--text);}
+::-webkit-scrollbar{width:7px; height:7px;}
+::-webkit-scrollbar-thumb{background:var(--line-strong); border-radius:99px;}
+::-webkit-scrollbar-track{background:transparent;}
+.mono{font-family:var(--mono);}
+.upx{text-transform:uppercase; letter-spacing:.12em; font-size:10.5px; color:var(--text-faint); font-weight:600;}
+
+/* ---------------------------- Ticker (signature) ---------------------------- */
+.ticker-bar{
+  height:32px; background:var(--bg-1); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; overflow:hidden; position:relative; z-index:60;
+}
+.ticker-tag{
+  flex-shrink:0; height:100%; display:flex; align-items:center; padding:0 14px;
+  background:var(--gold); color:#1a1305; font-family:var(--mono); font-size:10.5px; font-weight:600;
+  letter-spacing:.08em; z-index:2;
+}
+.ticker-track{display:flex; white-space:nowrap; animation:tickerScroll 42s linear infinite;}
+.ticker-track:hover{animation-play-state:paused;}
+.ticker-item{font-family:var(--mono); font-size:12px; padding:0 22px; color:var(--text-dim); display:flex; align-items:center; gap:6px; border-right:1px solid var(--line-soft);}
+.ticker-item b{color:var(--text);}
+.tk-up{color:var(--mint);} .tk-down{color:var(--coral);}
+@keyframes tickerScroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+/* ---------------------------- App shell ---------------------------- */
+.app-shell{display:grid; grid-template-columns:224px 1fr; height:calc(100% - 32px);}
+
+/* ---------------------------- Rail (sidebar) ---------------------------- */
+.rail{
+  background:var(--bg-1); border-right:1px solid var(--line);
+  display:flex; flex-direction:column; padding:20px 12px;
+  overflow-y:auto;
+}
+.rail-brand{display:flex; align-items:center; gap:10px; padding:2px 8px 20px;}
+.rail-brand-mark{width:26px; height:26px; border:1px solid var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; color:var(--accent); font-weight:600;}
+.rail-brand-name{font-family:var(--serif); font-size:1.2rem; font-weight:700;}
+.rail-brand-name span{color:var(--accent);}
+
+.rail-persona{
+  display:flex; align-items:center; gap:10px; padding:9px 10px; margin-bottom:16px;
+  border:1px solid var(--line); border-radius:var(--r-sm); background:var(--bg-2);
+}
+.rail-avatar{
+  width:32px; height:32px; border-radius:var(--r-xs); flex-shrink:0;
+  background:linear-gradient(135deg, var(--accent-deep), var(--accent));
+  display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:600; font-size:11px; color:#0a0e1a;
+}
+.rail-persona-name{font-size:12.5px; font-weight:600;}
+.rail-persona-role{font-size:10px; color:var(--mint); font-family:var(--mono);}
+
+.rail-search-btn{
+  display:flex; align-items:center; gap:8px; width:100%; padding:9px 10px; margin-bottom:16px;
+  background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-sm); color:var(--text-faint);
+  font-size:12px; font-family:var(--mono);
+}
+.rail-search-btn kbd{margin-left:auto; background:var(--bg-3); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:10px; color:var(--text-dim);}
+
+.nav-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1px;}
+.nav-item{
+  display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:var(--r-xs);
+  font-size:12.5px; font-weight:500; color:var(--text-dim); position:relative; border-left:2px solid transparent;
+  transition:color .15s, border-color .15s;
+}
+.nav-item .ic{width:15px; text-align:center; font-size:13px; opacity:.85;}
+.nav-item:hover{color:var(--text);}
+.nav-item.active{color:var(--text); border-left-color:var(--gold); background:linear-gradient(90deg, rgba(227,174,83,0.08), transparent);}
+.nav-count{margin-left:auto; font-family:var(--mono); font-size:10px; color:var(--text-faint);}
+.nav-item.active .nav-count{color:var(--gold);}
+.rail-divider{height:1px; background:var(--line-soft); margin:12px 4px;}
+.rail-foot{margin-top:auto; padding-top:14px; font-size:10px; color:var(--text-faint); font-family:var(--mono); line-height:1.7;}
+.rail-foot .live-dot{width:6px; height:6px; border-radius:50%; background:var(--mint); display:inline-block; margin-right:5px; box-shadow:0 0 0 3px var(--mint-dim);}
+
+/* ---------------------------- Main column ---------------------------- */
+.main-col{display:flex; flex-direction:column; overflow:hidden;}
+.topbar{
+  height:56px; flex-shrink:0; display:flex; align-items:center; gap:16px; padding:0 26px;
+  border-bottom:1px solid var(--line); background:rgba(10,14,26,0.7); backdrop-filter:blur(6px);
+}
+.topbar .crumb{font-family:var(--mono); font-size:11px; color:var(--text-faint);}
+.topbar h1{font-size:1.2rem; font-family:var(--sans); font-weight:600;}
+.topbar-right{margin-left:auto; display:flex; align-items:center; gap:10px;}
+.icon-btn{
+  width:34px; height:34px; border-radius:var(--r-xs); border:1px solid var(--line); background:var(--bg-2);
+  display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--text-dim); position:relative;
+  transition:border-color .15s, color .15s;
+}
+.icon-btn:hover{border-color:var(--line-strong); color:var(--text);}
+.icon-dot{position:absolute; top:5px; right:6px; width:6px; height:6px; border-radius:50%; background:var(--coral); box-shadow:0 0 0 2px var(--bg);}
+
+.view{display:none; flex:1; overflow-y:auto; padding:24px 28px 60px;}
+.view.active{display:block; animation:fadeUp .3s var(--ease);}
+@keyframes fadeUp{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+.view-header{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;}
+.view-header h1{font-size:1.7rem;}
+.view-sub{color:var(--text-dim); font-size:13px; margin-top:5px; max-width:560px;}
+.eyebrow{font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; display:block;}
+
+/* ---------------------------- Buttons ---------------------------- */
+.btn{
+  display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:var(--r-xs);
+  font-size:12px; font-weight:600; border:1px solid transparent; font-family:var(--sans);
+  transition:transform .15s var(--ease), border-color .15s, background .15s;
+}
+.btn-primary{background:var(--gold); color:#1a1305;}
+.btn-primary:hover{transform:translateY(-1px);}
+.btn-outline{background:transparent; border-color:var(--line-strong); color:var(--text);}
+.btn-outline:hover{border-color:var(--accent); background:var(--bg-2);}
+.btn-ghost{background:transparent; color:var(--text-dim); border:none; padding:9px 4px;}
+.btn-ghost:hover{color:var(--text);}
+.btn-danger{background:transparent; border-color:var(--coral); color:var(--coral);}
+.btn-sm{padding:6px 12px; font-size:11px;}
+.btn[disabled]{opacity:.4; cursor:not-allowed; transform:none !important;}
+
+/* ---------------------------- Panels ---------------------------- */
+.panel{
+  background:linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  border:1px solid var(--line); border-radius:var(--r-md); padding:18px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.03);
+}
+.panel-title{font-size:12.5px; font-weight:600; color:var(--text); margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; font-family:var(--mono); text-transform:uppercase; letter-spacing:.06em;}
+.panel-title .tag-ai{font-family:var(--sans); text-transform:none; letter-spacing:0;}
+
+.grid-6{display:grid; grid-template-columns:repeat(6,1fr); gap:14px;}
+.grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+
+/* ---------------------------- Stat cards w/ sparkline ---------------------------- */
+.stat-card{
+  background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-md); padding:16px;
+  transition:border-color .2s, transform .2s var(--ease);
+}
+.stat-card:hover{border-color:var(--line-strong); transform:translateY(-3px);}
+.stat-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+.stat-icon{font-size:15px; opacity:.75;}
+.stat-num{font-family:var(--mono); font-size:1.75rem; font-weight:600; color:var(--text); line-height:1; font-variant-numeric:tabular-nums;}
+.stat-label{font-size:10.5px; color:var(--text-faint); margin-top:5px; text-transform:uppercase; letter-spacing:.06em;}
+.stat-delta{font-family:var(--mono); font-size:10.5px; font-weight:600; margin-top:2px;}
+.spark{width:100%; height:24px; margin-top:8px; display:block;}
+
+/* ---------------------------- Badges ---------------------------- */
+.badge{display:inline-flex; align-items:center; gap:4px; font-family:var(--mono); font-size:10px; font-weight:600; padding:3px 8px; border-radius:4px; letter-spacing:.02em; border:1px solid transparent;}
+.badge-verified{background:var(--mint-dim); color:var(--mint); border-color:rgba(63,211,153,0.3);}
+.badge-active{background:var(--mint-dim); color:var(--mint);}
+.badge-offer{background:var(--gold-dim); color:var(--gold);}
+.badge-sold{background:rgba(170,179,236,0.14); color:var(--accent);}
+.badge-pending{background:var(--gold-dim); color:var(--gold);}
+.badge-ai{background:rgba(170,179,236,0.14); color:var(--accent); border-color:rgba(170,179,236,0.3);}
+
+/* ---------------------------- Dashboard ---------------------------- */
+.welcome-banner{
+  border:1px solid var(--line); border-radius:var(--r-md); padding:22px 26px; margin-bottom:20px;
+  display:flex; align-items:center; justify-content:space-between;
+  background:radial-gradient(120% 140% at 0% 0%, rgba(227,174,83,0.10), transparent 55%), var(--bg-2);
+}
+.welcome-banner h1{font-size:1.7rem;}
+.welcome-banner p{color:var(--text-dim); margin:6px 0 0; font-size:13px; max-width:460px;}
+.welcome-clock{font-family:var(--mono); font-size:11.5px; color:var(--gold); text-align:right;}
+.welcome-clock div:last-child{color:var(--text-faint); font-size:10px; margin-top:3px;}
+
+.activity-row{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:14px; margin:18px 0;}
+.mini-list{display:flex; flex-direction:column; gap:8px;}
+.mini-item{display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:var(--r-xs); background:var(--bg-1); border:1px solid var(--line-soft); font-size:12px; color:var(--text-dim);}
+.mini-item .mi-ic{width:26px; height:26px; border-radius:var(--r-xs); background:var(--bg-3); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px;}
+.mini-item b{color:var(--text); font-weight:600;}
+.mini-item .mi-time{margin-left:auto; color:var(--text-faint); font-family:var(--mono); font-size:10px; flex-shrink:0;}
+.dash-bottom{display:grid; grid-template-columns:1.4fr 1fr; gap:14px; margin-top:14px;}
+.chart-wrap{height:210px;}
+
+/* ---------------------------- Listings ---------------------------- */
+.listing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:16px;}
+.listing-card{
+  background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden;
+  transition:border-color .2s, transform .2s var(--ease); cursor:pointer;
+}
+.listing-card:hover{border-color:var(--line-strong); transform:translateY(-4px);}
+.listing-photo{
+  height:132px; position:relative; display:flex; align-items:flex-end; padding:10px; font-size:26px;
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 14px),
+    linear-gradient(150deg, var(--bg-3), var(--bg-1));
+  border-bottom:1px solid var(--line);
+}
+.listing-photo .lp-badge{position:absolute; top:10px; left:10px;}
+.listing-photo .lp-fav{position:absolute; top:10px; right:10px; width:26px; height:26px; border-radius:var(--r-xs); background:var(--bg-1); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:12px;}
+.listing-body{padding:14px 15px 15px;}
+.listing-price{font-family:var(--mono); font-size:1.25rem; font-weight:600; color:var(--gold); font-variant-numeric:tabular-nums;}
+.listing-addr{font-size:12px; color:var(--text-dim); margin:3px 0 10px;}
+.listing-meta-row{display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:10.5px; color:var(--text-faint); margin-bottom:11px;}
+.listing-collabs{display:flex;}
+.mini-avatar{width:20px; height:20px; border-radius:var(--r-xs); border:1px solid var(--bg-2); background:var(--accent-deep); margin-left:-6px; font-size:8px; font-family:var(--mono); display:flex; align-items:center; justify-content:center; color:var(--bg); font-weight:700;}
+.listing-actions{display:flex; justify-content:space-between; align-items:center;}
+
+/* ---------------------------- Property details ---------------------------- */
+.pd-gallery{display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:6px; height:260px; border-radius:var(--r-md); overflow:hidden; margin-bottom:18px; border:1px solid var(--line);}
+.pd-gallery div{display:flex; align-items:center; justify-content:center; font-size:30px; background:linear-gradient(150deg, var(--bg-3), var(--bg-1)); color:var(--text-faint);}
+.pd-gallery div:first-child{grid-row:1/3;}
+.pd-layout{display:grid; grid-template-columns:1.5fr 1fr; gap:18px;}
+.pd-tags{display:flex; gap:7px; flex-wrap:wrap; margin:12px 0 16px;}
+.pd-tag{background:var(--bg-2); border:1px solid var(--line); color:var(--text-dim); font-family:var(--mono); font-size:10.5px; padding:4px 10px; border-radius:var(--r-xs);}
+.amenity-list{display:flex; flex-direction:column; gap:0;}
+.amenity-row{display:flex; justify-content:space-between; font-size:12px; padding:9px 0; border-bottom:1px solid var(--line-soft); color:var(--text-dim);}
+.amenity-row span:last-child{font-family:var(--mono); color:var(--text-faint);}
+.mortgage-box label{font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; display:block; margin:10px 0 5px; font-weight:600;}
+.mortgage-box input{width:100%; padding:9px 11px; border-radius:var(--r-xs); border:1px solid var(--line); font-family:var(--mono); font-size:13px; background:var(--bg-1); color:var(--text);}
+.mortgage-box input:focus{outline:none; border-color:var(--accent);}
+.mortgage-result{margin-top:14px; background:var(--bg-1); border:1px solid var(--line); border-radius:var(--r-sm); padding:14px; text-align:center;}
+.mortgage-result .mr-num{font-family:var(--mono); font-size:1.5rem; font-weight:600; color:var(--gold);}
+.ai-val-box{border:1px solid var(--line); border-radius:var(--r-md); padding:16px; margin-bottom:14px; background:radial-gradient(120% 140% at 100% 0%, rgba(170,179,236,0.12), transparent 60%), var(--bg-2);}
+.ai-val-box .av-num{font-family:var(--mono); font-size:1.9rem; font-weight:600; color:var(--text);}
+.ai-val-box .av-range{font-size:11px; color:var(--text-faint); margin-top:4px; font-family:var(--mono);}
+
+/* ---------------------------- Agent network ---------------------------- */
+.agent-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:16px;}
+.agent-card{background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-md); padding:18px; text-align:center; transition:border-color .2s, transform .2s var(--ease);}
+.agent-card:hover{border-color:var(--line-strong); transform:translateY(-4px);}
+.agent-avatar-lg{width:58px; height:58px; border-radius:var(--r-sm); margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-weight:600; font-size:17px; color:var(--bg); position:relative;}
+.agent-avatar-lg .verif-dot{position:absolute; bottom:-3px; right:-3px; width:18px; height:18px; background:var(--mint); border:2px solid var(--bg-2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; color:#06251a;}
+.agent-name{font-weight:600; color:var(--text); font-size:14px;}
+.agent-loc{font-size:11px; color:var(--text-faint); margin:2px 0 9px; font-family:var(--mono);}
+.agent-tags{display:flex; gap:5px; flex-wrap:wrap; justify-content:center; margin-bottom:10px;}
+.agent-tag{background:var(--bg-1); border:1px solid var(--line); color:var(--text-dim); font-family:var(--mono); font-size:9.5px; padding:3px 8px; border-radius:4px;}
+.agent-stats-row{display:flex; justify-content:center; gap:14px; margin-bottom:12px; font-size:10.5px; color:var(--text-faint); font-family:var(--mono);}
+.agent-stats-row b{display:block; color:var(--text); font-size:1.05rem;}
+.stars{color:var(--gold); font-size:12px; letter-spacing:1px;}
+
+.profile-hero{display:grid; grid-template-columns:190px 1fr; gap:22px; align-items:start; margin-bottom:22px;}
+.profile-avatar-xl{width:160px; height:160px; border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:38px; font-weight:600; color:var(--bg);}
+.profile-license-list{display:flex; flex-direction:column; gap:6px; margin-top:12px; padding:0; list-style:none;}
+.profile-license-list li{font-size:11px; color:var(--text-dim); font-family:var(--mono);}
+
+/* ---------------------------- Buyers ---------------------------- */
+.buyer-row{display:grid; grid-template-columns:42px 1.4fr 1fr 1fr 1fr auto; align-items:center; gap:12px; padding:13px 14px; border-radius:var(--r-sm); background:var(--bg-2); border:1px solid var(--line); margin-bottom:8px; transition:border-color .15s, transform .15s; cursor:pointer;}
+.buyer-row:hover{border-color:var(--line-strong); transform:translateY(-2px);}
+.buyer-avatar{width:38px; height:38px; border-radius:var(--r-xs); background:var(--accent-deep); color:var(--bg); font-family:var(--mono); font-weight:700; display:flex; align-items:center; justify-content:center; font-size:12px;}
+.buyer-name{font-weight:600; color:var(--text); font-size:13px;}
+.buyer-sub{font-size:10.5px; color:var(--text-faint); font-family:var(--mono);}
+
+/* Journey timeline */
+.jt-rail{display:flex; align-items:center; margin:22px 0 6px;}
+.jt-step{flex:1; text-align:center; position:relative;}
+.jt-step .jt-dot{width:30px; height:30px; border-radius:50%; background:var(--bg-1); border:1.5px solid var(--line-strong); color:var(--text-faint); display:flex; align-items:center; justify-content:center; margin:0 auto 8px; font-family:var(--mono); font-weight:600; font-size:12px; position:relative; z-index:2;}
+.jt-step.done .jt-dot{background:var(--mint-dim); border-color:var(--mint); color:var(--mint);}
+.jt-step.current .jt-dot{background:var(--gold-dim); border-color:var(--gold); color:var(--gold); box-shadow:0 0 0 4px rgba(227,174,83,0.10);}
+.jt-step::before{content:""; position:absolute; top:15px; left:-50%; width:100%; height:1px; background:var(--line-strong); z-index:1;}
+.jt-step:first-child::before{display:none;}
+.jt-step.done::before{background:var(--mint);}
+.jt-label{font-size:10.5px; font-weight:600; color:var(--text-dim); font-family:var(--mono); text-transform:uppercase; letter-spacing:.04em;}
+
+/* ---------------------------- Messages ---------------------------- */
+.msg-shell{display:grid; grid-template-columns:270px 1fr; height:calc(100vh - 240px); border-radius:var(--r-md); overflow:hidden; border:1px solid var(--line);}
+.msg-side{background:var(--bg-2); border-right:1px solid var(--line); overflow-y:auto;}
+.msg-tabs{display:flex; border-bottom:1px solid var(--line);}
+.msg-tab{flex:1; text-align:center; padding:11px; font-size:11px; font-weight:600; color:var(--text-faint); border-bottom:2px solid transparent; cursor:pointer; font-family:var(--mono); text-transform:uppercase; letter-spacing:.04em;}
+.msg-tab.active{color:var(--gold); border-color:var(--gold);}
+.conv-item{display:flex; gap:9px; padding:12px 13px; border-bottom:1px solid var(--line-soft); cursor:pointer;}
+.conv-item:hover, .conv-item.active{background:var(--bg-3);}
+.conv-name{font-weight:600; font-size:12.5px; color:var(--text);}
+.conv-preview{font-size:11px; color:var(--text-faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:170px;}
+.conv-unread{width:6px; height:6px; border-radius:50%; background:var(--gold); margin-left:auto; flex-shrink:0; align-self:center;}
+.chat-pane{display:flex; flex-direction:column; background:var(--bg-1);}
+.chat-head{padding:14px 18px; background:var(--bg-2); border-bottom:1px solid var(--line); font-weight:600; color:var(--text); font-size:13px;}
+.chat-body{flex:1; overflow-y:auto; padding:18px; display:flex; flex-direction:column; gap:10px;}
+.bubble{max-width:60%; padding:10px 14px; border-radius:var(--r-sm); font-size:12.5px; line-height:1.55; border:1px solid var(--line);}
+.bubble.them{background:var(--bg-2); align-self:flex-start;}
+.bubble.me{background:var(--gold-dim); border-color:rgba(227,174,83,.3); color:var(--text); align-self:flex-end;}
+.bubble-time{font-size:9.5px; color:var(--text-faint); margin-top:3px; font-family:var(--mono);}
+.chat-input-row{display:flex; gap:10px; padding:13px 16px; background:var(--bg-2); border-top:1px solid var(--line);}
+.chat-input-row input{flex:1; padding:10px 14px; border-radius:var(--r-xs); border:1px solid var(--line); font-family:inherit; font-size:12.5px; background:var(--bg-1); color:var(--text-dim);}
+
+/* ---------------------------- Calendar ---------------------------- */
+.cal-toolbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+.cal-legend{display:flex; gap:12px; font-size:10.5px; font-family:var(--mono);}
+.cal-legend span{display:flex; align-items:center; gap:5px; color:var(--text-dim);}
+.cal-legend .dot{width:7px; height:7px; border-radius:50%;}
+.cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:6px;}
+.cal-dow{text-align:center; font-size:10px; font-weight:600; color:var(--text-faint); padding-bottom:6px; font-family:var(--mono); text-transform:uppercase;}
+.cal-cell{background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-xs); min-height:78px; padding:7px; font-size:11px; cursor:pointer; transition:border-color .15s;}
+.cal-cell.blank{background:transparent; border:none; cursor:default;}
+.cal-cell:hover{border-color:var(--line-strong);}
+.cal-cell.selected{border-color:var(--gold);}
+.cal-num{font-weight:600; color:var(--text); font-family:var(--mono);}
+.cal-pill{margin-top:4px; font-size:9px; font-weight:600; padding:2px 5px; border-radius:3px; display:block; margin-bottom:3px; font-family:var(--mono);}
+
+/* ---------------------------- AI assistant ---------------------------- */
+.ai-tool-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:16px;}
+.ai-tool-card{background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-md); padding:18px;}
+.ai-tool-ic{width:36px; height:36px; border-radius:var(--r-sm); background:rgba(170,179,236,0.12); border:1px solid rgba(170,179,236,0.25); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:16px; margin-bottom:12px;}
+.ai-tool-title{font-weight:600; color:var(--text); font-size:13.5px; margin-bottom:4px;}
+.ai-tool-desc{font-size:11.5px; color:var(--text-dim); margin-bottom:13px; line-height:1.6;}
+.ai-output{display:none; margin-top:13px; background:var(--bg-1); border-left:2px solid var(--accent); border-radius:var(--r-xs); padding:11px 13px; font-size:11.5px; color:var(--text-dim); line-height:1.7;}
+.ai-output.show{display:block; animation:fadeUp .25s var(--ease);}
+.ai-output .ai-tag{display:inline-block; margin-bottom:6px;}
+
+/* ---------------------------- Analytics ---------------------------- */
+.chart-card{background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-md); padding:18px;}
+
+/* ---------------------------- Reviews ---------------------------- */
+.review-summary{display:flex; align-items:center; gap:26px; margin-bottom:18px;}
+.rs-score{font-family:var(--mono); font-size:2.6rem; font-weight:600; color:var(--text); line-height:1;}
+.rs-bars{flex:1; display:flex; flex-direction:column; gap:6px;}
+.rs-bar-row{display:flex; align-items:center; gap:8px; font-size:10.5px; color:var(--text-faint); font-family:var(--mono);}
+.rs-bar-track{flex:1; height:5px; background:var(--bg-1); border-radius:99px; overflow:hidden;}
+.rs-bar-fill{height:100%; background:var(--gold); border-radius:99px;}
+.review-card{background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-sm); padding:14px; margin-bottom:10px;}
+.review-card-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:13px;}
+
+/* ---------------------------- Documents ---------------------------- */
+.doc-row{display:grid; grid-template-columns:32px 1.6fr 1fr 1fr auto; align-items:center; gap:12px; padding:12px 14px; border-radius:var(--r-xs); border:1px solid var(--line); background:var(--bg-2); margin-bottom:7px; font-size:11.5px; color:var(--text-dim); font-family:var(--mono);}
+.doc-ic{font-size:17px;}
+
+/* ---------------------------- Notifications ---------------------------- */
+.notif-row{display:flex; align-items:flex-start; gap:11px; padding:13px; border-radius:var(--r-sm); background:var(--bg-2); border:1px solid var(--line); margin-bottom:8px;}
+.notif-row.unread{border-color:rgba(227,174,83,0.35); background:linear-gradient(90deg, rgba(227,174,83,0.05), transparent);}
+.notif-ic{width:30px; height:30px; border-radius:var(--r-xs); background:var(--bg-1); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0;}
+.notif-time{font-size:10px; color:var(--text-faint); margin-top:2px; font-family:var(--mono);}
+
+/* ---------------------------- Settings ---------------------------- */
+.settings-group{margin-bottom:22px;}
+.settings-row{display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line-soft);}
+.settings-row:last-child{border-bottom:none;}
+.settings-label{font-size:12.5px; font-weight:600; color:var(--text);}
+.settings-hint{font-size:11px; color:var(--text-faint); margin-top:2px;}
+.toggle{width:38px; height:21px; border-radius:99px; background:var(--bg-1); border:1px solid var(--line); position:relative; cursor:pointer; flex-shrink:0; transition:background .2s;}
+.toggle.on{background:var(--gold-dim); border-color:var(--gold);}
+.toggle-knob{position:absolute; top:2px; left:2px; width:15px; height:15px; border-radius:50%; background:var(--text-faint); transition:left .2s, background .2s;}
+.toggle.on .toggle-knob{left:19px; background:var(--gold);}
+.tag-input-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
+.settings-tag{background:var(--bg-1); border:1px solid var(--line); color:var(--text-dim); padding:5px 11px; border-radius:var(--r-xs); font-size:11px; font-family:var(--mono); display:flex; gap:6px; align-items:center;}
+.settings-tag button{background:none; border:none; color:var(--text-faint); font-size:12px;}
+
+/* ---------------------------- Ecosystem ---------------------------- */
+.eco-wheel{position:relative; width:520px; height:520px; margin:26px auto;}
+.eco-center{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:120px; height:120px; border-radius:50%; background:radial-gradient(circle at 30% 30%, var(--bg-3), var(--bg-1)); border:1px solid var(--gold); color:var(--text); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-weight:600; z-index:3; font-family:var(--mono); font-size:13px;}
+.eco-center span{font-size:9.5px; font-weight:500; color:var(--gold); margin-top:2px; text-transform:uppercase; letter-spacing:.06em;}
+.eco-node{position:absolute; width:88px; height:88px; border-radius:50%; background:var(--bg-2); border:1px solid var(--line-strong); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-size:10.5px; font-weight:600; color:var(--text); cursor:pointer; transition:transform .2s var(--ease), border-color .2s; z-index:3; font-family:var(--mono);}
+.eco-node .eco-ic{font-size:18px; margin-bottom:3px;}
+.eco-node:hover{transform:scale(1.08); border-color:var(--gold);}
+.eco-line{position:absolute; top:50%; left:50%; height:1px; background:linear-gradient(90deg, var(--line-strong), transparent); transform-origin:left center; z-index:1;}
+.eco-tooltip{position:fixed; background:var(--bg-3); color:var(--text); border:1px solid var(--line-strong); padding:8px 12px; border-radius:var(--r-xs); font-size:11.5px; max-width:220px; z-index:100; display:none; pointer-events:none; font-family:var(--mono);}
+
+/* ---------------------------- Command palette ---------------------------- */
+.cmdk-overlay{position:fixed; inset:0; background:rgba(6,9,18,0.7); backdrop-filter:blur(2px); display:none; align-items:flex-start; justify-content:center; padding-top:12vh; z-index:300;}
+.cmdk-overlay.show{display:flex;}
+.cmdk-box{width:560px; max-width:90%; background:var(--bg-2); border:1px solid var(--line-strong); border-radius:var(--r-md); overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.5);}
+.cmdk-input-row{display:flex; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid var(--line);}
+.cmdk-input-row input{flex:1; background:none; border:none; outline:none; color:var(--text); font-family:var(--mono); font-size:14px;}
+.cmdk-input-row .cmdk-esc{font-family:var(--mono); font-size:10px; color:var(--text-faint); border:1px solid var(--line); padding:2px 6px; border-radius:4px;}
+.cmdk-results{max-height:360px; overflow-y:auto; padding:8px;}
+.cmdk-group-title{font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); padding:10px 10px 4px;}
+.cmdk-item{display:flex; align-items:center; gap:10px; padding:10px 10px; border-radius:var(--r-xs); font-size:13px; color:var(--text-dim); cursor:pointer;}
+.cmdk-item:hover{background:var(--bg-3); color:var(--text);}
+.cmdk-empty{padding:26px; text-align:center; color:var(--text-faint); font-size:12.5px;}
+
+/* ---------------------------- Modal ---------------------------- */
+.modal-overlay{position:fixed; inset:0; background:rgba(6,9,18,0.7); display:none; align-items:center; justify-content:center; z-index:300;}
+.modal-overlay.show{display:flex; animation:fadeUp .2s var(--ease);}
+.modal-box{background:var(--bg-2); border:1px solid var(--line-strong); border-radius:var(--r-md); padding:26px; max-width:400px; width:90%; position:relative;}
+.modal-box h3{font-size:1.2rem; margin-bottom:6px;}
+.modal-avatar-row{display:flex; align-items:center; gap:12px; margin:16px 0;}
+.modal-close{position:absolute; top:14px; right:16px; background:none; border:none; font-size:16px; color:var(--text-faint);}
+.modal-detail-row{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line-soft); font-size:12.5px; color:var(--text-dim);}
+.modal-detail-row b{color:var(--text); font-family:var(--mono);}
+.modal-actions{display:flex; gap:10px; margin-top:18px;}
+.modal-actions .btn{flex:1; justify-content:center;}
+
+/* ---------------------------- Toast ---------------------------- */
+.toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(16px); background:var(--bg-3); border:1px solid var(--line-strong); color:var(--text); padding:12px 20px; border-radius:var(--r-sm); font-size:12.5px; font-weight:500; opacity:0; transition:opacity .25s, transform .25s; z-index:400; pointer-events:none; font-family:var(--mono);}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+/* ---------------------------- Empty states ---------------------------- */
+.empty-state{text-align:center; padding:46px 20px; color:var(--text-faint);}
+.empty-state .es-ic{font-size:28px; margin-bottom:10px; opacity:.6;}
+.empty-state .es-title{font-weight:600; color:var(--text); font-size:13px; margin-bottom:4px;}
+.empty-state .es-text{font-size:11.5px;}
+
+[data-tip]{position:relative;}
+[data-tip]:hover::after{
+  content:attr(data-tip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+  background:var(--bg-3); border:1px solid var(--line-strong); color:var(--text); font-size:11px; padding:6px 10px; border-radius:var(--r-xs); white-space:nowrap; z-index:60; font-family:var(--mono);
+}
+
+/* ---------------- Mobile rail toggle / backdrop ---------------- */
+.rail-toggle{display:none;}
+.rail-backdrop{display:none; position:fixed; inset:0; background:rgba(6,9,18,0.6); z-index:150;}
+.rail-backdrop.show{display:block;}
+
+@media (max-width:1100px){
+  .listing-grid, .agent-grid{grid-template-columns:repeat(2,1fr);}
+  .grid-6{grid-template-columns:repeat(3,1fr);}
+  .grid-3, .pd-layout, .grid-2, .activity-row, .dash-bottom, .ai-tool-grid{grid-template-columns:1fr;}
+}
+
+@media (max-width:860px){
+  .app-shell{grid-template-columns:1fr;}
+  .rail{
+    position:fixed; top:32px; left:0; bottom:0; width:240px; z-index:200;
+    transform:translateX(-100%); transition:transform .25s var(--ease);
+  }
+  .rail.show{transform:translateX(0);}
+  .rail-toggle{display:flex;}
+  .profile-hero{grid-template-columns:120px 1fr;}
+  .profile-avatar-xl{width:100px; height:100px; font-size:26px;}
+}
+
+@media (max-width:640px){
+  body{overflow-y:auto; overflow-x:hidden;}
+  .app-shell{height:auto; min-height:calc(100% - 32px);}
+  .view{overflow-y:visible; padding:18px 16px 50px;}
+  .view.active{display:block;}
+
+  .ticker-tag{padding:0 8px; font-size:9.5px;}
+  .ticker-item{padding:0 14px; font-size:11px;}
+
+  .topbar{padding:0 14px; gap:10px;}
+  .topbar h1{font-size:1rem;}
+  .crumb{display:none;}
+
+  .grid-6, .grid-3, .grid-2{grid-template-columns:repeat(2,1fr);}
+  .listing-grid, .agent-grid, .ai-tool-grid{grid-template-columns:1fr;}
+  .activity-row, .dash-bottom{grid-template-columns:1fr;}
+
+  .welcome-banner{flex-direction:column; align-items:flex-start; gap:12px;}
+  .welcome-clock{text-align:left;}
+
+  .pd-layout{grid-template-columns:1fr;}
+  .pd-gallery{height:auto; grid-template-columns:1fr 1fr; grid-template-rows:90px 90px 90px;}
+  .pd-gallery div:first-child{grid-row:auto; grid-column:1/3; height:130px;}
+
+  .profile-hero{grid-template-columns:1fr; text-align:center;}
+  .profile-avatar-xl{margin:0 auto;}
+  .agent-stats-row{justify-content:center !important;}
+  .profile-license-list{align-items:center; display:flex; flex-direction:column;}
+
+  .buyer-row{grid-template-columns:1fr; gap:8px; text-align:left;}
+  .buyer-row button{width:100%; margin-top:4px;}
+
+  .msg-shell{grid-template-columns:1fr; height:auto;}
+  .msg-side{max-height:180px;}
+  .chat-body{min-height:260px;}
+
+  .doc-row{grid-template-columns:1fr; gap:4px; text-align:left;}
+  .doc-row button{width:100%; margin-top:6px;}
+
+  .cal-grid{gap:4px;}
+  .cal-cell{min-height:52px; padding:5px; font-size:10px;}
+  .cal-pill{font-size:7.5px; padding:1px 4px;}
+  .cal-legend{flex-wrap:wrap; row-gap:6px;}
+
+  .eco-wheel{width:100%; max-width:340px; height:340px;}
+
+  .cmdk-box{width:94%;}
+  .modal-box{width:92%; padding:20px;}
+
+  .review-summary{flex-direction:column; align-items:flex-start; gap:14px;}
+}
+</style>
+<script>
+function toggleRail(force){
+  const rail = document.getElementById('rail');
+  const backdrop = document.getElementById('railBackdrop');
+  const show = force !== undefined ? force : !rail.classList.contains('show');
+  rail.classList.toggle('show', show);
+  backdrop.classList.toggle('show', show);
+}
+</script>
+</head>
+<body>
+
+<!-- ============ SIGNATURE: LIVE NETWORK TICKER ============ -->
+<div class="ticker-bar">
+  <div class="ticker-tag">● LIVE NETWORK</div>
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<div class="rail-backdrop" id="railBackdrop" onclick="toggleRail(false)"></div>
+
+<div class="app-shell">
+
+  <!-- ============ RAIL ============ -->
+  <aside class="rail" id="rail">
+    <div class="rail-brand">
+      <div class="rail-brand-mark">LH</div>
+      <div class="rail-brand-name">Luci<span>Home</span></div>
+    </div>
+
+    <div class="rail-persona">
+      <div class="rail-avatar">MT</div>
+      <div>
+        <div class="rail-persona-name">Michael Turner</div>
+        <div class="rail-persona-role">● verified · London</div>
+      </div>
+    </div>
+
+    <button class="rail-search-btn" onclick="openCmdk()">🔎 Search workspace <kbd>⌘K</kbd></button>
+
+    <ul class="nav-list">
+      <li class="nav-item active" data-view="dashboard"><span class="ic">◧</span> Dashboard</li>
+      <li class="nav-item" data-view="listings"><span class="ic">▤</span> My Listings <span class="nav-count">87</span></li>
+      <li class="nav-item" data-view="network"><span class="ic">◈</span> Collaboration Network</li>
+      <li class="nav-item" data-view="buyers"><span class="ic">◍</span> Buyers <span class="nav-count">23</span></li>
+      <li class="nav-item" data-view="messages"><span class="ic">◨</span> Messages</li>
+      <li class="nav-item" data-view="calendar"><span class="ic">▦</span> Calendar</li>
+      <li class="nav-item" data-view="ai"><span class="ic">✦</span> AI Assistant</li>
+      <li class="nav-item" data-view="analytics"><span class="ic">▲</span> Analytics</li>
+      <li class="nav-item" data-view="reviews"><span class="ic">★</span> Reviews</li>
+      <li class="nav-item" data-view="documents"><span class="ic">▥</span> Documents</li>
+      <div class="rail-divider"></div>
+      <li class="nav-item" data-view="notifications"><span class="ic">◉</span> Notifications <span class="nav-count">5</span></li>
+      <li class="nav-item" data-view="settings"><span class="ic">⚙</span> Settings</li>
+    </ul>
+
+    <div class="rail-foot"><span class="live-dot"></span>Demo build · v0.9.2<br>50+ countries · beta network</div>
+  </aside>
+
+  <!-- ============ MAIN COLUMN ============ -->
+  <div class="main-col">
+
+    <div class="topbar">
+      <button class="icon-btn rail-toggle" onclick="toggleRail()" aria-label="Menu">☰</button>
+      <div><div class="crumb mono">WORKSPACE /</div><h1 id="topbarTitle">Dashboard</h1></div>
+      <div class="topbar-right">
+        <button class="icon-btn" data-tip="Simulate incoming request" onclick="openCollabModal()">⇄</button>
+        <button class="icon-btn" onclick="goto('notifications')">◉<span class="icon-dot"></span></button>
+        <div class="rail-avatar" style="width:34px;height:34px;">MT</div>
+      </div>
+    </div>
+
+    <!-- ======================= DASHBOARD ======================= -->
+    <section class="view active" id="view-dashboard">
+
+      <div class="welcome-banner">
+        <div>
+          <span class="eyebrow">Session · Monday, July 6</span>
+          <h1>Welcome back, Michael</h1>
+          <p>3 new collaboration requests and 2 pending offers are waiting for a response.</p>
+        </div>
+        <div class="welcome-clock mono" id="liveClock">09:24:07<div>UTC+1 · London</div></div>
+      </div>
+
+      <div class="grid-6">
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">▤</span></div><div class="stat-num">087</div><div class="stat-label">Active Listings</div><div class="stat-delta" style="color:var(--mint);">▲ 4 this month</div><svg class="spark" viewBox="0 0 100 24"><polyline points="0,18 15,15 30,17 45,10 60,12 75,6 100,4" fill="none" stroke="#3fd399" stroke-width="2"/></svg></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">◈</span></div><div class="stat-num">014</div><div class="stat-label">Collab Partners</div><div class="stat-delta" style="color:var(--mint);">▲ 2 this month</div><svg class="spark" viewBox="0 0 100 24"><polyline points="0,16 15,17 30,12 45,13 60,8 75,9 100,3" fill="none" stroke="#3fd399" stroke-width="2"/></svg></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">✦</span></div><div class="stat-num">023</div><div class="stat-label">New Leads</div><div class="stat-delta" style="color:var(--gold);">▲ 9 this week</div><svg class="spark" viewBox="0 0 100 24"><polyline points="0,20 15,12 30,15 45,7 60,10 75,4 100,6" fill="none" stroke="#e3ae53" stroke-width="2"/></svg></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">◎</span></div><div class="stat-num">009</div><div class="stat-label">Countries Reached</div><div class="stat-delta" style="color:var(--mint);">▲ 1 this month</div><svg class="spark" viewBox="0 0 100 24"><polyline points="0,18 20,18 40,14 60,14 80,9 100,9" fill="none" stroke="#3fd399" stroke-width="2"/></svg></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">◆</span></div><div class="stat-num">031</div><div class="stat-label">Sold This Year</div><div class="stat-delta" style="color:var(--text-faint);">pace: 52/yr</div><svg class="spark" viewBox="0 0 100 24"><polyline points="0,20 20,17 40,18 60,12 80,10 100,5" fill="none" stroke="#8d97b8" stroke-width="2"/></svg></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">✦</span></div><div class="stat-num">012</div><div class="stat-label">AI Recommendations</div><div class="stat-delta" style="color:var(--accent);">4 unread</div><svg class="spark" viewBox="0 0 100 24"><polyline points="0,10 15,14 30,8 45,15 60,9 75,13 100,7" fill="none" stroke="#aab3ec" stroke-width="2"/></svg></div>
+      </div>
+
+      <div class="activity-row">
+        <div class="panel">
+          <div class="panel-title">Today's Activity <button class="btn-ghost" style="font-size:10.5px; font-family:var(--mono);" onclick="goto('notifications')">VIEW ALL →</button></div>
+          <div class="mini-list">
+            <div class="mini-item"><span class="mi-ic">⇄</span> <b>Sofia Almeida</b> requested to collaborate on Seafront Apartment, Athens <span class="mi-time">12m</span></div>
+            <div class="mini-item"><span class="mi-ic">◍</span> <b>Julia Rossi</b> matched as a new buyer for New Development, Lisbon <span class="mi-time">48m</span></div>
+            <div class="mini-item"><span class="mi-ic">€</span> New offer on Modern Apartment, Lisbon — €610,000 <span class="mi-time">2h</span></div>
+            <div class="mini-item"><span class="mi-ic">✦</span> AI flagged a price-drop opportunity for Luxury Villa, Marbella <span class="mi-time">3h</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Pending Offers</div>
+          <div class="mini-list">
+            <div class="mini-item"><span class="mi-ic">€</span> Modern Apartment, Lisbon — <b>€610,000</b> <span class="mi-time">review</span></div>
+            <div class="mini-item"><span class="mi-ic">€</span> Penthouse, Dubai — <b>€1,850,000</b> <span class="mi-time">review</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Active Buyers</div>
+          <div class="mini-list">
+            <div class="mini-item"><span class="mi-ic">◍</span> Michael Brown — Canada <span class="mi-time">verified</span></div>
+            <div class="mini-item"><span class="mi-ic">◍</span> Amira Hassan — UAE <span class="mi-time">verified</span></div>
+            <div class="mini-item"><span class="mi-ic">◍</span> Tom Becker — Germany <span class="mi-time">verified</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-bottom">
+        <div class="chart-card">
+          <div class="panel-title">Revenue This Month <span class="mono" style="color:var(--text-faint); font-weight:400;">(demo data)</span></div>
+          <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">AI Recommendations <span class="badge badge-ai">AI</span></div>
+          <div class="mini-list">
+            <div class="mini-item"><span class="mi-ic">✦</span> Lower Luxury Villa (Marbella) 3% to match demand</div>
+            <div class="mini-item"><span class="mi-ic">✦</span> 2 buyers in Toronto match your Modern Apartment listing</div>
+            <div class="mini-item"><span class="mi-ic">✦</span> Sofia Almeida is a strong collaboration fit for Athens</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= MY LISTINGS ======================= -->
+    <section class="view" id="view-listings">
+      <div class="view-header">
+        <div><span class="eyebrow">My Listings</span><h1>87 active listings</h1><div class="view-sub">Everything you've published across the LuciHome network.</div></div>
+        <button class="btn btn-primary">+ Add Listing</button>
+      </div>
+
+      <div class="listing-grid">
+
+        <div class="listing-card" onclick="goto('property')">
+          <div class="listing-photo"><span class="badge badge-active lp-badge">ACTIVE</span><div class="lp-fav">♥</div>🏡</div>
+          <div class="listing-body">
+            <div class="listing-price">€2,450,000</div>
+            <div class="listing-addr">Luxury Villa · Marbella, Spain</div>
+            <div class="listing-meta-row"><span>◎ 1,204 views</span><span>♥ 86</span></div>
+            <div class="listing-actions">
+              <div class="listing-collabs"><div class="mini-avatar">SA</div><div class="mini-avatar">RC</div></div>
+              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card" onclick="goto('property')">
+          <div class="listing-photo"><span class="badge badge-offer lp-badge">UNDER OFFER</span><div class="lp-fav">♥</div>🏢</div>
+          <div class="listing-body">
+            <div class="listing-price">€1,890,000</div>
+            <div class="listing-addr">Penthouse · Dubai, UAE</div>
+            <div class="listing-meta-row"><span>◎ 980 views</span><span>♥ 61</span></div>
+            <div class="listing-actions">
+              <div class="listing-collabs"><div class="mini-avatar">KS</div></div>
+              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card" onclick="goto('property')">
+          <div class="listing-photo"><span class="badge badge-active lp-badge">ACTIVE</span><div class="lp-fav">♥</div>🏘️</div>
+          <div class="listing-body">
+            <div class="listing-price">€850,000</div>
+            <div class="listing-addr">Seafront Apartment · Athens, Greece</div>
+            <div class="listing-meta-row"><span>◎ 742 views</span><span>♥ 48</span></div>
+            <div class="listing-actions">
+              <div class="listing-collabs"><div class="mini-avatar">SA</div></div>
+              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card" onclick="goto('property')">
+          <div class="listing-photo"><span class="badge badge-active lp-badge">ACTIVE</span><div class="lp-fav">♥</div>🏙️</div>
+          <div class="listing-body">
+            <div class="listing-price">€620,000</div>
+            <div class="listing-addr">Modern Apartment · Lisbon, Portugal</div>
+            <div class="listing-meta-row"><span>◎ 655 views</span><span>♥ 39</span></div>
+            <div class="listing-actions">
+              <div class="listing-collabs"><div class="mini-avatar">RC</div><div class="mini-avatar">EP</div></div>
+              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card" onclick="goto('property')">
+          <div class="listing-photo"><span class="badge badge-sold lp-badge">SOLD</span><div class="lp-fav">♥</div>🏔️</div>
+          <div class="listing-body">
+            <div class="listing-price">€1,120,000</div>
+            <div class="listing-addr">Alpine Chalet · Chamonix, France</div>
+            <div class="listing-meta-row"><span>◎ 1,530 views</span><span>♥ 112</span></div>
+            <div class="listing-actions">
+              <div class="listing-collabs"><div class="mini-avatar">DC</div></div>
+              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card" onclick="goto('property')">
+          <div class="listing-photo"><span class="badge badge-active lp-badge">ACTIVE</span><div class="lp-fav">♥</div>🏚️</div>
+          <div class="listing-body">
+            <div class="listing-price">€340,000</div>
+            <div class="listing-addr">Renovated Loft · Bucharest, Romania</div>
+            <div class="listing-meta-row"><span>◎ 410 views</span><span>♥ 22</span></div>
+            <div class="listing-actions">
+              <div class="listing-collabs"></div>
+              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================= PROPERTY DETAILS ======================= -->
+    <section class="view" id="view-property">
+      <button class="btn btn-ghost" onclick="goto('listings')">← Back to My Listings</button>
+
+      <div class="pd-gallery">
+        <div>🏡</div><div>🛋️</div><div>🍽️</div><div>🌇</div><div>🏊</div>
+      </div>
+
+      <div class="pd-layout">
+        <div>
+          <span class="badge badge-active">ACTIVE</span>
+          <h1 style="margin-top:8px;">Luxury Villa — Marbella, Spain</h1>
+          <div class="listing-price" style="font-size:1.5rem; margin-top:4px;">€2,450,000</div>
+          <div class="pd-tags">
+            <span class="pd-tag">5 BED</span><span class="pd-tag">4 BATH</span><span class="pd-tag">420 M²</span>
+            <span class="pd-tag">POOL</span><span class="pd-tag">SEA VIEW</span><span class="pd-tag">BUILT 2019</span>
+          </div>
+          <p style="font-size:13px; color:var(--text-dim); line-height:1.8;">
+            A contemporary villa on the Golden Mile, five minutes from the beach. Floor-to-ceiling windows, a private pool terrace, and direct access to Marbella's most exclusive amenities. Fully furnished and ready for immediate handover.
+          </p>
+
+          <div class="panel" style="margin-top:18px;">
+            <div class="panel-title">Nearby</div>
+            <div class="amenity-list">
+              <div class="amenity-row"><span>Aloha International School</span><span>1.2 km</span></div>
+              <div class="amenity-row"><span>Marbella Bus Terminal</span><span>2.4 km</span></div>
+              <div class="amenity-row"><span>El Lago Restaurant</span><span>0.6 km</span></div>
+              <div class="amenity-row"><span>Parque de la Represa</span><span>1.8 km</span></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:18px;">
+            <div class="panel-title">Buyer Inquiries (3)</div>
+            <div class="mini-list">
+              <div class="mini-item"><span class="mi-ic">◍</span> <b>Michael Brown</b> — Canada · asked about financing <span class="mi-time">verified</span></div>
+              <div class="mini-item"><span class="mi-ic">◍</span> <b>Tom Becker</b> — Germany · requested private viewing <span class="mi-time">verified</span></div>
+              <div class="mini-item"><span class="mi-ic">◍</span> <b>Julia Rossi</b> — Italy · saved to shortlist <span class="mi-time">pending</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="ai-val-box">
+            <div class="eyebrow" style="margin-bottom:8px;">AI Valuation</div>
+            <div class="av-num">€2,410,000</div>
+            <div class="av-range">est. range €2.32M–€2.51M · 94% confidence</div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Mortgage Calculator</div>
+            <div class="mortgage-box">
+              <label>Loan Amount (€)</label>
+              <input type="number" id="mLoan" value="1960000" oninput="calcMortgage()">
+              <label>Interest Rate (% / yr)</label>
+              <input type="number" id="mRate" value="3.8" step="0.1" oninput="calcMortgage()">
+              <label>Term (years)</label>
+              <input type="number" id="mYears" value="25" oninput="calcMortgage()">
+              <div class="mortgage-result">
+                <div class="mr-num" id="mResult">€10,050 / mo</div>
+                <div style="font-size:10.5px; color:var(--text-faint); font-family:var(--mono);">est. monthly payment</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:14px;">
+            <div class="panel-title">Collaborators</div>
+            <div class="mini-list">
+              <div class="mini-item"><span class="mi-ic">⇄</span> <b>Sofia Almeida</b> — Lisbon <span class="mi-time">50/50</span></div>
+              <div class="mini-item"><span class="mi-ic">⇄</span> <b>Radu Constantin</b> — Bucharest <span class="mi-time">60/40</span></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:14px;">
+            <div class="panel-title">Analytics</div>
+            <div class="mini-list">
+              <div class="mini-item">◎ 1,204 total views <span class="mi-time" style="color:var(--mint);">+18%</span></div>
+              <div class="mini-item">♥ 86 favorites <span class="mi-time" style="color:var(--mint);">+9%</span></div>
+              <div class="mini-item">◎ viewed from 7 countries</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= COLLABORATION NETWORK ======================= -->
+    <section class="view" id="view-network">
+      <div class="view-header">
+        <div><span class="eyebrow">Collaboration Network</span><h1>14 active partners</h1><div class="view-sub">Verified agents and agencies you can collaborate with, across 50+ countries.</div></div>
+        <button class="btn btn-primary" onclick="openCollabModal()">Simulate Incoming Request</button>
+      </div>
+
+      <div class="agent-grid">
+
+        <div class="agent-card">
+          <div class="agent-avatar-lg" style="background:linear-gradient(135deg,#6672b8,#aab3ec);">SA<span class="verif-dot">✓</span></div>
+          <div class="agent-name">Sofia Almeida</div>
+          <div class="agent-loc">LISBON, PT · PT/EN/ES</div>
+          <div class="agent-tags"><span class="agent-tag">RENTALS</span><span class="agent-tag">NEW DEV.</span></div>
+          <div class="agent-stats-row"><div><b>4.9</b><span class="stars">★★★★★</span></div><div><b>142</b>DEALS</div><div><b>6</b>COLLABS</div></div>
+          <button class="btn btn-outline btn-sm" style="width:100%;" onclick="goto('agent-profile')">View Profile</button>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-avatar-lg" style="background:linear-gradient(135deg,#e3ae53,#6672b8);">RC<span class="verif-dot">✓</span></div>
+          <div class="agent-name">Radu Constantin</div>
+          <div class="agent-loc">BUCHAREST, RO · RO/EN</div>
+          <div class="agent-tags"><span class="agent-tag">COMMERCIAL</span><span class="agent-tag">LAND</span></div>
+          <div class="agent-stats-row"><div><b>4.8</b><span class="stars">★★★★★</span></div><div><b>98</b>DEALS</div><div><b>4</b>COLLABS</div></div>
+          <button class="btn btn-outline btn-sm" style="width:100%;" onclick="goto('agent-profile')">View Profile</button>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-avatar-lg" style="background:linear-gradient(135deg,#aab3ec,#e3ae53);">KS<span class="verif-dot">✓</span></div>
+          <div class="agent-name">Kenji Sato</div>
+          <div class="agent-loc">TOKYO, JP · JP/EN</div>
+          <div class="agent-tags"><span class="agent-tag">LUXURY</span><span class="agent-tag">RELOCATION</span></div>
+          <div class="agent-stats-row"><div><b>5.0</b><span class="stars">★★★★★</span></div><div><b>76</b>DEALS</div><div><b>3</b>COLLABS</div></div>
+          <button class="btn btn-outline btn-sm" style="width:100%;" onclick="goto('agent-profile')">View Profile</button>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-avatar-lg" style="background:linear-gradient(135deg,#6672b8,#e3ae53);">AO<span class="verif-dot">✓</span></div>
+          <div class="agent-name">Amara Okafor</div>
+          <div class="agent-loc">LAGOS, NG · EN/FR</div>
+          <div class="agent-tags"><span class="agent-tag">INVESTMENT</span><span class="agent-tag">DIASPORA</span></div>
+          <div class="agent-stats-row"><div><b>4.7</b><span class="stars">★★★★☆</span></div><div><b>54</b>DEALS</div><div><b>5</b>COLLABS</div></div>
+          <button class="btn btn-outline btn-sm" style="width:100%;" onclick="goto('agent-profile')">View Profile</button>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-avatar-lg" style="background:linear-gradient(135deg,#e3ae53,#aab3ec);">EP<span class="verif-dot">✓</span></div>
+          <div class="agent-name">Elena Popescu</div>
+          <div class="agent-loc">CLUJ-NAPOCA, RO · RO/EN/FR</div>
+          <div class="agent-tags"><span class="agent-tag">NEW DEV.</span><span class="agent-tag">RENTALS</span></div>
+          <div class="agent-stats-row"><div><b>4.9</b><span class="stars">★★★★★</span></div><div><b>63</b>DEALS</div><div><b>7</b>COLLABS</div></div>
+          <button class="btn btn-outline btn-sm" style="width:100%;" onclick="goto('agent-profile')">View Profile</button>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-avatar-lg" style="background:linear-gradient(135deg,#aab3ec,#6672b8);">DC<span class="verif-dot">✓</span></div>
+          <div class="agent-name">David Cohen</div>
+          <div class="agent-loc">TEL AVIV, IL · HE/EN</div>
+          <div class="agent-tags"><span class="agent-tag">LUXURY</span><span class="agent-tag">COMMERCIAL</span></div>
+          <div class="agent-stats-row"><div><b>4.8</b><span class="stars">★★★★★</span></div><div><b>112</b>DEALS</div><div><b>8</b>COLLABS</div></div>
+          <button class="btn btn-outline btn-sm" style="width:100%;" onclick="goto('agent-profile')">View Profile</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================= AGENT PROFILE ======================= -->
+    <section class="view" id="view-agent-profile">
+      <button class="btn btn-ghost" onclick="goto('network')">← Back to Collaboration Network</button>
+
+      <div class="profile-hero">
+        <div>
+          <div class="profile-avatar-xl" style="background:linear-gradient(135deg,#6672b8,#aab3ec);">SA</div>
+          <ul class="profile-license-list">
+            <li>⚖ Licensed Agent — Portugal</li>
+            <li>🎓 IMPIC Certified, 2016</li>
+          </ul>
+        </div>
+        <div>
+          <span class="badge badge-verified">✓ VERIFIED AGENT</span>
+          <h1 style="margin-top:8px;">Sofia Almeida</h1>
+          <div class="view-sub">Lisbon, Portugal · 9 years of experience · Portuguese, English, Spanish</div>
+          <p style="font-size:13px; color:var(--text-dim); line-height:1.8; margin-top:12px; max-width:600px;">
+            Sofia specializes in coastal rentals and new developments across Greater Lisbon. She's collaborated with agents in 6 countries and closed 142 transactions, with a strong track record matching international buyers to newly built properties.
+          </p>
+          <div class="agent-tags" style="justify-content:flex-start;">
+            <span class="agent-tag">RENTALS</span><span class="agent-tag">NEW DEVELOPMENTS</span><span class="agent-tag">COASTAL</span>
+          </div>
+          <div class="agent-stats-row" style="justify-content:flex-start; margin-top:16px; gap:26px;">
+            <div><b>4.9</b><span class="stars">★★★★★</span></div>
+            <div><b>142</b>DEALS</div>
+            <div><b>6</b>ACTIVE COLLABS</div>
+            <div><b>34</b>ACTIVE LISTINGS</div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:16px;" onclick="openCollabModal()">Request Collaboration</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Recent Reviews</div>
+        <div class="review-card">
+          <div class="review-card-head"><b>Tom Becker</b><span class="stars">★★★★★</span></div>
+          <div style="font-size:12px; color:var(--text-dim);">"Sofia made a cross-border deal feel effortless — fast replies, clear communication throughout."</div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-head"><b>Radu Constantin</b><span class="stars">★★★★★</span></div>
+          <div style="font-size:12px; color:var(--text-dim);">"Great collaborator. Split was fair and communicated up front."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= BUYERS ======================= -->
+    <section class="view" id="view-buyers">
+      <div class="view-header">
+        <div><span class="eyebrow">Buyers</span><h1>23 active buyers</h1><div class="view-sub">Verified buyers matched to your listings.</div></div>
+      </div>
+
+      <div id="buyersList">
+        <div class="buyer-row" onclick="goto('buyer-journey')">
+          <div class="buyer-avatar">MB</div>
+          <div><div class="buyer-name">Michael Brown</div><div class="buyer-sub">CANADA</div></div>
+          <div><div class="buyer-sub">INTERESTED IN</div>Luxury Villa</div>
+          <div><div class="buyer-sub">BUDGET</div>€750,000</div>
+          <div><span class="badge badge-verified">VERIFIED</span></div>
+          <button class="btn btn-outline btn-sm">View Journey</button>
+        </div>
+        <div class="buyer-row" onclick="goto('buyer-journey')">
+          <div class="buyer-avatar">AH</div>
+          <div><div class="buyer-name">Amira Hassan</div><div class="buyer-sub">UAE</div></div>
+          <div><div class="buyer-sub">INTERESTED IN</div>Investment Apt.</div>
+          <div><div class="buyer-sub">BUDGET</div>€1,200,000</div>
+          <div><span class="badge badge-verified">VERIFIED</span></div>
+          <button class="btn btn-outline btn-sm">View Journey</button>
+        </div>
+        <div class="buyer-row" onclick="goto('buyer-journey')">
+          <div class="buyer-avatar">TB</div>
+          <div><div class="buyer-name">Tom Becker</div><div class="buyer-sub">GERMANY</div></div>
+          <div><div class="buyer-sub">INTERESTED IN</div>Seafront Apt.</div>
+          <div><div class="buyer-sub">BUDGET</div>€900,000</div>
+          <div><span class="badge badge-verified">VERIFIED</span></div>
+          <button class="btn btn-outline btn-sm">View Journey</button>
+        </div>
+        <div class="buyer-row" onclick="goto('buyer-journey')">
+          <div class="buyer-avatar">JR</div>
+          <div><div class="buyer-name">Julia Rossi</div><div class="buyer-sub">ITALY</div></div>
+          <div><div class="buyer-sub">INTERESTED IN</div>New Development</div>
+          <div><div class="buyer-sub">BUDGET</div>€500,000</div>
+          <div><span class="badge badge-pending">PENDING</span></div>
+          <button class="btn btn-outline btn-sm">View Journey</button>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:14px;">
+        <button class="btn btn-ghost" onclick="showEmptyBuyers()">Preview empty state →</button>
+      </div>
+      <div class="empty-state" id="emptyBuyers" style="display:none;">
+        <div class="es-ic">◍</div>
+        <div class="es-title">No buyers found</div>
+        <div class="es-text">Try adjusting your filters, or check back once new leads come in.</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:14px;" onclick="hideEmptyBuyers()">Show buyers again</button>
+      </div>
+    </section>
+
+    <!-- ======================= BUYER JOURNEY ======================= -->
+    <section class="view" id="view-buyer-journey">
+      <button class="btn btn-ghost" onclick="goto('buyers')">← Back to Buyers</button>
+      <div class="view-header">
+        <div><span class="eyebrow">Buyer Journey</span><h1>Michael Brown</h1><div class="view-sub">Canada · Interested in Luxury Villa, Marbella · Budget €750,000</div></div>
+        <span class="badge badge-verified">VERIFIED BUYER</span>
+      </div>
+
+      <div class="panel">
+        <div class="jt-rail">
+          <div class="jt-step done"><div class="jt-dot">✓</div><div class="jt-label">Inquiry</div></div>
+          <div class="jt-step done"><div class="jt-dot">✓</div><div class="jt-label">Viewing</div></div>
+          <div class="jt-step current"><div class="jt-dot">3</div><div class="jt-label">Offer</div></div>
+          <div class="jt-step"><div class="jt-dot">4</div><div class="jt-label">Mortgage</div></div>
+          <div class="jt-step"><div class="jt-dot">5</div><div class="jt-label">Notary</div></div>
+          <div class="jt-step"><div class="jt-dot">6</div><div class="jt-label">Completed</div></div>
+        </div>
+        <div class="mini-list" style="margin-top:20px;">
+          <div class="mini-item"><span class="mi-ic">✓</span> Initial inquiry submitted through Modern Apartment, Lisbon listing <span class="mi-time">18d ago</span></div>
+          <div class="mini-item"><span class="mi-ic">✓</span> Private viewing completed with agent Sofia Almeida <span class="mi-time">11d ago</span></div>
+          <div class="mini-item"><span class="mi-ic">€</span> Offer of €610,000 submitted, currently under review <span class="mi-time">today</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= MESSAGES ======================= -->
+    <section class="view" id="view-messages">
+      <div class="view-header"><div><span class="eyebrow">Messages</span><h1>Conversations</h1></div></div>
+      <div class="msg-shell">
+        <div class="msg-side">
+          <div class="msg-tabs">
+            <div class="msg-tab active">Buyers</div>
+            <div class="msg-tab">Agents</div>
+            <div class="msg-tab">Agencies</div>
+          </div>
+          <div class="conv-item active">
+            <div class="buyer-avatar" style="width:32px;height:32px;font-size:11px;">MB</div>
+            <div><div class="conv-name">Michael Brown</div><div class="conv-preview">Could we schedule a second viewing?</div></div>
+            <div class="conv-unread"></div>
+          </div>
+          <div class="conv-item">
+            <div class="buyer-avatar" style="width:32px;height:32px;font-size:11px;">SA</div>
+            <div><div class="conv-name">Sofia Almeida</div><div class="conv-preview">Sounds good, 50/50 works for me.</div></div>
+          </div>
+          <div class="conv-item">
+            <div class="buyer-avatar" style="width:32px;height:32px;font-size:11px;">TB</div>
+            <div><div class="conv-name">Tom Becker</div><div class="conv-preview">Thanks for the mortgage info!</div></div>
+          </div>
+        </div>
+        <div class="chat-pane">
+          <div class="chat-head">Michael Brown · Canada</div>
+          <div class="chat-body">
+            <div><div class="bubble them">Hi Michael, thanks for your interest in the Marbella villa!</div><div class="bubble-time">10:02</div></div>
+            <div style="align-self:flex-end;"><div class="bubble me">Happy to answer any questions — would a video walkthrough help?</div><div class="bubble-time" style="text-align:right;">10:04</div></div>
+            <div><div class="bubble them">That would be great. Could we schedule a second viewing too?</div><div class="bubble-time">10:11</div></div>
+          </div>
+          <div class="chat-input-row">
+            <input placeholder="Demo mode — messaging is disabled" disabled>
+            <button class="btn btn-primary btn-sm" disabled>Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= CALENDAR ======================= -->
+    <section class="view" id="view-calendar">
+      <div class="view-header"><div><span class="eyebrow">Calendar</span><h1>August 2026</h1></div></div>
+      <div class="cal-toolbar">
+        <div class="cal-legend">
+          <span><span class="dot" style="background:#6672b8;"></span>Property Visit</span>
+          <span><span class="dot" style="background:#3fd399;"></span>Closing</span>
+          <span><span class="dot" style="background:#aab3ec;"></span>Client Meeting</span>
+          <span><span class="dot" style="background:#e3ae53;"></span>Collaboration Call</span>
+        </div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="panel" id="calDetail" style="margin-top:14px; display:none;"></div>
+    </section>
+
+    <!-- ======================= AI ASSISTANT ======================= -->
+    <section class="view" id="view-ai">
+      <div class="view-header"><div><span class="eyebrow">AI Assistant</span><h1>Your quiet third partner</h1><div class="view-sub">Every tool below runs on demo data — click "Run Demo" to see a sample output.</div></div></div>
+
+      <div class="ai-tool-grid">
+        <div class="ai-tool-card">
+          <div class="ai-tool-ic">▲</div>
+          <div class="ai-tool-title">Estimate Property Value</div>
+          <div class="ai-tool-desc">Get an instant, data-backed valuation for any listing.</div>
+          <button class="btn btn-outline btn-sm" onclick="toggleAI(this)">Run Demo</button>
+          <div class="ai-output"><span class="badge badge-ai ai-tag">AI ESTIMATE</span><br>Luxury Villa, Marbella: <b>€2,410,000</b> (range €2.32M–€2.51M, 94% confidence) based on 12 comparable sales within 3km.</div>
+        </div>
+        <div class="ai-tool-card">
+          <div class="ai-tool-ic">✎</div>
+          <div class="ai-tool-title">Generate Listing Description</div>
+          <div class="ai-tool-desc">Turn a few details into a polished, sales-ready description.</div>
+          <button class="btn btn-outline btn-sm" onclick="toggleAI(this)">Run Demo</button>
+          <div class="ai-output"><span class="badge badge-ai ai-tag">AI DRAFT</span><br>"A sun-filled 3-bedroom apartment moments from Lisbon's riverfront, blending original details with a fully renovated kitchen and private balcony."</div>
+        </div>
+        <div class="ai-tool-card">
+          <div class="ai-tool-ic">◎</div>
+          <div class="ai-tool-title">Translate Listing</div>
+          <div class="ai-tool-desc">Reach international buyers in their own language, instantly.</div>
+          <button class="btn btn-outline btn-sm" onclick="toggleAI(this)">Run Demo</button>
+          <div class="ai-output"><span class="badge badge-ai ai-tag">TRANSLATED · FR</span><br>"Villa contemporaine sur la Golden Mile, à cinq minutes de la plage, avec piscine privée et vue sur la mer."</div>
+        </div>
+        <div class="ai-tool-card">
+          <div class="ai-tool-ic">€</div>
+          <div class="ai-tool-title">Recommend Price</div>
+          <div class="ai-tool-desc">A suggested listing price based on live market movement.</div>
+          <button class="btn btn-outline btn-sm" onclick="toggleAI(this)">Run Demo</button>
+          <div class="ai-output"><span class="badge badge-ai ai-tag">AI SUGGESTION</span><br>Consider lowering Luxury Villa, Marbella by 3% — comparable listings have moved faster at €2.38M this quarter.</div>
+        </div>
+        <div class="ai-tool-card">
+          <div class="ai-tool-ic">◍</div>
+          <div class="ai-tool-title">Suggest Buyers</div>
+          <div class="ai-tool-desc">Surface the buyers on the network most likely to convert.</div>
+          <button class="btn btn-outline btn-sm" onclick="toggleAI(this)">Run Demo</button>
+          <div class="ai-output"><span class="badge badge-ai ai-tag">3 MATCHES</span><br>Michael Brown, Amira Hassan, and 1 unlisted buyer in Toronto match your Modern Apartment listing criteria.</div>
+        </div>
+        <div class="ai-tool-card">
+          <div class="ai-tool-ic">▤</div>
+          <div class="ai-tool-title">Market Insights</div>
+          <div class="ai-tool-desc">Real-time trend data for your area and category.</div>
+          <button class="btn btn-outline btn-sm" onclick="toggleAI(this)">Run Demo</button>
+          <div class="ai-output"><span class="badge badge-ai ai-tag">TREND</span><br>Coastal listings in Southern Spain are up 6.2% YoY, with international demand concentrated in the UK and Germany.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= ANALYTICS ======================= -->
+    <section class="view" id="view-analytics">
+      <div class="view-header"><div><span class="eyebrow">Analytics</span><h1>Performance overview</h1></div></div>
+
+      <div class="grid-6" style="margin-bottom:16px;">
+        <div class="stat-card"><div class="stat-num">24,580</div><div class="stat-label">Total Views</div><div class="stat-delta" style="color:var(--mint);">+12.6%</div></div>
+        <div class="stat-card"><div class="stat-num">1,340</div><div class="stat-label">Leads</div><div class="stat-delta" style="color:var(--mint);">+8.1%</div></div>
+        <div class="stat-card"><div class="stat-num">612</div><div class="stat-label">Favorites</div><div class="stat-delta" style="color:var(--mint);">+5.4%</div></div>
+        <div class="stat-card"><div class="stat-num">009</div><div class="stat-label">Countries</div><div class="stat-delta" style="color:var(--mint);">+1</div></div>
+        <div class="stat-card"><div class="stat-num">031</div><div class="stat-label">Sales YTD</div><div class="stat-delta" style="color:var(--mint);">+16.3%</div></div>
+        <div class="stat-card"><div class="stat-num">5.4%</div><div class="stat-label">Conversion</div><div class="stat-delta" style="color:var(--mint);">+0.6pt</div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="chart-card"><div class="panel-title">Views — Last 6 Months</div><div class="chart-wrap"><canvas id="chartViews"></canvas></div></div>
+        <div class="chart-card"><div class="panel-title">Leads by Country</div><div class="chart-wrap"><canvas id="chartCountries"></canvas></div></div>
+      </div>
+    </section>
+
+    <!-- ======================= REVIEWS ======================= -->
+    <section class="view" id="view-reviews">
+      <div class="view-header"><div><span class="eyebrow">Reviews</span><h1>What clients and partners say</h1></div></div>
+
+      <div class="panel">
+        <div class="review-summary">
+          <div><div class="rs-score">4.9</div><div class="stars">★★★★★</div><div style="font-size:10.5px; color:var(--text-faint); font-family:var(--mono);">128 REVIEWS</div></div>
+          <div class="rs-bars">
+            <div class="rs-bar-row">5★<div class="rs-bar-track"><div class="rs-bar-fill" style="width:82%;"></div></div>82%</div>
+            <div class="rs-bar-row">4★<div class="rs-bar-track"><div class="rs-bar-fill" style="width:12%;"></div></div>12%</div>
+            <div class="rs-bar-row">3★<div class="rs-bar-track"><div class="rs-bar-fill" style="width:4%;"></div></div>4%</div>
+            <div class="rs-bar-row">2★<div class="rs-bar-track"><div class="rs-bar-fill" style="width:1%;"></div></div>1%</div>
+            <div class="rs-bar-row">1★<div class="rs-bar-track"><div class="rs-bar-fill" style="width:1%;"></div></div>1%</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div class="review-card"><div class="review-card-head"><b>Michael Brown</b><span class="stars">★★★★★</span></div><div style="font-size:12px; color:var(--text-dim);">"Michael was incredibly responsive and made buying from abroad feel simple."</div></div>
+        <div class="review-card"><div class="review-card-head"><b>Amira Hassan</b><span class="stars">★★★★★</span></div><div style="font-size:12px; color:var(--text-dim);">"Clear communication and great local knowledge of the Marbella market."</div></div>
+        <div class="review-card"><div class="review-card-head"><b>Sofia Almeida</b><span class="stars">★★★★☆</span></div><div style="font-size:12px; color:var(--text-dim);">"Smooth collaboration, would happily work together again."</div></div>
+      </div>
+    </section>
+
+    <!-- ======================= DOCUMENTS ======================= -->
+    <section class="view" id="view-documents">
+      <div class="view-header"><div><span class="eyebrow">Documents</span><h1>Contracts & files</h1></div><button class="btn btn-primary" disabled data-tip="Disabled in demo mode">+ Upload</button></div>
+
+      <div class="doc-row"><div class="doc-ic">▤</div><div style="color:var(--text);">Collaboration Agreement — Sofia Almeida.pdf</div><div>1.2 MB</div><div>Jun 12, 2026</div><button class="btn btn-outline btn-sm" disabled>Download</button></div>
+      <div class="doc-row"><div class="doc-ic">▤</div><div style="color:var(--text);">Listing Contract — Luxury Villa Marbella.pdf</div><div>860 KB</div><div>May 28, 2026</div><button class="btn btn-outline btn-sm" disabled>Download</button></div>
+      <div class="doc-row"><div class="doc-ic">▥</div><div style="color:var(--text);">Brochure — Modern Apartment Lisbon.pdf</div><div>3.4 MB</div><div>May 20, 2026</div><button class="btn btn-outline btn-sm" disabled>Download</button></div>
+      <div class="doc-row"><div class="doc-ic">▦</div><div style="color:var(--text);">Property File — Penthouse Dubai.zip</div><div>8.1 MB</div><div>Apr 30, 2026</div><button class="btn btn-outline btn-sm" disabled>Download</button></div>
+    </section>
+
+    <!-- ======================= ECOSYSTEM ======================= -->
+    <section class="view" id="view-ecosystem">
+      <div class="view-header"><div><span class="eyebrow">Ecosystem</span><h1>Everything connects around you</h1><div class="view-sub">Hover a node to see how each professional category supports your deal.</div></div></div>
+      <div class="eco-wheel" id="ecoWheel">
+        <div class="eco-center">YOU<span>AGENT</span></div>
+      </div>
+    </section>
+
+    <!-- ======================= NOTIFICATIONS ======================= -->
+    <section class="view" id="view-notifications">
+      <div class="view-header"><div><span class="eyebrow">Notifications</span><h1>Recent activity</h1></div><button class="btn btn-outline btn-sm" onclick="clearNotifs()">Mark all as read</button></div>
+
+      <div id="notifList">
+        <div class="notif-row unread"><div class="notif-ic">◍</div><div><b>New buyer matched</b> — Julia Rossi is interested in New Development, Lisbon<div class="notif-time">18 MIN AGO</div></div></div>
+        <div class="notif-row unread"><div class="notif-ic">⇄</div><div><b>New collaboration request</b> — Sofia Almeida wants to collaborate on Seafront Apartment, Athens<div class="notif-time">1 HOUR AGO</div></div></div>
+        <div class="notif-row unread"><div class="notif-ic">♥</div><div><b>Property saved</b> — Modern Apartment, Lisbon was added to 3 new shortlists<div class="notif-time">3 HOURS AGO</div></div></div>
+        <div class="notif-row unread"><div class="notif-ic">€</div><div><b>Offer received</b> — €610,000 for Modern Apartment, Lisbon<div class="notif-time">5 HOURS AGO</div></div></div>
+        <div class="notif-row unread"><div class="notif-ic">✦</div><div><b>AI price alert</b> — Luxury Villa, Marbella may be overpriced relative to new comparables<div class="notif-time">YESTERDAY</div></div></div>
+      </div>
+      <div class="empty-state" id="emptyNotifs" style="display:none;">
+        <div class="es-ic">◉</div>
+        <div class="es-title">No new notifications</div>
+        <div class="es-text">You're all caught up. New activity will show up here.</div>
+      </div>
+    </section>
+
+    <!-- ======================= SETTINGS ======================= -->
+    <section class="view" id="view-settings">
+      <div class="view-header"><div><span class="eyebrow">Settings</span><h1>Profile & preferences</h1></div><button class="btn btn-primary" onclick="showToast('Settings saved (demo)')">Save Changes</button></div>
+
+      <div class="panel settings-group">
+        <div class="panel-title">Profile</div>
+        <div class="settings-row"><div><div class="settings-label">Name</div><div class="settings-hint">Michael Turner</div></div><button class="btn btn-ghost btn-sm">Edit</button></div>
+        <div class="settings-row"><div><div class="settings-label">Bio</div><div class="settings-hint">Luxury & coastal property specialist, London</div></div><button class="btn btn-ghost btn-sm">Edit</button></div>
+      </div>
+
+      <div class="panel settings-group">
+        <div class="panel-title">Notifications</div>
+        <div class="settings-row"><div><div class="settings-label">New buyer matches</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-knob"></div></div></div>
+        <div class="settings-row"><div><div class="settings-label">Collaboration requests</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-knob"></div></div></div>
+        <div class="settings-row"><div><div class="settings-label">AI price alerts</div></div><div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-knob"></div></div></div>
+      </div>
+
+      <div class="panel settings-group">
+        <div class="panel-title">Languages</div>
+        <div class="tag-input-list">
+          <span class="settings-tag">ENGLISH <button>✕</button></span>
+          <span class="settings-tag">FRENCH <button>✕</button></span>
+          <span class="settings-tag">+ ADD LANGUAGE</span>
+        </div>
+      </div>
+
+      <div class="panel settings-group">
+        <div class="panel-title">Commission & Availability</div>
+        <div class="settings-row"><div><div class="settings-label">Default commission split</div><div class="settings-hint">Applied to new collaboration requests</div></div><input type="text" value="50 / 50" style="width:90px; padding:8px; border-radius:6px; border:1px solid var(--line); text-align:center; background:var(--bg-1); color:var(--text); font-family:var(--mono);"></div>
+        <div class="settings-row"><div><div class="settings-label">Currently accepting new buyers</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-knob"></div></div></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ============ COMMAND PALETTE ============ -->
+<div class="cmdk-overlay" id="cmdkOverlay" onclick="if(event.target===this)closeCmdk()">
+  <div class="cmdk-box">
+    <div class="cmdk-input-row">
+      <span class="mono" style="color:var(--text-faint);">⌘K</span>
+      <input id="cmdkInput" placeholder="Search agents, buyers, properties, collaborations…" autocomplete="off">
+      <span class="cmdk-esc">ESC</span>
+    </div>
+    <div class="cmdk-results" id="cmdkResults"></div>
+  </div>
+</div>
+
+<!-- ============ COLLAB REQUEST MODAL ============ -->
+<div class="modal-overlay" id="collabModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeCollabModal()">✕</button>
+    <span class="eyebrow">Collaboration Request</span>
+    <h3>John Smith wants to collaborate</h3>
+    <div class="modal-avatar-row">
+      <div class="rail-avatar" style="width:40px;height:40px;">JS</div>
+      <div><b>John Smith</b><div style="font-size:11px; color:var(--text-faint); font-family:var(--mono);">VERIFIED AGENT · TORONTO, CANADA</div></div>
+    </div>
+    <div class="modal-detail-row"><span>Property</span><b>Luxury Apartment</b></div>
+    <div class="modal-detail-row"><span>Commission Split</span><b>50 / 50</b></div>
+    <div class="modal-detail-row"><span>Buyer interest</span><b>2 verified buyers</b></div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" onclick="respondCollab(false)">Decline</button>
+      <button class="btn btn-primary" onclick="respondCollab(true)">Accept</button>
+    </div>
+  </div>
+</div>
+
+<div class="eco-tooltip" id="ecoTooltip"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- Live clock ---------------- */
+function tickClock(){
+  const el = document.getElementById('liveClock');
+  const now = new Date();
+  const t = now.toTimeString().slice(0,8);
+  el.childNodes[0].textContent = t;
+}
+setInterval(tickClock, 1000); tickClock();
+
+/* ---------------- Live ticker content ---------------- */
+const tickerData = [
+  ['Luxury Villa · Marbella','€2,450,000','up'],
+  ['Penthouse · Dubai','€1,890,000','down'],
+  ['Seafront Apt · Athens','€850,000','up'],
+  ['Modern Apt · Lisbon','€620,000','up'],
+  ['Alpine Chalet · Chamonix','SOLD €1,120,000','up'],
+  ['New collaboration','Sofia Almeida × Radu Constantin','flat'],
+  ['New buyer','Amira Hassan · UAE verified','flat'],
+  ['AI alert','Marbella villa −3% suggested','flat'],
+];
+function buildTicker(){
+  const track = document.getElementById('tickerTrack');
+  let html = '';
+  for(let r=0;r<2;r++){
+    tickerData.forEach(t=>{
+      const cls = t[2]==='up' ? 'tk-up' : (t[2]==='down' ? 'tk-down' : '');
+      const arrow = t[2]==='up' ? '▲' : (t[2]==='down' ? '▼' : '●');
+      html += '<div class="ticker-item">'+t[0]+' <b>'+t[1]+'</b> <span class="'+cls+'">'+arrow+'</span></div>';
+    });
+  }
+  track.innerHTML = html;
+}
+buildTicker();
+
+/* ---------------- Navigation ---------------- */
+const titles = {
+  dashboard:"Dashboard", listings:"My Listings", property:"Property Details",
+  network:"Collaboration Network", "agent-profile":"Agent Profile", buyers:"Buyers",
+  "buyer-journey":"Buyer Journey", messages:"Messages", calendar:"Calendar",
+  ai:"AI Assistant", analytics:"Analytics", reviews:"Reviews", documents:"Documents",
+  ecosystem:"Ecosystem", notifications:"Notifications", settings:"Settings"
+};
+function goto(view){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const navMatch = document.querySelector('.nav-item[data-view="'+view+'"]');
+  if(navMatch) navMatch.classList.add('active');
+  document.getElementById('topbarTitle').textContent = titles[view] || 'Dashboard';
+  document.getElementById('view-'+view).scrollTop = 0;
+  if(view==='analytics') setTimeout(initAnalyticsCharts,50);
+}
+document.querySelectorAll('.nav-item[data-view]').forEach(item=>{
+  item.addEventListener('click', ()=>{ goto(item.dataset.view); if(window.innerWidth<=860) toggleRail(false); });
+});
+
+/* ---------------- Mortgage calculator ---------------- */
+function calcMortgage(){
+  const p = parseFloat(document.getElementById('mLoan').value)||0;
+  const r = (parseFloat(document.getElementById('mRate').value)||0)/100/12;
+  const n = (parseFloat(document.getElementById('mYears').value)||1)*12;
+  let m = r===0 ? p/n : p * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+  document.getElementById('mResult').textContent = '€' + Math.round(m).toLocaleString() + ' / mo';
+}
+
+/* ---------------- AI tool outputs ---------------- */
+function toggleAI(btn){
+  const out = btn.parentElement.querySelector('.ai-output');
+  out.classList.toggle('show');
+  btn.textContent = out.classList.contains('show') ? 'Hide Result' : 'Run Demo';
+}
+
+/* ---------------- Collaboration modal ---------------- */
+function openCollabModal(){ document.getElementById('collabModal').classList.add('show'); }
+function closeCollabModal(){ document.getElementById('collabModal').classList.remove('show'); }
+function respondCollab(accepted){
+  closeCollabModal();
+  showToast(accepted ? 'Collaboration request accepted' : 'Collaboration request declined');
+}
+
+/* ---------------- Toast ---------------- */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+/* ---------------- Notifications ---------------- */
+function clearNotifs(){
+  document.querySelectorAll('.notif-row').forEach(n=>n.classList.remove('unread'));
+  showToast('All notifications marked as read');
+}
+
+/* ---------------- Empty states ---------------- */
+function showEmptyBuyers(){ document.getElementById('buyersList').style.display='none'; document.getElementById('emptyBuyers').style.display='block'; }
+function hideEmptyBuyers(){ document.getElementById('buyersList').style.display='block'; document.getElementById('emptyBuyers').style.display='none'; }
+
+/* ---------------- Calendar ---------------- */
+const events = {5:[['Property Visit','#6672b8']],8:[['Collab Call','#e3ae53']],12:[['Client Meeting','#aab3ec'],['Property Visit','#6672b8']],17:[['Closing','#3fd399']],21:[['Property Visit','#6672b8']],26:[['Client Meeting','#aab3ec']],30:[['Closing','#3fd399']]};
+function buildCalendar(){
+  const grid = document.getElementById('calGrid');
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d=>{
+    const el = document.createElement('div'); el.className='cal-dow'; el.textContent=d; grid.appendChild(el);
+  });
+  const firstDow = 6; // Aug 1 2026 is a Saturday
+  for(let i=0;i<firstDow;i++){ const b=document.createElement('div'); b.className='cal-cell blank'; grid.appendChild(b); }
+  for(let d=1; d<=31; d++){
+    const cell = document.createElement('div'); cell.className='cal-cell';
+    cell.innerHTML = '<div class="cal-num">'+String(d).padStart(2,'0')+'</div>';
+    if(events[d]){
+      events[d].forEach(ev=>{
+        const pill = document.createElement('div'); pill.className='cal-pill';
+        pill.style.background = ev[1]+'26'; pill.style.color = ev[1];
+        pill.textContent=ev[0];
+        cell.appendChild(pill);
+      });
+    }
+    cell.addEventListener('click', ()=>{
+      document.querySelectorAll('.cal-cell').forEach(c=>c.classList.remove('selected'));
+      cell.classList.add('selected');
+      const detail = document.getElementById('calDetail');
+      detail.style.display='block';
+      if(events[d]){
+        detail.innerHTML = '<div class="panel-title">AUGUST '+d+', 2026</div>' + events[d].map(ev=>'<div class="mini-item"><span class="mi-ic">📅</span> <b>'+ev[0]+'</b></div>').join('');
+      } else {
+        detail.innerHTML = '<div class="empty-state" style="padding:16px;"><div class="es-title">No events on August '+d+'</div></div>';
+      }
+    });
+    grid.appendChild(cell);
+  }
+}
+buildCalendar();
+
+/* ---------------- Ecosystem wheel ---------------- */
+const ecoNodes = [
+  {label:'AGENCY', ic:'◈', angle:0},
+  {label:'BUYER', ic:'◍', angle:51.4},
+  {label:'BANK', ic:'▥', angle:102.8},
+  {label:'NOTARY', ic:'⚖', angle:154.2},
+  {label:'DEVELOPER', ic:'▦', angle:205.6},
+  {label:'ARCHITECT', ic:'▲', angle:257},
+  {label:'AI', ic:'✦', angle:308.4},
+];
+const ecoTips = {
+  AGENCY:'Share listings and split leads with agencies on the network.',
+  BUYER:'Verified buyers reach your listings directly, including from abroad.',
+  BANK:'Buyers calculate financing on your listing and get matched to a lender.',
+  NOTARY:'Closed deals move straight to a verified notary with data already in place.',
+  DEVELOPER:'Access new development inventory to offer alongside resale listings.',
+  ARCHITECT:'Bring in design partners for renovation-ready or off-plan properties.',
+  AI:'Valuation, matching, and market insight running quietly behind every listing.'
+};
+function buildEcosystem(){
+  const wheel = document.getElementById('ecoWheel');
+  wheel.innerHTML = '<div class="eco-center">YOU<span>AGENT</span></div>';
+  const size = wheel.offsetWidth;
+  const nodeSize = size < 400 ? 64 : 88;
+  const R = size/2 - nodeSize/2 - 8, cx=size/2, cy=size/2;
+  ecoNodes.forEach(n=>{
+    const rad = n.angle * Math.PI/180;
+    const x = cx + R*Math.cos(rad) - nodeSize/2;
+    const y = cy + R*Math.sin(rad) - nodeSize/2;
+    const line = document.createElement('div');
+    line.className='eco-line';
+    line.style.width = R+'px';
+    line.style.transform = 'rotate('+n.angle+'deg)';
+    wheel.appendChild(line);
+    const node = document.createElement('div');
+    node.className='eco-node';
+    node.style.width = nodeSize+'px'; node.style.height = nodeSize+'px';
+    node.style.left = x+'px'; node.style.top = y+'px';
+    if(size < 400){ node.style.fontSize = '9px'; }
+    node.innerHTML = '<div class="eco-ic">'+n.ic+'</div>'+n.label;
+    node.addEventListener('mouseenter', (e)=>{
+      const tip = document.getElementById('ecoTooltip');
+      tip.textContent = ecoTips[n.label];
+      tip.style.display='block';
+      tip.style.left = (e.clientX+14)+'px';
+      tip.style.top = (e.clientY+10)+'px';
+    });
+    node.addEventListener('mousemove', (e)=>{
+      const tip = document.getElementById('ecoTooltip');
+      tip.style.left = (e.clientX+14)+'px';
+      tip.style.top = (e.clientY+10)+'px';
+    });
+    node.addEventListener('mouseleave', ()=>{ document.getElementById('ecoTooltip').style.display='none'; });
+    node.addEventListener('click', ()=>{ showToast(ecoTips[n.label]); });
+    wheel.appendChild(node);
+  });
+}
+buildEcosystem();
+window.addEventListener('resize', ()=>{
+  clearTimeout(window.__ecoResizeT);
+  window.__ecoResizeT = setTimeout(buildEcosystem, 200);
+});
+
+/* ---------------- Command palette (global search) ---------------- */
+const searchIndex = [
+  {group:'Agents', label:'Sofia Almeida — Lisbon', view:'network'},
+  {group:'Agents', label:'Radu Constantin — Bucharest', view:'network'},
+  {group:'Agents', label:'Kenji Sato — Tokyo', view:'network'},
+  {group:'Buyers', label:'Michael Brown — Canada', view:'buyers'},
+  {group:'Buyers', label:'Amira Hassan — UAE', view:'buyers'},
+  {group:'Buyers', label:'Tom Becker — Germany', view:'buyers'},
+  {group:'Properties', label:'Luxury Villa — Marbella (€2,450,000)', view:'listings'},
+  {group:'Properties', label:'Penthouse — Dubai (€1,890,000)', view:'listings'},
+  {group:'Properties', label:'Modern Apartment — Lisbon (€620,000)', view:'listings'},
+  {group:'Collaborations', label:'Sofia Almeida × Seafront Apartment, Athens', view:'network'},
+  {group:'Collaborations', label:'Radu Constantin × Modern Apartment, Lisbon', view:'network'},
+];
+const cmdkOverlay = document.getElementById('cmdkOverlay');
+const cmdkInput = document.getElementById('cmdkInput');
+const cmdkResults = document.getElementById('cmdkResults');
+function openCmdk(){ cmdkOverlay.classList.add('show'); cmdkInput.value=''; renderCmdk(''); setTimeout(()=>cmdkInput.focus(),50); }
+function closeCmdk(){ cmdkOverlay.classList.remove('show'); }
+function renderCmdk(q){
+  q = q.trim().toLowerCase();
+  const list = q ? searchIndex.filter(i=>i.label.toLowerCase().includes(q)) : searchIndex;
+  if(list.length===0){ cmdkResults.innerHTML = '<div class="cmdk-empty">No results for "'+q+'"</div>'; return; }
+  const groups = {};
+  list.forEach(m=>{ (groups[m.group]=groups[m.group]||[]).push(m); });
+  cmdkResults.innerHTML = Object.keys(groups).map(g=>
+    '<div class="cmdk-group-title">'+g+'</div>' +
+    groups[g].map(m=>'<div class="cmdk-item" data-view="'+m.view+'">'+m.label+'</div>').join('')
+  ).join('');
+  cmdkResults.querySelectorAll('.cmdk-item').forEach(el=>{
+    el.addEventListener('click', ()=>{ goto(el.dataset.view); closeCmdk(); });
+  });
+}
+cmdkInput.addEventListener('input', ()=>renderCmdk(cmdkInput.value));
+document.addEventListener('keydown', (e)=>{
+  if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openCmdk(); }
+  if(e.key==='Escape') closeCmdk();
+});
+
+/* ---------------- Conversation tab switching (Messages) ---------------- */
+document.querySelectorAll('.conv-item').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    document.querySelectorAll('.conv-item').forEach(i=>i.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+
+/* ---------------- Charts (dark theme) ---------------- */
+Chart.defaults.font.family = "IBM Plex Mono";
+Chart.defaults.color = "#5b6485";
+new Chart(document.getElementById('chartRevenue'), {
+  type:'line',
+  data:{labels:['W1','W2','W3','W4'], datasets:[{data:[8200,11400,9800,15600], borderColor:'#e3ae53', backgroundColor:'rgba(227,174,83,0.08)', fill:true, tension:.4, pointRadius:3, pointBackgroundColor:'#e3ae53'}]},
+  options:{plugins:{legend:{display:false}}, scales:{y:{grid:{color:'rgba(160,172,214,0.08)'}}, x:{grid:{display:false}}}}
+});
+
+function initAnalyticsCharts(){
+  if(window.__chartsInit) return; window.__chartsInit = true;
+  new Chart(document.getElementById('chartViews'), {
+    type:'line',
+    data:{labels:['Feb','Mar','Apr','May','Jun','Jul'], datasets:[{data:[3200,3900,4650,5100,5980,6420], borderColor:'#aab3ec', backgroundColor:'rgba(170,179,236,0.08)', fill:true, tension:.4, pointRadius:3, pointBackgroundColor:'#aab3ec'}]},
+    options:{plugins:{legend:{display:false}}, scales:{y:{grid:{color:'rgba(160,172,214,0.08)'}}, x:{grid:{display:false}}}}
+  });
+  new Chart(document.getElementById('chartCountries'), {
+    type:'bar',
+    data:{labels:['UK','Germany','UAE','Canada','Portugal','France'], datasets:[{data:[29,24,18,16,14,10], backgroundColor:'#6672b8', borderRadius:4}]},
+    options:{plugins:{legend:{display:false}}, scales:{y:{grid:{color:'rgba(160,172,214,0.08)'}}, x:{grid:{display:false}}}}
+  });
+}
+</script>
+</body>
+</html>
