@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-         <!-- Google tag (gtag.js) -->
+        <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQG0HRP6TD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -12,7 +12,7 @@
 </script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LuciHome — Agent Workspace </title>
+<title>LuciHome — Agent Workspace</title>
 <link rel="icon" type="image/png" href="/lucihome.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -570,6 +570,7 @@ function toggleRail(force){
       <li class="nav-item" data-view="analytics"><span class="ic">▲</span> Analytics</li>
       <li class="nav-item" data-view="reviews"><span class="ic">★</span> Reviews</li>
       <li class="nav-item" data-view="documents"><span class="ic">▥</span> Documents</li>
+      <li class="nav-item" data-view="ecosystem"><span class="ic">◎</span> Ecosystem</li>
       <div class="rail-divider"></div>
       <li class="nav-item" data-view="notifications"><span class="ic">◉</span> Notifications <span class="nav-count">5</span></li>
       <li class="nav-item" data-view="settings"><span class="ic">⚙</span> Settings</li>
@@ -658,139 +659,43 @@ function toggleRail(force){
     <!-- ======================= MY LISTINGS ======================= -->
     <section class="view" id="view-listings">
       <div class="view-header">
-        <div><span class="eyebrow">My Listings</span><h1>87 active listings</h1><div class="view-sub">Everything you've published across the LuciHome network.</div></div>
+        <div><span class="eyebrow">My Listings</span><h1>87 active listings</h1><div class="view-sub">Everything you've published across the LuciHome network. Click any card to open the full listing.</div></div>
         <button class="btn btn-primary">+ Add Listing</button>
       </div>
 
-      <div class="listing-grid">
-
-        <div class="listing-card" onclick="goto('property')">
-          <div class="listing-photo"><span class="badge badge-active lp-badge">ACTIVE</span><div class="lp-fav">♥</div>🏡</div>
-          <div class="listing-body">
-            <div class="listing-price">€2,450,000</div>
-            <div class="listing-addr">Luxury Villa · Marbella, Spain</div>
-            <div class="listing-meta-row"><span>◎ 1,204 views</span><span>♥ 86</span></div>
-            <div class="listing-actions">
-              <div class="listing-collabs"><div class="mini-avatar">SA</div><div class="mini-avatar">RC</div></div>
-              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="listing-card" onclick="goto('property')">
-          <div class="listing-photo"><span class="badge badge-offer lp-badge">UNDER OFFER</span><div class="lp-fav">♥</div>🏢</div>
-          <div class="listing-body">
-            <div class="listing-price">€1,890,000</div>
-            <div class="listing-addr">Penthouse · Dubai, UAE</div>
-            <div class="listing-meta-row"><span>◎ 980 views</span><span>♥ 61</span></div>
-            <div class="listing-actions">
-              <div class="listing-collabs"><div class="mini-avatar">KS</div></div>
-              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="listing-card" onclick="goto('property')">
-          <div class="listing-photo"><span class="badge badge-active lp-badge">ACTIVE</span><div class="lp-fav">♥</div>🏘️</div>
-          <div class="listing-body">
-            <div class="listing-price">€850,000</div>
-            <div class="listing-addr">Seafront Apartment · Athens, Greece</div>
-            <div class="listing-meta-row"><span>◎ 742 views</span><span>♥ 48</span></div>
-            <div class="listing-actions">
-              <div class="listing-collabs"><div class="mini-avatar">SA</div></div>
-              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="listing-card" onclick="goto('property')">
-          <div class="listing-photo"><span class="badge badge-active lp-badge">ACTIVE</span><div class="lp-fav">♥</div>🏙️</div>
-          <div class="listing-body">
-            <div class="listing-price">€620,000</div>
-            <div class="listing-addr">Modern Apartment · Lisbon, Portugal</div>
-            <div class="listing-meta-row"><span>◎ 655 views</span><span>♥ 39</span></div>
-            <div class="listing-actions">
-              <div class="listing-collabs"><div class="mini-avatar">RC</div><div class="mini-avatar">EP</div></div>
-              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="listing-card" onclick="goto('property')">
-          <div class="listing-photo"><span class="badge badge-sold lp-badge">SOLD</span><div class="lp-fav">♥</div>🏔️</div>
-          <div class="listing-body">
-            <div class="listing-price">€1,120,000</div>
-            <div class="listing-addr">Alpine Chalet · Chamonix, France</div>
-            <div class="listing-meta-row"><span>◎ 1,530 views</span><span>♥ 112</span></div>
-            <div class="listing-actions">
-              <div class="listing-collabs"><div class="mini-avatar">DC</div></div>
-              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="listing-card" onclick="goto('property')">
-          <div class="listing-photo"><span class="badge badge-active lp-badge">ACTIVE</span><div class="lp-fav">♥</div>🏚️</div>
-          <div class="listing-body">
-            <div class="listing-price">€340,000</div>
-            <div class="listing-addr">Renovated Loft · Bucharest, Romania</div>
-            <div class="listing-meta-row"><span>◎ 410 views</span><span>♥ 22</span></div>
-            <div class="listing-actions">
-              <div class="listing-collabs"></div>
-              <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();goto('property')">View Details</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      <div class="listing-grid" id="listingGrid"></div>
     </section>
 
     <!-- ======================= PROPERTY DETAILS ======================= -->
     <section class="view" id="view-property">
       <button class="btn btn-ghost" onclick="goto('listings')">← Back to My Listings</button>
 
-      <div class="pd-gallery">
-        <div>🏡</div><div>🛋️</div><div>🍽️</div><div>🌇</div><div>🏊</div>
-      </div>
+      <div class="pd-gallery" id="pdGallery"></div>
 
       <div class="pd-layout">
         <div>
-          <span class="badge badge-active">ACTIVE</span>
-          <h1 style="margin-top:8px;">Luxury Villa — Marbella, Spain</h1>
-          <div class="listing-price" style="font-size:1.5rem; margin-top:4px;">€2,450,000</div>
-          <div class="pd-tags">
-            <span class="pd-tag">5 BED</span><span class="pd-tag">4 BATH</span><span class="pd-tag">420 M²</span>
-            <span class="pd-tag">POOL</span><span class="pd-tag">SEA VIEW</span><span class="pd-tag">BUILT 2019</span>
-          </div>
-          <p style="font-size:13px; color:var(--text-dim); line-height:1.8;">
-            A contemporary villa on the Golden Mile, five minutes from the beach. Floor-to-ceiling windows, a private pool terrace, and direct access to Marbella's most exclusive amenities. Fully furnished and ready for immediate handover.
-          </p>
+          <span class="badge" id="pdBadge">ACTIVE</span>
+          <h1 style="margin-top:8px;" id="pdTitle">—</h1>
+          <div class="listing-price" style="font-size:1.5rem; margin-top:4px;" id="pdPrice">—</div>
+          <div class="pd-tags" id="pdTags"></div>
+          <p style="font-size:13px; color:var(--text-dim); line-height:1.8;" id="pdDesc"></p>
 
           <div class="panel" style="margin-top:18px;">
             <div class="panel-title">Nearby</div>
-            <div class="amenity-list">
-              <div class="amenity-row"><span>Aloha International School</span><span>1.2 km</span></div>
-              <div class="amenity-row"><span>Marbella Bus Terminal</span><span>2.4 km</span></div>
-              <div class="amenity-row"><span>El Lago Restaurant</span><span>0.6 km</span></div>
-              <div class="amenity-row"><span>Parque de la Represa</span><span>1.8 km</span></div>
-            </div>
+            <div class="amenity-list" id="pdAmenities"></div>
           </div>
 
           <div class="panel" style="margin-top:18px;">
-            <div class="panel-title">Buyer Inquiries (3)</div>
-            <div class="mini-list">
-              <div class="mini-item"><span class="mi-ic">◍</span> <b>Michael Brown</b> — Canada · asked about financing <span class="mi-time">verified</span></div>
-              <div class="mini-item"><span class="mi-ic">◍</span> <b>Tom Becker</b> — Germany · requested private viewing <span class="mi-time">verified</span></div>
-              <div class="mini-item"><span class="mi-ic">◍</span> <b>Julia Rossi</b> — Italy · saved to shortlist <span class="mi-time">pending</span></div>
-            </div>
+            <div class="panel-title" id="pdInquiriesTitle">Buyer Inquiries</div>
+            <div class="mini-list" id="pdInquiries"></div>
           </div>
         </div>
 
         <div>
           <div class="ai-val-box">
             <div class="eyebrow" style="margin-bottom:8px;">AI Valuation</div>
-            <div class="av-num">€2,410,000</div>
-            <div class="av-range">est. range €2.32M–€2.51M · 94% confidence</div>
+            <div class="av-num" id="pdAiVal">—</div>
+            <div class="av-range" id="pdAiRange">—</div>
           </div>
 
           <div class="panel">
@@ -811,19 +716,12 @@ function toggleRail(force){
 
           <div class="panel" style="margin-top:14px;">
             <div class="panel-title">Collaborators</div>
-            <div class="mini-list">
-              <div class="mini-item"><span class="mi-ic">⇄</span> <b>Sofia Almeida</b> — Lisbon <span class="mi-time">50/50</span></div>
-              <div class="mini-item"><span class="mi-ic">⇄</span> <b>Radu Constantin</b> — Bucharest <span class="mi-time">60/40</span></div>
-            </div>
+            <div class="mini-list" id="pdCollabs"></div>
           </div>
 
           <div class="panel" style="margin-top:14px;">
             <div class="panel-title">Analytics</div>
-            <div class="mini-list">
-              <div class="mini-item">◎ 1,204 total views <span class="mi-time" style="color:var(--mint);">+18%</span></div>
-              <div class="mini-item">♥ 86 favorites <span class="mi-time" style="color:var(--mint);">+9%</span></div>
-              <div class="mini-item">◎ viewed from 7 countries</div>
-            </div>
+            <div class="mini-list" id="pdAnalytics"></div>
           </div>
         </div>
       </div>
@@ -1022,35 +920,19 @@ function toggleRail(force){
       <div class="view-header"><div><span class="eyebrow">Messages</span><h1>Conversations</h1></div></div>
       <div class="msg-shell">
         <div class="msg-side">
-          <div class="msg-tabs">
-            <div class="msg-tab active">Buyers</div>
-            <div class="msg-tab">Agents</div>
-            <div class="msg-tab">Agencies</div>
+          <div class="msg-tabs" id="msgTabs">
+            <div class="msg-tab active" data-group="Buyers">Buyers</div>
+            <div class="msg-tab" data-group="Agents">Agents</div>
+            <div class="msg-tab" data-group="Agencies">Agencies</div>
           </div>
-          <div class="conv-item active">
-            <div class="buyer-avatar" style="width:32px;height:32px;font-size:11px;">MB</div>
-            <div><div class="conv-name">Michael Brown</div><div class="conv-preview">Could we schedule a second viewing?</div></div>
-            <div class="conv-unread"></div>
-          </div>
-          <div class="conv-item">
-            <div class="buyer-avatar" style="width:32px;height:32px;font-size:11px;">SA</div>
-            <div><div class="conv-name">Sofia Almeida</div><div class="conv-preview">Sounds good, 50/50 works for me.</div></div>
-          </div>
-          <div class="conv-item">
-            <div class="buyer-avatar" style="width:32px;height:32px;font-size:11px;">TB</div>
-            <div><div class="conv-name">Tom Becker</div><div class="conv-preview">Thanks for the mortgage info!</div></div>
-          </div>
+          <div id="convList"></div>
         </div>
         <div class="chat-pane">
-          <div class="chat-head">Michael Brown · Canada</div>
-          <div class="chat-body">
-            <div><div class="bubble them">Hi Michael, thanks for your interest in the Marbella villa!</div><div class="bubble-time">10:02</div></div>
-            <div style="align-self:flex-end;"><div class="bubble me">Happy to answer any questions — would a video walkthrough help?</div><div class="bubble-time" style="text-align:right;">10:04</div></div>
-            <div><div class="bubble them">That would be great. Could we schedule a second viewing too?</div><div class="bubble-time">10:11</div></div>
-          </div>
+          <div class="chat-head" id="chatHead">—</div>
+          <div class="chat-body" id="chatBody"></div>
           <div class="chat-input-row">
-            <input placeholder="Demo mode — messaging is disabled" disabled>
-            <button class="btn btn-primary btn-sm" disabled>Send</button>
+            <input id="chatInput" placeholder="Type a message…" autocomplete="off">
+            <button class="btn btn-primary btn-sm" onclick="sendMessage()">Send</button>
           </div>
         </div>
       </div>
@@ -1323,6 +1205,7 @@ function goto(view){
   document.getElementById('topbarTitle').textContent = titles[view] || 'Dashboard';
   document.getElementById('view-'+view).scrollTop = 0;
   if(view==='analytics') setTimeout(initAnalyticsCharts,50);
+  if(view==='ecosystem') setTimeout(buildEcosystem,50);
 }
 document.querySelectorAll('.nav-item[data-view]').forEach(item=>{
   item.addEventListener('click', ()=>{ goto(item.dataset.view); if(window.innerWidth<=860) toggleRail(false); });
@@ -1462,8 +1345,8 @@ function buildEcosystem(){
     wheel.appendChild(node);
   });
 }
-buildEcosystem();
 window.addEventListener('resize', ()=>{
+  if(!document.getElementById('view-ecosystem').classList.contains('active')) return;
   clearTimeout(window.__ecoResizeT);
   window.__ecoResizeT = setTimeout(buildEcosystem, 200);
 });
@@ -1507,13 +1390,313 @@ document.addEventListener('keydown', (e)=>{
   if(e.key==='Escape') closeCmdk();
 });
 
-/* ---------------- Conversation tab switching (Messages) ---------------- */
-document.querySelectorAll('.conv-item').forEach(item=>{
-  item.addEventListener('click', ()=>{
-    document.querySelectorAll('.conv-item').forEach(i=>i.classList.remove('active'));
-    item.classList.add('active');
+/* ================================================================
+   PROPERTY ILLUSTRATIONS (inline SVG line-art — no external images,
+   so nothing ever breaks or needs licensing; unique look per listing)
+   ================================================================ */
+function svgScene(kind, c1, c2){
+  const sky = 'linear-gradient(160deg,'+c1+',' + c2 + ')';
+  const base = '<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMax slice" style="width:100%;height:100%;">';
+  const strokes = {stroke:'rgba(255,255,255,0.85)'};
+  let shape = '';
+  if(kind==='villa'){
+    shape = '<polyline points="30,70 30,45 70,25 110,45 110,70" fill="none" stroke="white" stroke-width="1.6" opacity=".9"/>'+
+      '<rect x="38" y="55" width="14" height="15" fill="none" stroke="white" stroke-width="1.2" opacity=".8"/>'+
+      '<rect x="60" y="55" width="14" height="15" fill="none" stroke="white" stroke-width="1.2" opacity=".8"/>'+
+      '<rect x="85" y="50" width="20" height="20" fill="none" stroke="white" stroke-width="1.2" opacity=".8"/>'+
+      '<ellipse cx="140" cy="88" rx="34" ry="9" fill="none" stroke="white" stroke-width="1.4" opacity=".7"/>'+
+      '<line x1="10" y1="70" x2="190" y2="70" stroke="white" stroke-width="1" opacity=".35"/>';
+  } else if(kind==='tower'){
+    shape = '<rect x="70" y="15" width="34" height="80" fill="none" stroke="white" stroke-width="1.6" opacity=".9"/>'+
+      Array.from({length:7}).map((_,i)=>'<line x1="70" y1="'+(24+i*10)+'" x2="104" y2="'+(24+i*10)+'" stroke="white" stroke-width=".8" opacity=".55"/>').join('')+
+      '<rect x="45" y="55" width="18" height="40" fill="none" stroke="white" stroke-width="1.2" opacity=".7"/>'+
+      '<rect x="112" y="65" width="16" height="30" fill="none" stroke="white" stroke-width="1.2" opacity=".7"/>'+
+      '<line x1="10" y1="95" x2="190" y2="95" stroke="white" stroke-width="1" opacity=".35"/>';
+  } else if(kind==='seafront'){
+    shape = '<rect x="55" y="30" width="70" height="55" fill="none" stroke="white" stroke-width="1.6" opacity=".9"/>'+
+      Array.from({length:3}).map((_,i)=>'<line x1="55" y1="'+(46+i*14)+'" x2="125" y2="'+(46+i*14)+'" stroke="white" stroke-width=".8" opacity=".5"/>').join('')+
+      '<path d="M10,95 Q30,88 50,95 T90,95 T130,95 T170,95" fill="none" stroke="white" stroke-width="1.3" opacity=".55"/>'+
+      '<path d="M10,102 Q30,96 50,102 T90,102 T130,102 T170,102" fill="none" stroke="white" stroke-width="1" opacity=".35"/>';
+  } else if(kind==='riverside'){
+    shape = '<rect x="50" y="35" width="90" height="45" fill="none" stroke="white" stroke-width="1.6" opacity=".9"/>'+
+      Array.from({length:4}).map((_,i)=>'<rect x="'+(58+i*20)+'" y="45" width="10" height="12" fill="none" stroke="white" stroke-width="1" opacity=".6"/>').join('')+
+      '<path d="M0,100 Q50,90 100,100 T200,100" fill="none" stroke="white" stroke-width="1.3" opacity=".5"/>';
+  } else if(kind==='chalet'){
+    shape = '<polyline points="50,60 100,20 150,60" fill="none" stroke="white" stroke-width="1.8" opacity=".95"/>'+
+      '<rect x="60" y="60" width="80" height="35" fill="none" stroke="white" stroke-width="1.4" opacity=".85"/>'+
+      '<line x1="100" y1="35" x2="100" y2="95" stroke="white" stroke-width="1" opacity=".5"/>'+
+      '<polyline points="15,45 35,25 55,45" fill="none" stroke="white" stroke-width="1.2" opacity=".55"/>'+
+      '<polyline points="145,50 165,30 185,50" fill="none" stroke="white" stroke-width="1.2" opacity=".55"/>';
+  } else { // loft
+    shape = '<rect x="35" y="35" width="130" height="55" fill="none" stroke="white" stroke-width="1.6" opacity=".9"/>'+
+      Array.from({length:5}).map((_,i)=>'<rect x="'+(43+i*24)+'" y="43" width="16" height="18" fill="none" stroke="white" stroke-width="1" opacity=".6"/>').join('')+
+      '<rect x="140" y="18" width="8" height="20" fill="none" stroke="white" stroke-width="1.2" opacity=".6"/>'+
+      '<line x1="15" y1="90" x2="185" y2="90" stroke="white" stroke-width="1" opacity=".35"/>';
+  }
+  return '<div style="width:100%;height:100%;background:'+sky+';">'+base+shape+'</svg></div>';
+}
+function svgRoom(kind){
+  const s='<svg viewBox="0 0 200 120" style="width:100%;height:100%;">';
+  let m='';
+  if(kind==='living') m='<rect x="30" y="60" width="70" height="26" rx="4" fill="none" stroke="white" stroke-width="1.4" opacity=".8"/><rect x="115" y="45" width="55" height="20" fill="none" stroke="white" stroke-width="1.2" opacity=".6"/><line x1="30" y1="95" x2="170" y2="95" stroke="white" stroke-width="1" opacity=".4"/>';
+  else if(kind==='dining') m='<ellipse cx="100" cy="70" rx="45" ry="14" fill="none" stroke="white" stroke-width="1.4" opacity=".8"/><line x1="70" y1="40" x2="70" y2="58" stroke="white" stroke-width="1" opacity=".55"/><line x1="130" y1="40" x2="130" y2="58" stroke="white" stroke-width="1" opacity=".55"/><line x1="100" y1="30" x2="100" y2="50" stroke="white" stroke-width="1" opacity=".55"/>';
+  else if(kind==='view') m='<line x1="10" y1="80" x2="190" y2="80" stroke="white" stroke-width="1.6" opacity=".8"/><polyline points="30,80 55,50 80,80" fill="none" stroke="white" stroke-width="1.2" opacity=".55"/><polyline points="110,80 140,45 170,80" fill="none" stroke="white" stroke-width="1.2" opacity=".55"/>';
+  else m='<ellipse cx="100" cy="75" rx="60" ry="16" fill="none" stroke="white" stroke-width="1.6" opacity=".8"/><ellipse cx="100" cy="75" rx="42" ry="10" fill="none" stroke="white" stroke-width="1" opacity=".5"/>';
+  return '<div style="width:100%;height:100%; background:linear-gradient(160deg, var(--bg-3), var(--bg-1)); display:flex; align-items:center; justify-content:center;">'+s+m+'</svg></div>';
+}
+
+/* ================================================================
+   PROPERTIES DATA — every listing has full, independent detail
+   ================================================================ */
+const PROPERTIES = {
+  'villa-marbella':{
+    price:'€2,450,000', title:'Luxury Villa — Marbella, Spain', addr:'Luxury Villa · Marbella, Spain',
+    status:'ACTIVE', badge:'badge-active', views:'1,204', fav:'86', c1:'#38598b', c2:'#a2a8d3', svg:'villa',
+    tags:['5 BED','4 BATH','420 M²','POOL','SEA VIEW','BUILT 2019'],
+    desc:'A contemporary villa on the Golden Mile, five minutes from the beach. Floor-to-ceiling windows, a private pool terrace, and direct access to Marbella\u2019s most exclusive amenities. Fully furnished and ready for immediate handover.',
+    amenities:[['Aloha International School','1.2 km'],['Marbella Bus Terminal','2.4 km'],['El Lago Restaurant','0.6 km'],['Parque de la Represa','1.8 km']],
+    inquiries:[['Michael Brown','Canada','asked about financing','verified'],['Tom Becker','Germany','requested private viewing','verified'],['Julia Rossi','Italy','saved to shortlist','pending']],
+    ai:{val:'€2,410,000', range:'est. range €2.32M–€2.51M · 94% confidence'},
+    loan:1960000, collabs:[['Sofia Almeida','Lisbon','50/50'],['Radu Constantin','Bucharest','60/40']],
+    an:['+18%','+9%','viewed from 7 countries']
+  },
+  'penthouse-dubai':{
+    price:'€1,890,000', title:'Penthouse — Dubai, UAE', addr:'Penthouse · Dubai, UAE',
+    status:'UNDER OFFER', badge:'badge-offer', views:'980', fav:'61', c1:'#113f67', c2:'#38598b', svg:'tower',
+    tags:['4 BED','3.5 BATH','310 M²','MARINA VIEW','SMART HOME','BUILT 2021'],
+    desc:'A full-floor penthouse overlooking Dubai Marina, with private elevator access, floor-to-ceiling glass, and an integrated smart-home system throughout.',
+    amenities:[['Dubai Marina Mall','0.8 km'],['Marina Metro Station','1.1 km'],['JBR Beach Club','1.4 km'],['GEMS International School','3.0 km']],
+    inquiries:[['Amira Hassan','UAE','requested floor plans','verified'],['Kenji Sato','Japan','asked about smart-home specs','verified']],
+    ai:{val:'€1,845,000', range:'est. range €1.79M–€1.92M · 91% confidence'},
+    loan:1512000, collabs:[['Kenji Sato','Tokyo','55/45']],
+    an:['+11%','+6%','viewed from 5 countries']
+  },
+  'seafront-athens':{
+    price:'€850,000', title:'Seafront Apartment — Athens, Greece', addr:'Seafront Apartment · Athens, Greece',
+    status:'ACTIVE', badge:'badge-active', views:'742', fav:'48', c1:'#a2a8d3', c2:'#38598b', svg:'seafront',
+    tags:['3 BED','2 BATH','145 M²','SEAFRONT','RENOVATED','BUILT 2018'],
+    desc:'A fully renovated apartment directly on the Athens coastline, with uninterrupted sea views from every room and a private balcony facing the sunset.',
+    amenities:[['Glyfada Marina','0.5 km'],['Coastal Tram Stop','0.3 km'],['Balux Seaside Café','0.4 km'],['Asteras Beach','0.6 km']],
+    inquiries:[['Sofia Almeida (collab)','Portugal','confirmed a joint viewing','verified']],
+    ai:{val:'€832,000', range:'est. range €795K–€865K · 89% confidence'},
+    loan:680000, collabs:[['Sofia Almeida','Lisbon','50/50']],
+    an:['+9%','+4%','viewed from 4 countries']
+  },
+  'modern-lisbon':{
+    price:'€620,000', title:'Modern Apartment — Lisbon, Portugal', addr:'Modern Apartment · Lisbon, Portugal',
+    status:'ACTIVE', badge:'badge-active', views:'655', fav:'39', c1:'#6672b8', c2:'#e3ae53', svg:'riverside',
+    tags:['2 BED','2 BATH','98 M²','RIVER VIEW','BALCONY','BUILT 2020'],
+    desc:'A sun-filled apartment moments from Lisbon\u2019s riverfront, blending original details with a fully renovated kitchen and a private balcony over the Tagus.',
+    amenities:[['Alfama Tram Stop','0.3 km'],['Ribeira das Naus','0.6 km'],['Time Out Market','0.9 km'],['Escola Marquês de Pombal','1.1 km']],
+    inquiries:[['Michael Brown','Canada','submitted an offer — €610,000','under review']],
+    ai:{val:'€610,500', range:'est. range €592K–€635K · 92% confidence'},
+    loan:496000, collabs:[['Radu Constantin','Bucharest','60/40'],['Elena Popescu','Cluj-Napoca','50/50']],
+    an:['+14%','+7%','viewed from 6 countries']
+  },
+  'chalet-chamonix':{
+    price:'€1,120,000', title:'Alpine Chalet — Chamonix, France', addr:'Alpine Chalet · Chamonix, France',
+    status:'SOLD', badge:'badge-sold', views:'1,530', fav:'112', c1:'#113f67', c2:'#6672b8', svg:'chalet',
+    tags:['4 BED','3 BATH','280 M²','SKI-IN/SKI-OUT','FIREPLACE','BUILT 2015'],
+    desc:'A ski-in, ski-out chalet at the base of Mont Blanc, with exposed timber beams, a double-height stone fireplace, and a private hot tub terrace.',
+    amenities:[['Chamonix Ski Lift','0.2 km'],['Chamonix-Mont-Blanc Station','2.1 km'],['Micro Brasserie La Boueya','0.5 km'],['Parc des Gaudenays','1.0 km']],
+    inquiries:[['David Cohen','Israel','closed — deal completed','sold']],
+    ai:{val:'€1,120,000', range:'sold at asking · closed June 2026'},
+    loan:896000, collabs:[['David Cohen','Tel Aviv','50/50']],
+    an:['+22%','+15%','viewed from 9 countries']
+  },
+  'loft-bucharest':{
+    price:'€340,000', title:'Renovated Loft — Bucharest, Romania', addr:'Renovated Loft · Bucharest, Romania',
+    status:'ACTIVE', badge:'badge-active', views:'410', fav:'22', c1:'#e3ae53', c2:'#113f67', svg:'loft',
+    tags:['STUDIO','1 BATH','68 M²','INDUSTRIAL','EXPOSED BRICK','RENOVATED 2023'],
+    desc:'A converted industrial loft in Bucharest\u2019s Old Town, with original exposed brick, oversized steel-frame windows, and a fully renovated open-plan kitchen.',
+    amenities:[['Universitate Metro','0.4 km'],['Stavropoleos Church','0.3 km'],['Caru\u2019 cu Bere','0.5 km'],['Cișmigiu Gardens','1.2 km']],
+    inquiries:[['Elena Popescu (collab)','Cluj-Napoca','shortlisted for a client','pending']],
+    ai:{val:'€335,000', range:'est. range €322K–€349K · 87% confidence'},
+    loan:272000, collabs:[],
+    an:['+6%','+3%','viewed from 3 countries']
+  }
+};
+let currentPropertyId = 'villa-marbella';
+
+function listingCardHTML(id){
+  const p = PROPERTIES[id];
+  const collabAvatars = p.collabs.map(c=>'<div class="mini-avatar">'+c[0].split(' ').map(w=>w[0]).join('')+'</div>').join('');
+  return '<div class="listing-card" onclick="openProperty(\''+id+'\')">'+
+    '<div class="listing-photo">'+svgScene(p.svg,p.c1,p.c2)+'<span class="badge '+p.badge+' lp-badge">'+p.status+'</span><div class="lp-fav">♥</div></div>'+
+    '<div class="listing-body">'+
+      '<div class="listing-price">'+p.price+'</div>'+
+      '<div class="listing-addr">'+p.addr+'</div>'+
+      '<div class="listing-meta-row"><span>◎ '+p.views+' views</span><span>♥ '+p.fav+'</span></div>'+
+      '<div class="listing-actions">'+
+        '<div class="listing-collabs">'+collabAvatars+'</div>'+
+        '<button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openProperty(\''+id+'\')">View Details</button>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+}
+function renderListings(){
+  document.getElementById('listingGrid').innerHTML = Object.keys(PROPERTIES).map(listingCardHTML).join('');
+}
+renderListings();
+
+function openProperty(id){
+  currentPropertyId = id;
+  const p = PROPERTIES[id];
+  document.getElementById('pdGallery').innerHTML =
+    '<div>'+svgScene(p.svg,p.c1,p.c2)+'</div>'+
+    '<div>'+svgRoom('living')+'</div>'+
+    '<div>'+svgRoom('dining')+'</div>'+
+    '<div>'+svgRoom('view')+'</div>'+
+    '<div>'+svgRoom('pool')+'</div>';
+  document.getElementById('pdBadge').className = 'badge '+p.badge;
+  document.getElementById('pdBadge').textContent = p.status;
+  document.getElementById('pdTitle').textContent = p.title;
+  document.getElementById('pdPrice').textContent = p.price;
+  document.getElementById('pdTags').innerHTML = p.tags.map(t=>'<span class="pd-tag">'+t+'</span>').join('');
+  document.getElementById('pdDesc').textContent = p.desc;
+  document.getElementById('pdAmenities').innerHTML = p.amenities.map(a=>'<div class="amenity-row"><span>'+a[0]+'</span><span>'+a[1]+'</span></div>').join('');
+  document.getElementById('pdInquiriesTitle').textContent = 'Buyer Inquiries ('+p.inquiries.length+')';
+  document.getElementById('pdInquiries').innerHTML = p.inquiries.map(i=>'<div class="mini-item"><span class="mi-ic">◍</span> <b>'+i[0]+'</b> — '+i[1]+' · '+i[2]+' <span class="mi-time">'+i[3]+'</span></div>').join('') || '<div class="empty-state" style="padding:20px;"><div class="es-title">No inquiries yet</div></div>';
+  document.getElementById('pdAiVal').textContent = p.ai.val;
+  document.getElementById('pdAiRange').textContent = p.ai.range;
+  document.getElementById('pdCollabs').innerHTML = p.collabs.map(c=>'<div class="mini-item"><span class="mi-ic">⇄</span> <b>'+c[0]+'</b> — '+c[1]+' <span class="mi-time">'+c[2]+'</span></div>').join('') || '<div class="empty-state" style="padding:20px;"><div class="es-title">No collaborators yet</div></div>';
+  document.getElementById('pdAnalytics').innerHTML =
+    '<div class="mini-item">◎ '+p.views+' total views <span class="mi-time" style="color:var(--mint);">'+p.an[0]+'</span></div>'+
+    '<div class="mini-item">♥ '+p.fav+' favorites <span class="mi-time" style="color:var(--mint);">'+p.an[1]+'</span></div>'+
+    '<div class="mini-item">◎ '+p.an[2]+'</div>';
+  document.getElementById('mLoan').value = p.loan;
+  calcMortgage();
+  goto('property');
+}
+
+/* ================================================================
+   MESSAGES — real, independent conversations across 3 groups,
+   fully typeable with simulated replies.
+   ================================================================ */
+const CONTACTS = {
+  Buyers:[
+    {id:'mb', name:'Michael Brown', sub:'Canada', messages:[
+      {from:'them', text:'Hi, thanks for your interest in the Marbella villa!'},
+      {from:'me', text:'Happy to answer any questions — would a video walkthrough help?'},
+      {from:'them', text:'That would be great. Could we schedule a second viewing too?'}
+    ], reply:'Sounds perfect — I\u2019ll check availability and confirm a time shortly.'},
+    {id:'ah', name:'Amira Hassan', sub:'UAE', messages:[
+      {from:'them', text:'Could you send the full floor plans for the Dubai penthouse?'},
+      {from:'me', text:'Of course — sending them over now, along with the smart-home spec sheet.'}
+    ], reply:'Great, thank you! I\u2019ll review and get back to you this week.'},
+    {id:'tb', name:'Tom Becker', sub:'Germany', messages:[
+      {from:'them', text:'Thanks for the mortgage info on the Athens apartment!'},
+      {from:'me', text:'Anytime — let me know if you want me to loop in a partner bank on the network.'}
+    ], reply:'That would actually be really helpful, yes please.'},
+    {id:'jr', name:'Julia Rossi', sub:'Italy', messages:[
+      {from:'them', text:'Is the Lisbon apartment still available?'},
+      {from:'me', text:'Yes, it\u2019s active — happy to arrange a viewing whenever suits you.'}
+    ], reply:'Perfect, does this Thursday work on your end?'}
+  ],
+  Agents:[
+    {id:'sa', name:'Sofia Almeida', sub:'Lisbon, PT', messages:[
+      {from:'them', text:'Sounds good, 50/50 works for me on the Athens listing.'},
+      {from:'me', text:'Great, I\u2019ll confirm it on the platform now.'}
+    ], reply:'Perfect, just accepted it on my end too. Looking forward to this one!'},
+    {id:'rc', name:'Radu Constantin', sub:'Bucharest, RO', messages:[
+      {from:'them', text:'Do you have any buyers who might fit the Lisbon apartment?'},
+      {from:'me', text:'Actually yes — I have two verified buyers who match closely.'}
+    ], reply:'Excellent, send them my way whenever you can.'},
+    {id:'ks', name:'Kenji Sato', sub:'Tokyo, JP', messages:[
+      {from:'them', text:'What\u2019s the current status on the Dubai penthouse offer?'},
+      {from:'me', text:'Still under review — I expect an answer by end of week.'}
+    ], reply:'Understood, thanks for the update.'}
+  ],
+  Agencies:[
+    {id:'plr', name:'Prime Lisbon Realty', sub:'Agency · Portugal', messages:[
+      {from:'them', text:'We\u2019d love to bring a few of our agents onto your network.'},
+      {from:'me', text:'That\u2019s great to hear — send over their profiles and I\u2019ll start the verification.'}
+    ], reply:'Sending them today. Thanks for the quick turnaround!'},
+    {id:'dep', name:'Dubai Elite Properties', sub:'Agency · UAE', messages:[
+      {from:'them', text:'Interested in co-listing the Marbella villa for our Gulf buyers.'},
+      {from:'me', text:'Happy to explore that — what split were you thinking?'}
+    ], reply:'We were thinking 50/50, open to discussing further.'}
+  ]
+};
+let activeGroup = 'Buyers';
+let activeContactId = 'mb';
+
+function findContact(id){
+  for(const g in CONTACTS){ const f = CONTACTS[g].find(c=>c.id===id); if(f) return f; }
+  return null;
+}
+function renderConvList(){
+  const list = document.getElementById('convList');
+  list.innerHTML = CONTACTS[activeGroup].map(c=>{
+    const initials = c.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const last = c.messages[c.messages.length-1];
+    const active = c.id===activeContactId ? ' active' : '';
+    return '<div class="conv-item'+active+'" data-id="'+c.id+'">'+
+      '<div class="buyer-avatar" style="width:32px;height:32px;font-size:11px;">'+initials+'</div>'+
+      '<div><div class="conv-name">'+c.name+'</div><div class="conv-preview">'+last.text+'</div></div>'+
+    '</div>';
+  }).join('');
+  list.querySelectorAll('.conv-item').forEach(el=>{
+    el.addEventListener('click', ()=>openChat(el.dataset.id));
+  });
+}
+function openChat(id){
+  activeContactId = id;
+  renderConvList();
+  const c = findContact(id);
+  document.getElementById('chatHead').textContent = c.name+' · '+c.sub;
+  renderChatBody(c);
+}
+function renderChatBody(c){
+  const body = document.getElementById('chatBody');
+  const now = new Date();
+  const t = now.toTimeString().slice(0,5);
+  body.innerHTML = c.messages.map(m=>{
+    if(m.from==='me'){
+      return '<div style="align-self:flex-end;"><div class="bubble me">'+m.text+'</div><div class="bubble-time" style="text-align:right;">'+(m.time||t)+'</div></div>';
+    }
+    return '<div><div class="bubble them">'+m.text+'</div><div class="bubble-time">'+(m.time||t)+'</div></div>';
+  }).join('');
+  body.scrollTop = body.scrollHeight;
+}
+function sendMessage(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const c = findContact(activeContactId);
+  const now = new Date().toTimeString().slice(0,5);
+  c.messages.push({from:'me', text:text, time:now});
+  input.value = '';
+  renderChatBody(c);
+  renderConvList();
+  const typing = document.createElement('div');
+  typing.id='typingIndicator';
+  typing.innerHTML = '<div class="bubble them" style="opacity:.6;">…</div>';
+  document.getElementById('chatBody').appendChild(typing);
+  document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+  setTimeout(()=>{
+    const ti = document.getElementById('typingIndicator'); if(ti) ti.remove();
+    const replyTime = new Date().toTimeString().slice(0,5);
+    c.messages.push({from:'them', text:c.reply, time:replyTime});
+    renderChatBody(c);
+    renderConvList();
+  }, 1300);
+}
+document.getElementById('chatInput').addEventListener('keydown', (e)=>{
+  if(e.key==='Enter'){ e.preventDefault(); sendMessage(); }
+});
+document.getElementById('msgTabs').querySelectorAll('.msg-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.msg-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    activeGroup = tab.dataset.group;
+    activeContactId = CONTACTS[activeGroup][0].id;
+    renderConvList();
+    openChat(activeContactId);
   });
 });
+renderConvList();
+openChat(activeContactId);
 
 /* ---------------- Charts (dark theme) ---------------- */
 Chart.defaults.font.family = "IBM Plex Mono";
