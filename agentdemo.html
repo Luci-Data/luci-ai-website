@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <!-- Google tag (gtag.js) -->
+              <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQG0HRP6TD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -15,7 +15,7 @@
 <title>LuciHome — Agent Workspace Demo</title>
 <link rel="icon" type="image/png" href="/lucihome.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
 <link rel="stylesheet" href="workspace.css">
 </head>
@@ -61,13 +61,14 @@
       </div>
     </div>
 
+    <button class="icon-btn" onclick="toast('info','Help center','The LuciHome guides open in a new tab (demo).')" aria-label="Help"><i class="ti ti-help-circle"></i></button>
+
     <div class="dropdown" id="avatarDropdown">
       <div class="topbar-avatar" id="avatarBtn" title="Your account">AI</div>
       <div class="dropdown-panel" id="avatarPanel">
         <div class="dropdown-header"><strong>Alexandra Ionescu</strong>Agent · LuciHome Bucharest</div>
         <div class="dropdown-item" onclick="showSection('profile');closeAllDropdowns()"><i class="ti ti-user-circle"></i>My profile</div>
         <div class="dropdown-item" onclick="showSection('settings');closeAllDropdowns()"><i class="ti ti-settings"></i>Settings</div>
-        <div class="dropdown-item" onclick="toast('info','Documentation','The LuciHome guides open in a new tab (demo).')"><i class="ti ti-help-circle"></i>Help center</div>
         <div class="dropdown-sep"></div>
         <div class="dropdown-item danger" onclick="logoutDemo()"><i class="ti ti-logout"></i>Log out</div>
       </div>
@@ -76,8 +77,18 @@
 </header>
 
 <div class="app-shell">
-<!-- ============================= SIDEBAR ============================= -->
+<!-- ============================= LEFT NAV ============================= -->
 <nav class="sidebar" id="sidebar">
+
+  <div class="nav-quick-create">
+    <button id="quickCreateBtn" onclick="toggleQuickCreate(event)"><i class="ti ti-plus"></i>New</button>
+    <div class="nav-quick-menu" id="quickCreateMenu">
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-listing')"><i class="ti ti-home-2"></i>New listing</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-contact')"><i class="ti ti-user-plus"></i>New contact</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-send-referral')"><i class="ti ti-send"></i>New referral</div>
+    </div>
+  </div>
+
   <div class="nav-group-label">Workspace</div>
   <button class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
   <button class="nav-item" data-section="listings" onclick="showSection('listings')"><i class="ti ti-home-2"></i>Listings<span class="nbadge">12</span></button>
@@ -120,6 +131,7 @@
     </div>
   </div>
 
+  <div class="section-label" style="margin-top:0">Overview</div>
   <div class="grid grid-4" style="margin-bottom:28px">
     <div class="stat-card"><div class="value">12</div><div class="label">Active listings</div><div class="delta up"><i class="ti ti-trending-up"></i> +2 vs last month</div></div>
     <div class="stat-card"><div class="value">5</div><div class="label">Active leads</div><div class="delta up"><i class="ti ti-trending-up"></i> +1 this week</div></div>
@@ -127,6 +139,23 @@
     <div class="stat-card"><div class="value">€48.2k</div><div class="label">Pipeline value</div><div class="delta up"><i class="ti ti-trending-up"></i> +€6.4k this month</div></div>
   </div>
 
+  <div class="section-label">This week</div>
+  <div class="grid grid-12" style="margin-bottom:28px">
+    <div class="span-8">
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:14px">Listing views &amp; new leads, last 7 days</p>
+        <div class="chart-wrap" id="dashTrendChart"></div>
+      </div>
+    </div>
+    <div class="span-4">
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:14px">Pipeline by stage</p>
+        <div class="chart-wrap" id="dashFunnelDonut"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Today</div>
   <div class="grid grid-12" style="margin-bottom:8px">
     <div class="span-8">
       <div class="card">
@@ -135,13 +164,6 @@
           <button class="btn-ghost btn-sm" id="markAllReadBtn2" onclick="markAllFeedRead()">Mark all read</button>
         </div>
         <div id="feedList"></div>
-      </div>
-
-      <div class="card" style="margin-top:16px">
-        <p class="mt" style="font-size:15px;margin-bottom:10px">Performance snapshot — this week vs. last week</p>
-        <div class="bar-row"><div class="bar-label">Listing views</div><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><div class="bar-value">1,240</div></div>
-        <div class="bar-row"><div class="bar-label">New leads</div><div class="bar-track"><div class="bar-fill" style="width:45%"></div></div><div class="bar-value">7</div></div>
-        <div class="bar-row"><div class="bar-label">Replies sent</div><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><div class="bar-value">18</div></div>
       </div>
     </div>
 
@@ -177,9 +199,9 @@
 
   <div class="card" style="margin-bottom:20px">
     <div class="flex flex-gap" style="flex-wrap:wrap;align-items:center">
-      <div class="topbar-search" style="max-width:280px;margin-left:0">
+      <div class="topbar-search" style="max-width:280px">
         <i class="ti ti-search"></i>
-        <input type="text" class="input" style="padding-left:34px" id="listingSearch" placeholder="Search by title or city..." oninput="renderListings()">
+        <input type="text" class="input" style="padding-left:34px;border-radius:8px" id="listingSearch" placeholder="Search by title or city..." oninput="renderListings()">
       </div>
       <select class="select" id="listingStatusFilter" style="max-width:180px" onchange="renderListings()">
         <option value="all">All statuses</option>
@@ -221,7 +243,7 @@
   <div class="page-header">
     <div>
       <h1 class="page-title">CRM / Clients</h1>
-      <p class="page-sub">Every lead, buyer, and seller — organized by stage. Drag cards between columns to update status.</p>
+      <p class="page-sub">Every lead, buyer, and seller — organized by stage. Drag cards between columns, click a card to open its full profile.</p>
     </div>
     <div class="page-actions">
       <button class="btn-primary" onclick="openModal('modal-add-contact')"><i class="ti ti-user-plus"></i>Add contact</button>
@@ -229,12 +251,13 @@
   </div>
 
   <div class="card" style="margin-bottom:18px">
-    <div class="topbar-search" style="max-width:320px;margin-left:0">
+    <div class="topbar-search" style="max-width:320px">
       <i class="ti ti-search"></i>
-      <input type="text" class="input" style="padding-left:34px" id="crmSearch" placeholder="Search client by name or tag..." oninput="renderKanban()">
+      <input type="text" class="input" style="padding-left:34px;border-radius:8px" id="crmSearch" placeholder="Search client by name or tag..." oninput="renderKanban()">
     </div>
   </div>
 
+  <div class="section-label" style="margin-top:0">Pipeline board</div>
   <div class="kanban" id="kanbanBoard"></div>
 </section>
 
@@ -253,11 +276,17 @@
     </div>
   </div>
 
-  <div id="txList" class="grid grid-3" style="margin-bottom:24px"></div>
-  <div id="txArchive" style="display:none;margin-bottom:24px"></div>
-
-  <div class="card" id="dealRoom">
-    <!-- populated by JS -->
+  <div class="workspace-grid">
+    <div class="panel-list">
+      <div class="section-label" style="margin-top:0">Open transactions</div>
+      <div id="txList" class="tx-stack"></div>
+      <div id="txArchive" style="display:none;margin-top:20px"></div>
+    </div>
+    <div class="panel-detail">
+      <div class="card" id="dealRoom">
+        <!-- populated by JS -->
+      </div>
+    </div>
   </div>
 </section>
 
@@ -400,7 +429,7 @@
       <div class="span-8">
         <div class="card">
           <div class="flex-gap" style="align-items:center;margin-bottom:12px">
-            <div class="avatar-circle" style="background:linear-gradient(135deg,#6b8fc4,#38598b)"><i class="ti ti-robot"></i></div>
+            <div class="avatar-circle"><i class="ti ti-robot"></i></div>
             <div><p class="mt" style="margin:0">Homy</p><p class="ms">LuciHome's AI assistant</p></div>
           </div>
           <div class="chat-box" id="homyChat"></div>
@@ -566,34 +595,19 @@
     <div class="span-8">
       <div class="card" style="margin-bottom:16px">
         <p class="mt">Listing performance — views</p>
-        <div class="bar-row"><div class="bar-label">Herastrau Apartment</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div class="bar-value">412</div></div>
-        <div class="bar-row"><div class="bar-label">Cluj Penthouse</div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><div class="bar-value">318</div></div>
-        <div class="bar-row"><div class="bar-label">Pipera Villa</div><div class="bar-track"><div class="bar-fill" style="width:54%"></div></div><div class="bar-value">241</div></div>
-        <div class="bar-row"><div class="bar-label">Old Town Studio</div><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><div class="bar-value">168</div></div>
+        <div class="chart-wrap" id="listingViewsChart"></div>
       </div>
 
       <div class="card">
         <p class="mt">Lead funnel</p>
-        <div class="funnel-row"><div class="funnel-top"><span>New lead</span><span>100%</span></div><div class="funnel-track"><div class="funnel-fill" style="width:100%">24</div></div></div>
-        <div class="funnel-row"><div class="funnel-top"><span>Contacted</span><span>75%</span></div><div class="funnel-track"><div class="funnel-fill" style="width:75%">18</div></div></div>
-        <div class="funnel-row"><div class="funnel-top"><span>Viewing scheduled</span><span>46%</span></div><div class="funnel-track"><div class="funnel-fill" style="width:46%">11</div></div></div>
-        <div class="funnel-row"><div class="funnel-top"><span>Offer made</span><span>25%</span></div><div class="funnel-track"><div class="funnel-fill" style="width:25%">6</div></div></div>
-        <div class="funnel-row"><div class="funnel-top"><span>Closed</span><span>12%</span></div><div class="funnel-track"><div class="funnel-fill" style="width:12%">3</div></div></div>
+        <div class="chart-wrap" id="leadFunnelChart"></div>
       </div>
     </div>
 
     <div class="span-4">
       <div class="card" style="margin-bottom:16px">
         <p class="mt">Buyer origin</p>
-        <table class="data-table">
-          <tbody>
-            <tr><td>🇷🇴 Romania</td><td class="strong">42%</td></tr>
-            <tr><td>🇫🇷 France</td><td class="strong">24%</td></tr>
-            <tr><td>🇦🇪 UAE</td><td class="strong">18%</td></tr>
-            <tr><td>🇩🇪 Germany</td><td class="strong">10%</td></tr>
-            <tr><td>Other</td><td class="strong">6%</td></tr>
-          </tbody>
-        </table>
+        <div class="chart-wrap" id="buyerOriginChart"></div>
       </div>
       <div class="card" style="margin-bottom:16px">
         <p class="mt">Commission</p>
@@ -603,8 +617,7 @@
       </div>
       <div class="card">
         <p class="mt">Average time on market</p>
-        <p class="ms">Your portfolio: <strong style="color:var(--text-primary)">38 days</strong></p>
-        <p class="ms">LuciHome platform average: <strong style="color:var(--text-primary)">51 days</strong></p>
+        <div class="chart-wrap" id="timeOnMarketChart"></div>
       </div>
     </div>
   </div>
@@ -730,6 +743,22 @@
 </div>
 
 <!-- ======================================================================
+     CONTACT DETAIL DRAWER (Gmail-style slide-over reading pane)
+====================================================================== -->
+<div class="detail-drawer-backdrop" id="contactDrawerBackdrop" onclick="closeContactDrawer()"></div>
+<div class="detail-drawer" id="contactDrawer">
+  <div class="detail-drawer-head">
+    <h3 id="cdName">Client</h3>
+    <button class="detail-drawer-close" onclick="closeContactDrawer()">&times;</button>
+  </div>
+  <div class="detail-drawer-body" id="cdBody"></div>
+  <div class="detail-drawer-foot">
+    <button class="btn-ghost spacer" onclick="closeContactDrawer()">Close</button>
+    <button class="btn-primary" onclick="saveContactDetail()"><i class="ti ti-device-floppy"></i>Save</button>
+  </div>
+</div>
+
+<!-- ======================================================================
      MODALS
 ====================================================================== -->
 
@@ -756,7 +785,7 @@
       </div>
       <div id="wizardStep3" style="display:none">
         <label class="field-label">Photos &amp; media</label>
-        <div class="empty-state" style="border:1.5px dashed var(--border-medium);border-radius:12px;cursor:pointer" onclick="simulateUpload()">
+        <div class="empty-state" style="border:1.5px dashed var(--border-strong);border-radius:12px;cursor:pointer" onclick="simulateUpload()">
           <i class="ti ti-cloud-upload"></i>
           <p style="margin:0 0 4px;color:var(--text-secondary)">Drag photos here or click to upload</p>
           <p style="margin:0;font-size:11px">JPG, PNG — up to 25 photos</p>
@@ -815,18 +844,6 @@
   </div>
 </div>
 
-<!-- Contact detail -->
-<div class="modal-overlay" id="modal-contact-detail">
-  <div class="modal wide">
-    <div class="modal-head"><h3 id="cdName">Client</h3><button class="modal-close" onclick="closeModal('modal-contact-detail')">&times;</button></div>
-    <div class="modal-body" id="cdBody"></div>
-    <div class="modal-foot">
-      <button class="btn-ghost spacer" onclick="closeModal('modal-contact-detail')">Close</button>
-      <button class="btn-primary" onclick="closeModal('modal-contact-detail');toast('success','Saved','Client notes have been updated.')"><i class="ti ti-device-floppy"></i>Save</button>
-    </div>
-  </div>
-</div>
-
 <!-- Send referral -->
 <div class="modal-overlay" id="modal-send-referral">
   <div class="modal">
@@ -841,7 +858,7 @@
       <div class="field"><label class="field-label">Search partner agent</label><input class="input" id="rAgent" placeholder="e.g. Sophie Laurent" value="Sophie Laurent — Paris Prestige Immobilier"></div>
       <div class="field">
         <label class="field-label">Referral commission: <span id="rPctVal">22</span>%</label>
-        <input type="range" min="10" max="30" value="22" id="rPct" style="width:100%;accent-color:var(--accent-bright)" oninput="document.getElementById('rPctVal').textContent=this.value">
+        <input type="range" min="10" max="30" value="22" id="rPct" style="width:100%;accent-color:var(--accent)" oninput="document.getElementById('rPctVal').textContent=this.value">
       </div>
     </div>
     <div class="modal-foot">
