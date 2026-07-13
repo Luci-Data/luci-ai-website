@@ -1,13 +1,13 @@
 /* ==========================================================================
    LuciHome — Agent Workspace Demo
-   All demo state and logic. No external dependencies besides the Google
-   Fonts and Tabler icons loaded in agentdemo.html.
+   Rebuilt interaction layer: Gmail-style quick-create menu, a slide-over
+   contact detail drawer (replacing the old contact modal), and a small
+   dependency-free SVG chart engine (line, bar, donut) used across the
+   Dashboard and Analytics sections.
    ========================================================================== */
 
-/* ---------------------------------------------------------------------- */
-/* STATE                                                                   */
-/* ---------------------------------------------------------------------- */
 let nextId = 1000;
+const CHART_COLORS = ['#1A73E8','#12B5CB','#F29900','#D93025','#9334E6','#188038'];
 
 const state = {
 
@@ -27,13 +27,19 @@ const state = {
     {time:'16:30', text:'Follow-up — Anna Popescu', sub:'Sent Tuesday, awaiting reply', done:true},
   ],
 
+  weekTrend:{
+    labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    views:[140,165,150,190,210,175,230],
+    leads:[1,2,1,3,2,1,3],
+  },
+
   listings: [
-    {id:1, title:'3-bedroom apartment with park view', city:'Herastrau, Bucharest', type:'Apartment', price:245000, beds:3, baths:2, size:98, status:'active', views:412, lastBoost:'4 days ago', tags:['Park view','Furnished'], grad:'linear-gradient(135deg,#2d4a78,#38598b)'},
-    {id:2, title:'Penthouse with panoramic terrace', city:'Zorilor, Cluj-Napoca', type:'Penthouse', price:398000, beds:4, baths:3, size:165, status:'active', views:318, lastBoost:'9 days ago', tags:['Terrace','Parking'], grad:'linear-gradient(135deg,#38598b,#6b8fc4)'},
-    {id:3, title:'Villa with garden and pool', city:'Pipera, Bucharest', type:'House / Villa', price:520000, beds:5, baths:4, size:280, status:'offer', views:241, lastBoost:'15 days ago', tags:['Pool','Pet friendly'], grad:'linear-gradient(135deg,#113f67,#38598b)'},
-    {id:4, title:'Modern studio, historic center', city:'Old Town, Bucharest', type:'Studio', price:600, beds:1, baths:1, size:42, status:'sold', views:168, lastBoost:'30 days ago', tags:['Furnished'], grad:'linear-gradient(135deg,#0d1f35,#38598b)'},
-    {id:5, title:'4-bedroom house in a quiet area', city:'Grigorescu, Cluj-Napoca', type:'House / Villa', price:310000, beds:4, baths:2, size:140, status:'draft', views:0, lastBoost:'—', tags:['Parking'], grad:'linear-gradient(135deg,#2d4a78,#113f67)'},
-    {id:6, title:'2-bedroom apartment, fully renovated', city:'Zorilor, Cluj-Napoca', type:'Apartment', price:172000, beds:2, baths:1, size:64, status:'active', views:96, lastBoost:'1 day ago', tags:['Furnished','Park view'], grad:'linear-gradient(135deg,#38598b,#4a6fa0)'},
+    {id:1, title:'3-bedroom apartment with park view', city:'Herastrau, Bucharest', type:'Apartment', price:245000, beds:3, baths:2, size:98, status:'active', views:412, lastBoost:'4 days ago', tags:['Park view','Furnished'], grad:'#1A73E8'},
+    {id:2, title:'Penthouse with panoramic terrace', city:'Zorilor, Cluj-Napoca', type:'Penthouse', price:398000, beds:4, baths:3, size:165, status:'active', views:318, lastBoost:'9 days ago', tags:['Terrace','Parking'], grad:'#12B5CB'},
+    {id:3, title:'Villa with garden and pool', city:'Pipera, Bucharest', type:'House / Villa', price:520000, beds:5, baths:4, size:280, status:'offer', views:241, lastBoost:'15 days ago', tags:['Pool','Pet friendly'], grad:'#9334E6'},
+    {id:4, title:'Modern studio, historic center', city:'Old Town, Bucharest', type:'Studio', price:600, beds:1, baths:1, size:42, status:'sold', views:168, lastBoost:'30 days ago', tags:['Furnished'], grad:'#80868B'},
+    {id:5, title:'4-bedroom house in a quiet area', city:'Grigorescu, Cluj-Napoca', type:'House / Villa', price:310000, beds:4, baths:2, size:140, status:'draft', views:0, lastBoost:'—', tags:['Parking'], grad:'#80868B'},
+    {id:6, title:'2-bedroom apartment, fully renovated', city:'Zorilor, Cluj-Napoca', type:'Apartment', price:172000, beds:2, baths:1, size:64, status:'active', views:96, lastBoost:'1 day ago', tags:['Furnished','Park view'], grad:'#188038'},
   ],
   listingView:'grid',
 
@@ -108,9 +114,15 @@ const state = {
     {id:4, name:'Bucharest Rentals', members:271, joined:false, desc:'A community focused exclusively on the Bucharest rental market.'},
   ],
 
+  buyerOrigin:[
+    {label:'Romania', value:42}, {label:'France', value:24}, {label:'UAE', value:18}, {label:'Germany', value:10}, {label:'Other', value:6},
+  ],
+  timeOnMarket:{mine:38, platform:51},
+
   integrations:{},
   wizardStep:1,
   uploadedFiles:[],
+  selectedContactId:null,
 };
 
 /* ---------------------------------------------------------------------- */
@@ -124,6 +136,7 @@ function showSection(id){
   const nav = document.querySelector('.nav-item[data-section="'+id+'"]');
   if(nav) nav.classList.add('active');
   document.getElementById('sidebar').classList.remove('open');
+  closeContactDrawer();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -143,6 +156,18 @@ function switchTab(group, tabId){
 document.getElementById('hamburgerBtn').addEventListener('click', ()=>{
   document.getElementById('sidebar').classList.toggle('open');
 });
+
+/* ---------------------------------------------------------------------- */
+/* QUICK CREATE MENU (Drive-style "+ New")                                 */
+/* ---------------------------------------------------------------------- */
+function toggleQuickCreate(e){
+  e.stopPropagation();
+  document.getElementById('quickCreateMenu').classList.toggle('open');
+}
+function closeQuickCreate(){
+  document.getElementById('quickCreateMenu').classList.remove('open');
+}
+document.addEventListener('click', closeQuickCreate);
 
 /* ---------------------------------------------------------------------- */
 /* DROPDOWNS                                                               */
@@ -203,6 +228,113 @@ document.querySelectorAll('.modal-overlay').forEach(ov=>{
 });
 
 /* ---------------------------------------------------------------------- */
+/* CHART ENGINE — dependency-free inline SVG                               */
+/* ---------------------------------------------------------------------- */
+function renderLineChart(containerId, series, labels){
+  const w=600, h=220, padL=34, padR=16, padT=16, padB=26;
+  const maxLen = Math.max(...series.map(s=>s.values.length));
+  const stepX = maxLen>1 ? (w-padL-padR)/(maxLen-1) : 0;
+  let svg = `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">`;
+  for(let i=0;i<=3;i++){
+    const y = padT + i*(h-padT-padB)/3;
+    svg += `<line x1="${padL}" y1="${y}" x2="${w-padR}" y2="${y}" stroke="#DADCE0" stroke-width="1"/>`;
+  }
+  series.forEach(s=>{
+    const max = Math.max(...s.values, 1);
+    const pts = s.values.map((v,i)=>[padL+i*stepX, h-padB-(v/max)*(h-padT-padB)]);
+    const linePath = pts.map((p,i)=>(i===0?'M':'L')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+    const areaPath = linePath+` L${pts[pts.length-1][0].toFixed(1)},${h-padB} L${pts[0][0].toFixed(1)},${h-padB} Z`;
+    svg += `<path d="${areaPath}" fill="${s.color}" opacity="0.10"></path>`;
+    svg += `<path d="${linePath}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>`;
+    pts.forEach(p=>{ svg += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="${s.color}" stroke="#fff" stroke-width="1.5"></circle>`; });
+  });
+  if(labels){
+    labels.forEach((lab,i)=>{
+      const x = padL+i*stepX;
+      svg += `<text x="${x}" y="${h-6}" text-anchor="middle" font-size="11" font-family="Roboto" fill="#80868B">${lab}</text>`;
+    });
+  }
+  svg += `</svg>`;
+  const legend = series.map(s=>`<div class="chart-legend-item"><span class="chart-legend-dot" style="background:${s.color}"></span>${s.name}</div>`).join('');
+  document.getElementById(containerId).innerHTML = svg + `<div class="chart-legend">${legend}</div>`;
+}
+
+function renderBarChart(containerId, items, opts){
+  opts = opts||{};
+  const w=560, barH=26, gap=14, leftPad=opts.leftPad||150, rightPad=48;
+  const max = opts.maxValue || Math.max(...items.map(i=>i.value), 1);
+  const h = items.length*(barH+gap)+gap;
+  let svg = `<svg viewBox="0 0 ${w} ${h}">`;
+  items.forEach((item,i)=>{
+    const y = gap + i*(barH+gap);
+    const barMaxW = w-leftPad-rightPad;
+    const barW = Math.max(3, (item.value/max)*barMaxW);
+    const color = item.color || '#1A73E8';
+    svg += `<text x="${leftPad-10}" y="${y+barH/2+4}" text-anchor="end" font-size="12" font-family="Roboto" fill="#5F6368">${item.label}</text>`;
+    svg += `<rect x="${leftPad}" y="${y}" width="${barMaxW}" height="${barH}" rx="5" fill="#F1F3F4"></rect>`;
+    svg += `<rect class="chart-bar" x="${leftPad}" y="${y}" width="${barW}" height="${barH}" rx="5" fill="${color}"></rect>`;
+    svg += `<text x="${leftPad+barW+8}" y="${y+barH/2+4}" font-size="12" font-family="Roboto" font-weight="500" fill="#202124">${item.value}${opts.suffix||''}</text>`;
+  });
+  svg += `</svg>`;
+  document.getElementById(containerId).innerHTML = svg;
+}
+
+function renderDonutChart(containerId, segments){
+  const total = segments.reduce((a,s)=>a+s.value,0) || 1;
+  const size=180, r=64, cx=90, cy=90, strokeW=24;
+  let offset=0;
+  let svg = `<svg viewBox="0 0 ${size} ${size}" style="max-width:200px;margin:0 auto">`;
+  segments.forEach((seg,i)=>{
+    const frac = seg.value/total;
+    const circumference = 2*Math.PI*r;
+    const dash = frac*circumference;
+    const color = seg.color || CHART_COLORS[i%CHART_COLORS.length];
+    svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="${strokeW}" stroke-dasharray="${dash.toFixed(1)} ${(circumference-dash).toFixed(1)}" stroke-dashoffset="${(-offset).toFixed(1)}" transform="rotate(-90 ${cx} ${cy})"></circle>`;
+    offset += dash;
+  });
+  svg += `<text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="24" font-weight="700" font-family="Roboto" fill="#202124">${total}</text>`;
+  svg += `<text x="${cx}" y="${cy+18}" text-anchor="middle" font-size="10.5" font-family="Roboto" fill="#80868B">total</text>`;
+  svg += `</svg>`;
+  const legend = segments.map((s,i)=>`<div class="chart-legend-item"><span class="chart-legend-dot" style="background:${s.color||CHART_COLORS[i%CHART_COLORS.length]}"></span>${s.label} · ${s.value}</div>`).join('');
+  document.getElementById(containerId).innerHTML = svg + `<div class="chart-legend">${legend}</div>`;
+}
+
+function renderDashboardCharts(){
+  renderLineChart('dashTrendChart', [
+    {name:'Listing views', color:'#1A73E8', values:state.weekTrend.views},
+    {name:'New leads (×20 scale)', color:'#12B5CB', values:state.weekTrend.leads.map(v=>v*20)},
+  ], state.weekTrend.labels);
+
+  const segs = state.stages.map((s,i)=>({
+    label:s.label,
+    value: state.contacts.filter(c=>c.stage===s.id).length,
+    color: CHART_COLORS[i%CHART_COLORS.length],
+  }));
+  renderDonutChart('dashFunnelDonut', segs);
+}
+
+function renderAnalyticsCharts(){
+  const top = [...state.listings].sort((a,b)=>b.views-a.views).slice(0,5)
+    .map((l,i)=>({label:l.title.length>22?l.title.slice(0,22)+'…':l.title, value:l.views, color:CHART_COLORS[i%CHART_COLORS.length]}));
+  renderBarChart('listingViewsChart', top, {leftPad:170});
+
+  renderBarChart('leadFunnelChart', [
+    {label:'New lead', value:24, color:CHART_COLORS[0]},
+    {label:'Contacted', value:18, color:CHART_COLORS[0]},
+    {label:'Viewing scheduled', value:11, color:CHART_COLORS[0]},
+    {label:'Offer made', value:6, color:CHART_COLORS[0]},
+    {label:'Closed', value:3, color:CHART_COLORS[0]},
+  ], {leftPad:150});
+
+  renderDonutChart('buyerOriginChart', state.buyerOrigin.map((b,i)=>({label:b.label, value:b.value, color:CHART_COLORS[i%CHART_COLORS.length]})));
+
+  renderBarChart('timeOnMarketChart', [
+    {label:'Your portfolio', value:state.timeOnMarket.mine, color:CHART_COLORS[5], suffix:'d'},
+    {label:'Platform average', value:state.timeOnMarket.platform, color:'#80868B', suffix:'d'},
+  ], {leftPad:120, maxValue:60});
+}
+
+/* ---------------------------------------------------------------------- */
 /* DASHBOARD — feed & agenda                                               */
 /* ---------------------------------------------------------------------- */
 function renderFeed(){
@@ -248,7 +380,7 @@ function renderAgenda(){
     <div class="agenda-item ${a.done?'done':''}">
       <div class="agenda-time">${a.time}</div>
       <div class="agenda-text"><p>${a.text}</p><span>${a.sub}</span></div>
-      <input type="checkbox" ${a.done?'checked':''} onchange="toggleAgenda(${i})" style="accent-color:var(--accent-bright);width:16px;height:16px;cursor:pointer">
+      <input type="checkbox" ${a.done?'checked':''} onchange="toggleAgenda(${i})" style="accent-color:var(--accent);width:16px;height:16px;cursor:pointer">
     </div>`).join('');
 }
 function toggleAgenda(i){
@@ -309,8 +441,8 @@ function renderListings(){
 }
 function setListingView(v){
   state.listingView = v;
-  document.getElementById('gridViewBtn').style.borderColor = v==='grid' ? 'var(--border-accent)' : '';
-  document.getElementById('listViewBtn').style.borderColor = v==='list' ? 'var(--border-accent)' : '';
+  document.getElementById('gridViewBtn').style.borderColor = v==='grid' ? 'var(--accent)' : '';
+  document.getElementById('listViewBtn').style.borderColor = v==='list' ? 'var(--accent)' : '';
   renderListings();
 }
 function editListingDemo(id){
@@ -322,8 +454,6 @@ function boostListing(id){
   l.lastBoost = 'a few seconds ago';
   toast('success','Listing boosted', `"${l.title}" has been re-boosted to the top of search results.`);
 }
-
-['listingSearch'].forEach(()=>{});
 
 /* ---------------------------------------------------------------------- */
 /* LISTING WIZARD                                                         */
@@ -384,8 +514,8 @@ function simulateUpload(){
   const name = `photo-${n}.jpg`;
   state.uploadedFiles.push(name);
   document.getElementById('uploadedFilesList').innerHTML = state.uploadedFiles.map(f=>`
-    <div class="flex-between" style="padding:8px 0;border-bottom:1px solid rgba(162,168,211,.08)">
-      <span style="font-size:12.5px;color:var(--text-secondary)"><i class="ti ti-photo" style="margin-right:8px;color:var(--accent-bright)"></i>${f}</span>
+    <div class="flex-between" style="padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:12.5px;color:var(--text-secondary)"><i class="ti ti-photo" style="margin-right:8px;color:var(--accent)"></i>${f}</span>
       <span class="badge badge-active">Uploaded</span>
     </div>`).join('');
 }
@@ -411,7 +541,7 @@ function publishListing(){
     views:0,
     lastBoost:'—',
     tags: Array.from(document.getElementById('wTags').querySelectorAll('.pill.on')).map(p=>p.textContent),
-    grad:'linear-gradient(135deg,#38598b,#6b8fc4)',
+    grad:'#1A73E8',
   };
   state.listings.unshift(l);
   closeModal('modal-add-listing');
@@ -424,7 +554,7 @@ function publishListing(){
 }
 
 /* ---------------------------------------------------------------------- */
-/* CRM — KANBAN                                                            */
+/* CRM — KANBAN + CONTACT DETAIL DRAWER                                    */
 /* ---------------------------------------------------------------------- */
 function renderKanban(){
   const q = (document.getElementById('crmSearch').value||'').toLowerCase();
@@ -435,7 +565,7 @@ function renderKanban(){
     <div class="kcol" data-stage="${stage.id}" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="dropCard(event,'${stage.id}')">
       <div class="kcol-head"><span>${stage.label}</span><span class="kcol-count">${cards.length}</span></div>
       ${cards.map(c=>`
-        <div class="kcard" draggable="true" ondragstart="dragCard(event,${c.id})" ondragend="this.classList.remove('dragging')" onclick="openContactDetail(${c.id})">
+        <div class="kcard ${state.selectedContactId===c.id?'selected':''}" draggable="true" ondragstart="dragCard(event,${c.id})" ondragend="this.classList.remove('dragging')" onclick="openContactDetail(${c.id})">
           <p class="kname"><span class="kavatar">${c.initials}</span>${c.name}</p>
           <p class="kmeta">€${c.budget.toLocaleString('en-US')}${c.reminder ? ' · ⏰ '+c.reminder : ''}</p>
           <div class="ktags"><span class="pill">${c.type}</span></div>
@@ -461,19 +591,43 @@ function dropCard(e, stageId){
 function openContactDetail(id){
   const c = state.contacts.find(x=>x.id===id);
   if(!c) return;
+  state.selectedContactId = id;
+  renderKanban();
   document.getElementById('cdName').textContent = c.name;
   document.getElementById('cdBody').innerHTML = `
-    <div class="pill-row" style="margin-bottom:14px">
+    <div class="pill-row" style="margin-bottom:16px">
       <span class="badge badge-info">${c.type}</span>
       <span class="badge badge-neutral">€${c.budget.toLocaleString('en-US')} budget</span>
       <span class="badge badge-active">${state.stages.find(s=>s.id===c.stage).label}</span>
     </div>
-    <div class="field"><label class="field-label">Notes</label><textarea class="textarea">${c.notes}</textarea></div>
-    <div class="field"><label class="field-label">Follow-up reminder</label><input class="input" value="${c.reminder||''}" placeholder="e.g. Call back Thursday"></div>
+    <div class="field"><label class="field-label">Notes</label><textarea class="textarea" id="cdNotes">${c.notes}</textarea></div>
+    <div class="field"><label class="field-label">Follow-up reminder</label><input class="input" id="cdReminder" value="${c.reminder||''}" placeholder="e.g. Call back Thursday"></div>
     <p class="section-label" style="margin-top:20px">Activity history</p>
     ${c.activity.map(a=>`<div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-clock"></i></div><div class="fi-text"><p>${a.t}</p><span>${a.d}</span></div></div>`).join('')}
   `;
-  openModal('modal-contact-detail');
+  document.getElementById('contactDrawer').classList.add('open');
+  document.getElementById('contactDrawerBackdrop').classList.add('open');
+}
+function closeContactDrawer(){
+  document.getElementById('contactDrawer').classList.remove('open');
+  document.getElementById('contactDrawerBackdrop').classList.remove('open');
+  if(state.selectedContactId!==null){
+    state.selectedContactId = null;
+    if(document.getElementById('kanbanBoard')) renderKanban();
+  }
+}
+function saveContactDetail(){
+  const c = state.contacts.find(x=>x.id===state.selectedContactId);
+  if(c){
+    const notesEl = document.getElementById('cdNotes');
+    const remEl = document.getElementById('cdReminder');
+    if(notesEl) c.notes = notesEl.value;
+    if(remEl) c.reminder = remEl.value || null;
+    renderKanban();
+    renderLeadScores();
+  }
+  closeContactDrawer();
+  toast('success','Saved','Client notes have been updated.');
 }
 function addContact(){
   const name = document.getElementById('cName').value.trim();
@@ -502,11 +656,13 @@ function addContact(){
 function renderTx(){
   const list = document.getElementById('txList');
   list.innerHTML = state.transactions.map(t=>`
-    <div class="card hoverable ${state.currentTxId===t.id?'active':''}" style="cursor:pointer" onclick="openDealRoom(${t.id})">
-      <i class="ti ti-file-invoice mi"></i>
-      <p class="mt">${t.property}</p>
-      <p class="ms">Buyer: ${t.buyer}<br>Seller: ${t.seller}</p>
-      <span class="badge badge-info" style="margin-top:8px">${state.txStages[t.stage]}</span>
+    <div class="list-row ${state.currentTxId===t.id?'selected':''}" onclick="openDealRoom(${t.id})">
+      <div class="fi-icon"><i class="ti ti-file-invoice"></i></div>
+      <div style="min-width:0;flex:1">
+        <p class="lr-title">${t.property}</p>
+        <p class="lr-sub">${t.buyer} → ${t.seller}</p>
+      </div>
+      <span class="badge badge-info">${state.txStages[t.stage]}</span>
     </div>`).join('');
 
   const arch = document.getElementById('txArchive');
@@ -551,7 +707,7 @@ function openDealRoom(id, silent){
     <div class="grid grid-12">
       <div class="span-8">
         <p class="section-label" style="margin-top:0">Document vault</p>
-        <div id="txDocsList">${t.docs.map(d=>`<div class="flex-between" style="padding:8px 0;border-bottom:1px solid rgba(162,168,211,.08)"><span style="font-size:12.5px"><i class="ti ti-file-text" style="margin-right:8px;color:var(--accent-bright)"></i>${d}</span><button class="btn-ghost btn-sm" onclick="toast('info','E-signature','A signature request has been sent to all parties.')"><i class="ti ti-signature"></i>Request signature</button></div>`).join('')}</div>
+        <div id="txDocsList">${t.docs.map(d=>`<div class="flex-between" style="padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:12.5px"><i class="ti ti-file-text" style="margin-right:8px;color:var(--accent)"></i>${d}</span><button class="btn-ghost btn-sm" onclick="toast('info','E-signature','A signature request has been sent to all parties.')"><i class="ti ti-signature"></i>Request signature</button></div>`).join('')}</div>
         <button class="btn-secondary btn-sm" style="margin-top:10px" onclick="uploadTxDoc(${t.id})"><i class="ti ti-upload"></i>Upload document</button>
 
         <p class="section-label">Closing checklist</p>
@@ -773,7 +929,7 @@ function renderLeadScores(){
   const body = document.getElementById('leadScoreBody');
   const rows = state.contacts.filter(c=>c.stage!=='closed').map(c=>{
     const score = computeLeadScore(c);
-    const color = score>=8 ? '#4ade80' : score>=5 ? '#fbbf24' : '#f87171';
+    const color = score>=8 ? '#188038' : score>=5 ? '#F29900' : '#D93025';
     return `<tr>
       <td class="strong">${c.name}</td>
       <td>€${c.budget.toLocaleString('en-US')}</td>
@@ -887,7 +1043,7 @@ let profileEditing = false;
 function toggleProfileEdit(){
   profileEditing = !profileEditing;
   document.getElementById('profBio').contentEditable = profileEditing;
-  document.getElementById('profBio').style.outline = profileEditing ? '1px dashed var(--border-medium)' : 'none';
+  document.getElementById('profBio').style.outline = profileEditing ? '1px dashed var(--border-strong)' : 'none';
   document.getElementById('profBio').style.padding = profileEditing ? '8px' : '0';
   document.getElementById('profEditFields').querySelectorAll('input').forEach(i=>i.disabled = !profileEditing);
   const btn = document.getElementById('editProfileBtn');
@@ -972,6 +1128,7 @@ function updateSidebarCounts(){
 function init(){
   renderFeed();
   renderAgenda();
+  renderDashboardCharts();
   renderListings();
   renderKanban();
   renderTx();
@@ -980,6 +1137,7 @@ function init(){
   renderDirectory();
   renderDevProjects();
   renderMarketGroups();
+  renderAnalyticsCharts();
   updateSidebarCounts();
   appendChat('bot', "Hi, Alexandra! I'm Homy, your AI assistant. Ask me anything about the market, your clients, or your listings.");
 
