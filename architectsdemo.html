@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQG0HRP6TD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GQG0HRP6TD');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuciHome — Architects &amp; Designers Workspace Demo</title>
+<link rel="icon" type="image/png" href="/lucihome.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<link rel="stylesheet" href="workspacearchitects.css">
+</head>
+<body>
+
+<!-- ============================= TOPBAR ============================= -->
+<header class="topbar">
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu"><i class="ti ti-menu-2"></i></button>
+  <div class="topbar-brand">
+    <div class="mark">
+    <img src="lucihome.png" alt="LuciHome Logo" class="logo-img">
+</div>
+<div class="wordmark">LuciHome</div>
+  </div>
+
+  <div class="topbar-search">
+    <i class="ti ti-search"></i>
+    <input type="text" id="globalSearch" placeholder="Search portfolio, projects, clients...">
+  </div>
+
+  <div class="topbar-actions">
+    <div class="dropdown" id="notifDropdown">
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+        <i class="ti ti-bell"></i>
+        <span class="dot" id="notifCount">4</span>
+      </button>
+      <div class="dropdown-panel notif-panel" id="notifPanel">
+        <div class="dropdown-header"><strong>Notifications</strong>4 unread</div>
+        <div id="notifList"></div>
+        <div class="notif-footer"><button id="markAllReadBtn">Mark all as read</button></div>
+      </div>
+    </div>
+
+    <div class="dropdown" id="msgDropdown">
+      <button class="icon-btn" id="msgBtn" aria-label="Messages">
+        <i class="ti ti-message-dots"></i>
+        <span class="dot">3</span>
+      </button>
+      <div class="dropdown-panel notif-panel">
+        <div class="dropdown-header"><strong>Recent messages</strong>3 unread conversations</div>
+        <div class="notif-item unread"><div class="notif-icon"><i class="ti ti-user"></i></div><div class="notif-text"><p><strong>Sophie Laurent</strong> — "Can you send the mood board for the Herastrau project?"</p><span>10 min ago</span></div></div>
+        <div class="notif-item unread"><div class="notif-icon"><i class="ti ti-user"></i></div><div class="notif-text"><p><strong>Michael Turner</strong> — "Loved the concept, when can we start?"</p><span>1 h ago</span></div></div>
+        <div class="notif-item unread"><div class="notif-icon"><i class="ti ti-crane"></i></div><div class="notif-text"><p><strong>Skyline Development</strong> — new project invitation</p><span>yesterday</span></div></div>
+        <div class="notif-footer"><button onclick="showSection('leads')">Open Leads &amp; CRM</button></div>
+      </div>
+    </div>
+
+    <button class="icon-btn" onclick="toast('info','Help center','The LuciHome guides open in a new tab (demo).')" aria-label="Help"><i class="ti ti-help-circle"></i></button>
+
+    <div class="dropdown" id="avatarDropdown">
+      <div class="topbar-avatar" id="avatarBtn" title="Your account">ED</div>
+      <div class="dropdown-panel" id="avatarPanel">
+        <div class="dropdown-header"><strong>Elena Dumitrescu</strong>Architect &amp; Interior Designer · LuciHome Bucharest</div>
+        <div class="dropdown-item" onclick="showSection('profile');closeAllDropdowns()"><i class="ti ti-user-circle"></i>My profile</div>
+        <div class="dropdown-item" onclick="showSection('settings');closeAllDropdowns()"><i class="ti ti-settings"></i>Settings</div>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-item danger" onclick="logoutDemo()"><i class="ti ti-logout"></i>Log out</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="app-shell">
+<!-- ============================= LEFT NAV ============================= -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="nav-quick-create">
+    <button id="quickCreateBtn" onclick="toggleQuickCreate(event)"><i class="ti ti-plus"></i>New</button>
+    <div class="nav-quick-menu" id="quickCreateMenu">
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-project')"><i class="ti ti-photo"></i>New portfolio project</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-lead')"><i class="ti ti-user-plus"></i>New lead</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-send-request')"><i class="ti ti-send"></i>New connection request</div>
+    </div>
+  </div>
+
+  <div class="nav-group-label">Workspace</div>
+  <button class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+  <button class="nav-item" data-section="portfolio" onclick="showSection('portfolio')"><i class="ti ti-photo"></i>Portfolio<span class="nbadge">9</span></button>
+  <button class="nav-item" data-section="projects" onclick="showSection('projects')"><i class="ti ti-briefcase"></i>Projects<span class="nbadge">3</span></button>
+  <button class="nav-item" data-section="leads" onclick="showSection('leads')"><i class="ti ti-user-search"></i>Leads &amp; CRM<span class="nbadge">5</span></button>
+  <button class="nav-item" data-section="collaboration" onclick="showSection('collaboration')"><i class="ti ti-arrows-exchange"></i>Collaboration</button>
+
+  <div class="nav-group-label">Intelligence</div>
+  <button class="nav-item" data-section="ai" onclick="showSection('ai')"><i class="ti ti-robot"></i>AI Tools</button>
+  <button class="nav-item" data-section="analytics" onclick="showSection('analytics')"><i class="ti ti-chart-bar"></i>Analytics</button>
+
+  <div class="nav-group-label">Account</div>
+  <button class="nav-item" data-section="profile" onclick="showSection('profile')"><i class="ti ti-user-circle"></i>Public Profile</button>
+  <button class="nav-item" data-section="settings" onclick="showSection('settings')"><i class="ti ti-settings"></i>Settings</button>
+
+  <div class="sidebar-foot">
+    <p><strong>Founding Professional Plan</strong><br>100 spots available at launch — August 30, 2026.</p>
+    <button class="btn-secondary btn-sm btn-block" onclick="showSection('settings');switchTab('settings','settings-billing')">View subscription</button>
+  </div>
+</nav>
+
+<!-- ============================= MAIN ============================= -->
+<main class="main">
+<div class="content-wrap">
+
+<!-- ======================================================================
+     DASHBOARD
+====================================================================== -->
+<section class="module-section visible" id="section-dashboard">
+  <div class="breadcrumb"><i class="ti ti-layout-dashboard"></i> Workspace / Dashboard</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Good morning, Elena</h1>
+      <p class="page-sub">Here's what's happening across your projects today, July 11, 2026. You have 2 upcoming deadlines and 3 new leads to follow up with.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="showSection('analytics')"><i class="ti ti-chart-bar"></i>View full report</button>
+      <button class="btn-primary" onclick="openModal('modal-add-project')"><i class="ti ti-plus"></i>Add project</button>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Key metrics</div>
+  <div class="grid grid-4" style="margin-bottom:28px">
+    <div class="stat-card"><div class="value">8</div><div class="label">Active projects</div><div class="delta up"><i class="ti ti-trending-up"></i> +1 vs last month</div></div>
+    <div class="stat-card"><div class="value">1,240</div><div class="label">Portfolio views</div><div class="delta up"><i class="ti ti-trending-up"></i> +180 this week</div></div>
+    <div class="stat-card"><div class="value">5</div><div class="label">New leads</div><div class="delta up"><i class="ti ti-trending-up"></i> +2 this week</div></div>
+    <div class="stat-card"><div class="value">12</div><div class="label">Collaborations</div><div class="delta down"><i class="ti ti-minus"></i> unchanged</div></div>
+  </div>
+
+  <div class="section-label">This week</div>
+  <div class="grid grid-12" style="margin-bottom:28px">
+    <div class="span-8">
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:14px">Portfolio views &amp; new leads, last 7 days</p>
+        <div class="chart-wrap" id="dashTrendChart"></div>
+      </div>
+    </div>
+    <div class="span-4">
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:14px">Lead pipeline by stage</p>
+        <div class="chart-wrap" id="dashFunnelDonut"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Today</div>
+  <div class="grid grid-12" style="margin-bottom:8px">
+    <div class="span-8">
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:6px">
+          <p class="mt" style="font-size:15px">Recent activity</p>
+          <button class="btn-ghost btn-sm" id="markAllReadBtn2" onclick="markAllFeedRead()">Mark all read</button>
+        </div>
+        <div id="feedList"></div>
+      </div>
+    </div>
+
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt" style="font-size:15px;margin-bottom:4px">Today's agenda</p>
+        <div id="agendaList"></div>
+      </div>
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:4px">Pending tasks</p>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-license"></i></div><div class="fi-text"><p>Building permit review — Herastrau Apartment</p><span>Due in 3 days</span></div></div>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-clock"></i></div><div class="fi-text"><p>Client awaiting reply — Michael T.</p><span>4 hours ago</span></div></div>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-palette"></i></div><div class="fi-text"><p>Mood board approval pending — Pipera Villa</p><span>in 2 days</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PORTFOLIO
+====================================================================== -->
+<section class="module-section" id="section-portfolio">
+  <div class="breadcrumb"><i class="ti ti-photo"></i> Workspace / Portfolio</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Portfolio</h1>
+      <p class="page-sub">Your public showcase of completed work — what agents, developers, and clients see when they find you on LuciHome.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="openModal('modal-add-project')"><i class="ti ti-plus"></i>Add project</button>
+    </div>
+  </div>
+
+  <div class="type-legend">
+    <span class="spec-badge spec-arch">🏛 Architecture</span>
+    <span class="spec-badge spec-int">🎨 Interior Design</span>
+    <span class="spec-badge spec-both">⚡ Both</span>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="flex flex-gap" style="flex-wrap:wrap;align-items:center">
+      <div class="topbar-search" style="max-width:280px">
+        <i class="ti ti-search"></i>
+        <input type="text" class="input" style="padding-left:34px;border-radius:8px" id="portfolioSearch" placeholder="Search by title or city..." oninput="renderPortfolio()">
+      </div>
+      <select class="select" id="portfolioTypeFilter" style="max-width:200px" onchange="renderPortfolio()">
+        <option value="all">All categories</option>
+        <option value="Architecture">Architecture</option>
+        <option value="Interior Design">Interior Design</option>
+        <option value="Both">Both</option>
+      </select>
+      <select class="select" id="portfolioSort" style="max-width:180px" onchange="renderPortfolio()">
+        <option value="views">Sort: Views</option>
+        <option value="year">Sort: Year</option>
+        <option value="size">Sort: Size</option>
+      </select>
+      <div class="flex flex-gap" style="margin-left:auto">
+        <button class="btn-icon btn-secondary" id="gridViewBtn" onclick="setPortfolioView('grid')" title="Grid"><i class="ti ti-layout-grid"></i></button>
+        <button class="btn-icon btn-secondary" id="listViewBtn" onclick="setPortfolioView('list')" title="List"><i class="ti ti-list"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="portfolioGrid" class="grid grid-3"></div>
+
+  <div class="section-label">Portfolio project flow</div>
+  <div class="flow-row">
+    <div class="fs">Step 1: Basic info</div><span class="fa">→</span>
+    <div class="fs">Step 2: Location</div><span class="fa">→</span>
+    <div class="fs">Step 3: Photos + media</div><span class="fa">→</span>
+    <div class="fs">Step 4: Before / after</div><span class="fa">→</span>
+    <div class="fs">Step 5: AI description</div><span class="fa">→</span>
+    <div class="fs done"><i class="ti ti-check"></i> Publish</div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PROJECTS
+====================================================================== -->
+<section class="module-section" id="section-projects">
+  <div class="breadcrumb"><i class="ti ti-briefcase"></i> Workspace / Projects</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Active Projects</h1>
+      <p class="page-sub">Each project has its own workspace — tasks, documents, budget, and every party involved, separate from your public portfolio.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" id="archiveToggleBtn" onclick="toggleArchive()"><i class="ti ti-archive"></i><span id="archiveBtnLabel">Completed projects archive</span></button>
+    </div>
+  </div>
+
+  <div class="workspace-grid">
+    <div class="panel-list">
+      <div class="section-label" style="margin-top:0">Project pipeline</div>
+      <div class="tx-stack" id="txList"></div>
+    </div>
+    <div class="panel-detail">
+      <div class="card" id="dealRoom"></div>
+    </div>
+  </div>
+
+  <div id="txArchive" style="display:none;margin-top:28px"></div>
+</section>
+
+<!-- ======================================================================
+     LEADS & CRM
+====================================================================== -->
+<section class="module-section" id="section-leads">
+  <div class="breadcrumb"><i class="ti ti-user-search"></i> Workspace / Leads &amp; CRM</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Leads &amp; CRM</h1>
+      <p class="page-sub">Every inquiry — from your public profile, referred by agents, or platform auto-match — organized by stage. Drag cards between columns, click a card for the full client brief.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="openModal('modal-add-lead')"><i class="ti ti-user-plus"></i>Add lead</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="topbar-search" style="max-width:320px">
+      <i class="ti ti-search"></i>
+      <input type="text" class="input" style="padding-left:34px;border-radius:8px" id="crmSearch" placeholder="Search client by name or tag..." oninput="renderKanban()">
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Lead pipeline</div>
+  <div class="kanban" id="kanbanBoard"></div>
+
+  <div class="section-label">Cost estimate calculator</div>
+  <div class="grid grid-2">
+    <div class="card">
+      <p class="mt">Quick estimate for a new lead</p>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Size (m²)</label><input class="input" type="number" id="estSize" value="90"></div>
+        <div class="field"><label class="field-label">Finish level</label><select class="select" id="estFinish"><option>Standard</option><option selected>Premium</option><option>Luxury</option></select></div>
+      </div>
+      <div class="field"><label class="field-label">Project type</label>
+        <select class="select" id="estType"><option>Interior design — full renovation</option><option>Interior design — furnishing only</option><option>Architecture — new build</option><option>Architecture — extension</option></select>
+      </div>
+      <button class="btn-primary btn-block" onclick="generateCostEstimate()"><i class="ti ti-calculator"></i>Generate estimate</button>
+    </div>
+    <div class="card" id="estResultCard">
+      <p class="mt">Estimate result</p>
+      <p class="ms">Fill in the form and click generate to see an indicative budget range, ready to send as a first response to a lead.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     COLLABORATION
+====================================================================== -->
+<section class="module-section" id="section-collaboration">
+  <div class="breadcrumb"><i class="ti ti-arrows-exchange"></i> Workspace / Collaboration</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Collaboration</h1>
+      <p class="page-sub">Find, connect, and collaborate with agents, developers, and other professionals — the heart of the LuciHome ecosystem.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="openModal('modal-send-request')"><i class="ti ti-send"></i>Send request</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="collab-directory" onclick="switchTab('collab',this.dataset.tab)">Professional directory</button>
+    <button class="tab-btn" data-tab="collab-mine" onclick="switchTab('collab',this.dataset.tab)">My network</button>
+    <button class="tab-btn" data-tab="collab-projects" onclick="switchTab('collab',this.dataset.tab)">Developer projects</button>
+    <button class="tab-btn" data-tab="collab-badges" onclick="switchTab('collab',this.dataset.tab)">Collaboration badges</button>
+  </div>
+
+  <div class="tab-panel visible" id="collab-directory">
+    <div class="card" style="margin-bottom:18px">
+      <div class="flex flex-gap" style="flex-wrap:wrap">
+        <input class="input" style="max-width:220px" id="dirSearch" placeholder="Search by name..." oninput="renderDirectory()">
+        <select class="select" style="max-width:200px" id="dirType" onchange="renderDirectory()">
+          <option value="all">All types</option>
+          <option value="Agent">Agent</option>
+          <option value="Developer">Developer</option>
+          <option value="Architect">Architect</option>
+          <option value="Designer">Designer</option>
+          <option value="Notary">Notary</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid grid-3" id="directoryGrid"></div>
+  </div>
+
+  <div class="tab-panel" id="collab-mine">
+    <div class="grid grid-3" id="myNetworkGrid"></div>
+  </div>
+
+  <div class="tab-panel" id="collab-projects">
+    <div class="grid grid-2" id="devProjectsGrid"></div>
+  </div>
+
+  <div class="tab-panel" id="collab-badges">
+    <div class="grid grid-3">
+      <div class="card">
+        <i class="ti ti-certificate mi"></i>
+        <p class="mt">Verified collaborator</p>
+        <p class="ms">Earned after completing a project with another LuciHome professional. You currently hold this badge.</p>
+      </div>
+      <div class="card">
+        <i class="ti ti-star mi"></i>
+        <p class="mt">Professional reviews</p>
+        <p class="ms">4.9 average from agents and developers you've collaborated with, across 12 completed collaborations.</p>
+      </div>
+      <div class="card">
+        <i class="ti ti-trophy mi"></i>
+        <p class="mt">Collaborations counter</p>
+        <p class="ms"><strong style="color:var(--text-primary)">12 collaborations</strong> completed on LuciHome — visible on your public profile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     AI TOOLS
+====================================================================== -->
+<section class="module-section" id="section-ai">
+  <div class="breadcrumb"><i class="ti ti-robot"></i> Workspace / AI Tools</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">AI Tools</h1>
+      <p class="page-sub">Not a separate "AI" tab in the live product — each tool appears exactly where you need it in the workflow. Try them here directly.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="ai-desc" onclick="switchTab('ai',this.dataset.tab)"><i class="ti ti-writing"></i> Project description</button>
+    <button class="tab-btn" data-tab="ai-staging" onclick="switchTab('ai',this.dataset.tab)"><i class="ti ti-sofa"></i> Virtual staging</button>
+    <button class="tab-btn" data-tab="ai-trend" onclick="switchTab('ai',this.dataset.tab)"><i class="ti ti-chart-dots"></i> Trend insights</button>
+    <button class="tab-btn" data-tab="ai-translate" onclick="switchTab('ai',this.dataset.tab)"><i class="ti ti-translate"></i> Translation</button>
+    <button class="tab-btn" data-tab="ai-homy" onclick="switchTab('ai',this.dataset.tab)"><i class="ti ti-message-chatbot"></i> Homy</button>
+  </div>
+
+  <!-- AI description -->
+  <div class="tab-panel visible" id="ai-desc">
+    <div class="grid grid-2">
+      <div class="card">
+        <p class="mt">Generate a portfolio project description</p>
+        <div class="field"><label class="field-label">Project category</label>
+          <select class="select" id="descType"><option>Architecture</option><option>Interior Design</option><option>Both</option></select>
+        </div>
+        <div class="field-row">
+          <div class="field"><label class="field-label">City / area</label><input class="input" id="descCity" value="Herastrau, Bucharest"></div>
+          <div class="field"><label class="field-label">Size (m²)</label><input class="input" type="number" id="descSize" value="140"></div>
+        </div>
+        <div class="field"><label class="field-label">Key features (comma separated)</label>
+          <input class="input" id="descFeatures" value="open-plan living, custom joinery, natural light, warm minimalist palette">
+        </div>
+        <button class="btn-primary btn-block" onclick="generateDescription()"><i class="ti ti-sparkles"></i>Generate description</button>
+      </div>
+      <div class="card">
+        <div class="flex-between"><p class="mt">Generated result</p><button class="btn-ghost btn-sm" onclick="copyText('descOutput')"><i class="ti ti-copy"></i>Copy</button></div>
+        <div id="descLoading" style="display:none"><div class="skeleton skel-line w80"></div><div class="skeleton skel-line w60"></div><div class="skeleton skel-line w40"></div></div>
+        <textarea class="textarea" id="descOutput" style="min-height:220px" placeholder="Click 'Generate description' to see the AI result here..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI virtual staging -->
+  <div class="tab-panel" id="ai-staging">
+    <div class="grid grid-2">
+      <div class="card">
+        <p class="mt">Virtual staging AI</p>
+        <p class="ms" style="margin-bottom:14px">Upload a photo of an empty room and AI furnishes it digitally in the selected style.</p>
+        <div class="field"><label class="field-label">Room type</label>
+          <select class="select" id="stagingRoom"><option>Living room</option><option>Bedroom</option><option>Kitchen</option><option>Office</option></select>
+        </div>
+        <div class="field"><label class="field-label">Style</label>
+          <select class="select" id="stagingStyle"><option>Scandinavian</option><option>Modern Luxury</option><option>Mediterranean</option><option>Industrial</option></select>
+        </div>
+        <div class="empty-state" style="border:1.5px dashed var(--border-strong);border-radius:12px;cursor:pointer;margin-bottom:14px" onclick="simulateUpload()">
+          <i class="ti ti-cloud-upload"></i>
+          <p style="margin:0 0 4px;color:var(--text-secondary)">Drag a photo here or click to upload</p>
+          <p style="margin:0;font-size:11px">JPG, PNG</p>
+        </div>
+        <div id="uploadedFilesList" style="margin-bottom:14px"></div>
+        <button class="btn-primary btn-block" onclick="generateStaging()"><i class="ti ti-sparkles"></i>Stage this room</button>
+      </div>
+      <div class="card" id="stagingResultCard">
+        <p class="mt">Staged result</p>
+        <p class="ms">Upload a room photo and click "Stage this room" to see the furnished result here.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI trend insights -->
+  <div class="tab-panel" id="ai-trend">
+    <div class="card">
+      <p class="mt">AI trend insights</p>
+      <p class="ms" style="margin-bottom:14px">Which styles are most searched in your active markets, based on platform activity.</p>
+      <div class="chart-wrap" id="trendInsightsChart"></div>
+    </div>
+  </div>
+
+  <!-- AI translate -->
+  <div class="tab-panel" id="ai-translate">
+    <div class="grid grid-2">
+      <div class="card">
+        <p class="mt">Translate message / description</p>
+        <div class="field"><label class="field-label">Target language</label>
+          <select class="select" id="translateLang"><option value="ro">Romanian</option><option value="fr">French</option><option value="de">German</option><option value="es">Spanish</option><option value="ar">Arabic</option></select>
+        </div>
+        <div class="field"><label class="field-label">Original text (English)</label>
+          <textarea class="textarea" id="translateInput" style="min-height:140px">Full renovation of a 3-bedroom apartment, Scandinavian style, natural materials, completed in 10 weeks.</textarea>
+        </div>
+        <button class="btn-primary btn-block" onclick="generateTranslation()"><i class="ti ti-translate"></i>Translate</button>
+      </div>
+      <div class="card">
+        <p class="mt">Translated result</p>
+        <textarea class="textarea" id="translateOutput" style="min-height:180px" placeholder="The translation will appear here..."></textarea>
+        <p class="field-hint">Demo — the translation is simulated for the presentation. In the final product, LuciHome uses a dedicated AI translation model.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Homy chat -->
+  <div class="tab-panel" id="ai-homy">
+    <div class="grid grid-12">
+      <div class="span-8">
+        <div class="card">
+          <div class="flex-gap" style="align-items:center;margin-bottom:12px">
+            <div class="avatar-circle"><i class="ti ti-robot"></i></div>
+            <div><p class="mt" style="margin:0">Homy</p><p class="ms">LuciHome's AI assistant</p></div>
+          </div>
+          <div class="chat-box" id="homyChat"></div>
+          <div class="chat-input-row">
+            <input class="input" id="homyInput" placeholder="Ask Homy anything about the market or your clients..." onkeydown="if(event.key==='Enter'){askHomy()}">
+            <button class="btn-primary btn-icon" onclick="askHomy()"><i class="ti ti-send"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="span-4">
+        <div class="card">
+          <p class="mt">Suggested questions</p>
+          <div class="pill-row" style="flex-direction:column;align-items:stretch;gap:8px">
+            <button class="pill clickable" style="text-align:left" onclick="askHomyPreset(this)">Which styles are trending in Bucharest right now?</button>
+            <button class="pill clickable" style="text-align:left" onclick="askHomyPreset(this)">Which of my portfolio projects are underperforming?</button>
+            <button class="pill clickable" style="text-align:left" onclick="askHomyPreset(this)">What should I charge for a full renovation?</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PROFILE
+====================================================================== -->
+<section class="module-section" id="section-profile">
+  <div class="breadcrumb"><i class="ti ti-user-circle"></i> Workspace / Public Profile</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Your Public Profile</h1>
+      <p class="page-sub">What agents, developers and clients see when they click on your name anywhere on LuciHome.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" id="editProfileBtn" onclick="toggleProfileEdit()"><i class="ti ti-edit"></i>Edit profile</button>
+    </div>
+  </div>
+
+  <div class="grid grid-12">
+    <div class="span-8">
+      <div class="card">
+        <div class="flex flex-gap" style="align-items:flex-start">
+          <div class="avatar-circle lg">ED</div>
+          <div style="flex:1">
+            <p class="mt" style="font-size:20px;font-family:var(--font-display)" id="profName">Elena Dumitrescu</p>
+            <p class="ms" id="profRole">Architect &amp; Interior Designer · LuciHome Bucharest &amp; Paris</p>
+            <div class="pill-row" style="margin-top:10px">
+              <span class="badge badge-active"><i class="ti ti-rosette-discount-check"></i>ID verified</span>
+              <span class="badge badge-info"><i class="ti ti-certificate"></i>License RO-ARH-2290</span>
+              <span class="badge badge-neutral"><i class="ti ti-building"></i>Studio verified</span>
+            </div>
+          </div>
+        </div>
+        <hr class="rule">
+        <p class="ms" id="profBio" contenteditable="false">Specialized in residential architecture and interior design across Bucharest and the Herastrau area, with cross-border projects for clients from France and the UAE. I speak Romanian, English, and French.</p>
+        <div class="field-row" style="margin-top:16px" id="profEditFields">
+          <div class="field"><label class="field-label">LinkedIn</label><input class="input" value="linkedin.com/in/elena-dumitrescu-arch" disabled></div>
+          <div class="field"><label class="field-label">WhatsApp</label><input class="input" value="+40 7xx xxx xxx" disabled></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <p class="mt">Reviews &amp; ratings</p>
+        <p class="ms" style="margin-bottom:10px"><span class="stars">★★★★★</span> 4.9 out of 5 · 31 verified reviews</p>
+        <div class="feed-item"><div class="fi-icon"><i class="ti ti-quote"></i></div><div class="fi-text"><p>"Elena transformed our apartment beyond what we imagined — on time and on budget." — The Rhodes family</p><span>Project completed, Herastrau</span></div></div>
+        <div class="feed-item"><div class="fi-icon"><i class="ti ti-quote"></i></div><div class="fi-text"><p>"Excellent technical drawings and communication throughout the permit process." — Skyline Development</p><span>Collaboration completed</span></div></div>
+      </div>
+    </div>
+
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Active markets</p>
+        <div class="pill-row">
+          <span class="pill on">Bucharest</span><span class="pill on">Cluj-Napoca</span><span class="pill on">Paris</span><span class="pill">Dubai</span>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Design styles</p>
+        <div class="pill-row">
+          <span class="pill on">Scandinavian</span><span class="pill on">Modern Luxury</span><span class="pill">Mediterranean</span><span class="pill">Industrial</span>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Achievements</p>
+        <div class="grid grid-2" style="gap:10px">
+          <div class="mini-stat"><p class="v">47</p><p class="l">Projects completed</p></div>
+          <div class="mini-stat"><p class="v">€3.4M</p><p class="l">Total volume</p></div>
+          <div class="mini-stat"><p class="v">3</p><p class="l">Markets covered</p></div>
+          <div class="mini-stat"><p class="v">12</p><p class="l">Collaborations</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="mt">External links</p>
+        <div class="pill-row" style="flex-direction:column;align-items:stretch">
+          <a class="btn-secondary btn-sm" style="justify-content:flex-start" href="https://linkedin.com/in/elena-dumitrescu-arch" target="_blank" rel="noopener"><i class="ti ti-brand-linkedin"></i>LinkedIn</a>
+          <a class="btn-secondary btn-sm" style="justify-content:flex-start" href="https://lucihome.com/professional.html" target="_blank" rel="noopener"><i class="ti ti-link"></i>LuciHome page</a>
+          <a class="btn-secondary btn-sm" style="justify-content:flex-start" href="mailto:office@lucihome.com"><i class="ti ti-mail"></i>office@lucihome.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     ANALYTICS
+====================================================================== -->
+<section class="module-section" id="section-analytics">
+  <div class="breadcrumb"><i class="ti ti-chart-bar"></i> Workspace / Analytics</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Performance Analytics</h1>
+      <p class="page-sub">The data that shows you what's working — top-performing portfolio projects, best lead sources, conversion rates.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="exportReport()"><i class="ti ti-file-export"></i>Export report</button>
+    </div>
+  </div>
+
+  <div class="grid grid-12" style="margin-bottom:20px">
+    <div class="span-6">
+      <div class="card">
+        <p class="mt" style="margin-bottom:14px">Top portfolio projects by views</p>
+        <div class="chart-wrap" id="portfolioViewsChart"></div>
+      </div>
+    </div>
+    <div class="span-6">
+      <div class="card">
+        <p class="mt" style="margin-bottom:14px">Lead funnel</p>
+        <div class="chart-wrap" id="leadFunnelChart"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-12">
+    <div class="span-6">
+      <div class="card">
+        <p class="mt" style="margin-bottom:14px">Audience origin</p>
+        <div class="chart-wrap" id="audienceOriginChart"></div>
+      </div>
+    </div>
+    <div class="span-6">
+      <div class="card">
+        <p class="mt" style="margin-bottom:14px">Revenue — completed vs. pipeline (€k)</p>
+        <div class="chart-wrap" id="revenueChart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     SETTINGS
+====================================================================== -->
+<section class="module-section" id="section-settings">
+  <div class="breadcrumb"><i class="ti ti-settings"></i> Workspace / Settings</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Settings</h1>
+      <p class="page-sub">Manage your account, preferences, privacy, and integrations.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="settings-prefs" onclick="switchTab('settings',this.dataset.tab)">Preferences</button>
+    <button class="tab-btn" data-tab="settings-privacy" onclick="switchTab('settings',this.dataset.tab)">Privacy</button>
+    <button class="tab-btn" data-tab="settings-integrations" onclick="switchTab('settings',this.dataset.tab)">Integrations</button>
+    <button class="tab-btn" data-tab="settings-account" onclick="switchTab('settings',this.dataset.tab)">Account &amp; security</button>
+    <button class="tab-btn" data-tab="settings-billing" onclick="switchTab('settings',this.dataset.tab)">Billing</button>
+  </div>
+
+  <div class="tab-panel visible" id="settings-prefs">
+    <div class="card">
+      <div class="field-row">
+        <div class="field"><label class="field-label">Workspace language</label><select class="select"><option>English</option><option>Română</option><option>Français</option></select></div>
+        <div class="field"><label class="field-label">Default currency</label><select class="select"><option>EUR (€)</option><option>RON (lei)</option><option>USD ($)</option></select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Time zone</label><select class="select"><option>(GMT+3) Bucharest</option><option>(GMT+1) Paris</option><option>(GMT+4) Dubai</option></select></div>
+        <div class="field"><label class="field-label">Date format</label><select class="select"><option>DD/MM/YYYY</option><option>MM/DD/YYYY</option><option>YYYY-MM-DD</option></select></div>
+      </div>
+      <button class="btn-primary" onclick="toast('success','Saved','Your preferences have been updated.')"><i class="ti ti-device-floppy"></i>Save preferences</button>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-privacy">
+    <div class="card">
+      <div class="switch-row"><div><p class="st-label">Public profile visible</p><p class="st-sub">Your profile can be seen by clients and partners</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Show phone number</p><p class="st-sub">Visible on your public profile and portfolio</p></div><label class="switch"><input type="checkbox"><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Exact project locations</p><p class="st-sub">If disabled, only the approximate area is shown on portfolio projects</p></div><label class="switch"><input type="checkbox"><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Visible in professional directory</p><p class="st-sub">Other professionals can find and contact you</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-integrations">
+    <div class="grid grid-3">
+      <div class="card">
+        <i class="ti ti-calendar mi"></i><p class="mt">Google Calendar</p><p class="ms">Sync deadlines and client meetings</p>
+        <button class="btn-secondary btn-block int-btn" style="margin-top:10px" data-name="Google Calendar" onclick="toggleIntegration(this)">Connect</button>
+      </div>
+      <div class="card">
+        <i class="ti ti-brand-whatsapp mi"></i><p class="mt">WhatsApp Business</p><p class="ms">Receive messages directly in the LuciHome inbox</p>
+        <button class="btn-secondary btn-block int-btn" style="margin-top:10px" data-name="WhatsApp Business" onclick="toggleIntegration(this)">Connect</button>
+      </div>
+      <div class="card">
+        <i class="ti ti-mail mi"></i><p class="mt">Email</p><p class="ms">Sync email conversations</p>
+        <button class="btn-secondary btn-block int-btn connected" style="margin-top:10px" data-name="Email" onclick="toggleIntegration(this)">Connected <i class="ti ti-check"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-account">
+    <div class="grid grid-2">
+      <div class="card">
+        <p class="mt">Change password</p>
+        <div class="field"><label class="field-label">Current password</label><input class="input" type="password" placeholder="••••••••"></div>
+        <div class="field"><label class="field-label">New password</label><input class="input" type="password" placeholder="••••••••"></div>
+        <button class="btn-primary" onclick="toast('success','Password updated','Your password has been changed successfully (demo).')">Update password</button>
+        <hr class="rule">
+        <div class="switch-row" style="border:none;padding-bottom:0"><div><p class="st-label">Two-factor authentication (2FA)</p><p class="st-sub">Extra security at login</p></div><label class="switch"><input type="checkbox"><span class="track"></span></label></div>
+      </div>
+      <div class="card">
+        <p class="mt">Your data</p>
+        <p class="ms" style="margin-bottom:12px">Export all of your account data (GDPR) or delete your account permanently.</p>
+        <button class="btn-secondary btn-block" style="margin-bottom:10px" onclick="exportAccountData()"><i class="ti ti-download"></i>Export my data (JSON)</button>
+        <button class="btn-danger btn-block" onclick="openModal('modal-delete-account')"><i class="ti ti-trash"></i>Delete account</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-billing">
+    <div class="grid grid-12">
+      <div class="span-8">
+        <div class="card">
+          <div class="flex-between"><p class="mt">Current plan</p><span class="badge badge-active">Founding Professional</span></div>
+          <p class="ms">100 Founding Professional spots at launch — lifetime benefits for early sign-ups. Next billing date: August 30, 2026.</p>
+          <div class="grid grid-2" style="margin-top:14px">
+            <div class="mini-stat"><p class="v">€0</p><p class="l">Cost during beta</p></div>
+            <div class="mini-stat"><p class="v">0%</p><p class="l">Platform commission (beta)</p></div>
+          </div>
+          <button class="btn-primary" style="margin-top:16px" onclick="openModal('modal-upgrade')"><i class="ti ti-rocket"></i>View post-launch plans</button>
+        </div>
+      </div>
+      <div class="span-4">
+        <div class="card">
+          <p class="mt">Payment method</p>
+          <p class="ms">No payment method is required during the Founding Member period.</p>
+          <button class="btn-secondary btn-block" style="margin-top:10px" onclick="toast('info','Billing','Adding a payment method will be available starting August 2026.')">Add card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<!-- ======================================================================
+     LEAD DETAIL DRAWER (Gmail-style slide-over reading pane)
+====================================================================== -->
+<div class="detail-drawer-backdrop" id="contactDrawerBackdrop" onclick="closeContactDrawer()"></div>
+<div class="detail-drawer" id="contactDrawer">
+  <div class="detail-drawer-head">
+    <h3 id="cdName">Client</h3>
+    <button class="detail-drawer-close" onclick="closeContactDrawer()">&times;</button>
+  </div>
+  <div class="detail-drawer-body" id="cdBody"></div>
+  <div class="detail-drawer-foot">
+    <button class="btn-ghost spacer" onclick="closeContactDrawer()">Close</button>
+    <button class="btn-primary" onclick="saveContactDetail()"><i class="ti ti-device-floppy"></i>Save</button>
+  </div>
+</div>
+
+<!-- ======================================================================
+     MODALS
+====================================================================== -->
+
+<!-- Add portfolio project wizard -->
+<div class="modal-overlay" id="modal-add-project">
+  <div class="modal wide">
+    <div class="modal-head"><h3>Add project to portfolio</h3><button class="modal-close" onclick="closeModal('modal-add-project')">&times;</button></div>
+    <div class="modal-body">
+      <div class="wizard-steps" id="wizardDots"></div>
+      <div id="wizardStep1">
+        <div class="field-row">
+          <div class="field"><label class="field-label">Project title *</label><input class="input" id="wTitle" placeholder="e.g. Full renovation, park view apartment"></div>
+          <div class="field"><label class="field-label">Category *</label><select class="select" id="wType"><option>Architecture</option><option>Interior Design</option><option>Both</option></select></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label class="field-label">Completion year</label><input class="input" type="number" id="wYear" placeholder="e.g. 2026"></div>
+          <div class="field"><label class="field-label">Size (m²) *</label><input class="input" type="number" id="wSize" placeholder="e.g. 140"></div>
+        </div>
+      </div>
+      <div id="wizardStep2" style="display:none">
+        <div class="field"><label class="field-label">City *</label><input class="input" id="wCity" placeholder="e.g. Bucharest"></div>
+        <div class="field"><label class="field-label">Neighborhood / area</label><input class="input" id="wZone" placeholder="e.g. Herastrau"></div>
+        <div class="note-box"><i class="ti ti-map-pin"></i> <strong>Map placement:</strong> in the live version, the professional pins an exact or approximate location (privacy toggle).</div>
+      </div>
+      <div id="wizardStep3" style="display:none">
+        <label class="field-label">Photos &amp; media</label>
+        <div class="empty-state" style="border:1.5px dashed var(--border-strong);border-radius:12px;cursor:pointer" onclick="simulateUpload()">
+          <i class="ti ti-cloud-upload"></i>
+          <p style="margin:0 0 4px;color:var(--text-secondary)">Drag photos here or click to upload</p>
+          <p style="margin:0;font-size:11px">JPG, PNG — up to 25 photos</p>
+        </div>
+        <div id="uploadedFilesListModal" style="margin-top:12px"></div>
+      </div>
+      <div id="wizardStep4" style="display:none">
+        <p class="ms" style="margin-bottom:10px">Optional — add a before/after slider for renovation projects.</p>
+        <div class="field-row">
+          <div class="field"><label class="field-label">Budget (€)</label><input class="input" type="number" id="wBudget" placeholder="e.g. 45000"></div>
+          <div class="field"><label class="field-label">Duration (weeks)</label><input class="input" type="number" id="wDuration" placeholder="e.g. 10"></div>
+        </div>
+        <label class="field-label">Style tags</label>
+        <div class="pill-row" id="wTags">
+          <span class="pill clickable" onclick="this.classList.toggle('on')">Scandinavian</span>
+          <span class="pill clickable" onclick="this.classList.toggle('on')">Mediterranean</span>
+          <span class="pill clickable on" onclick="this.classList.toggle('on')">Modern Luxury</span>
+          <span class="pill clickable" onclick="this.classList.toggle('on')">Industrial</span>
+          <span class="pill clickable on" onclick="this.classList.toggle('on')">Minimalist</span>
+          <span class="pill clickable" onclick="this.classList.toggle('on')">Classic</span>
+        </div>
+      </div>
+      <div id="wizardStep5" style="display:none">
+        <p class="ms" style="margin-bottom:10px">Fill in the basic details and let LuciHome AI write the final description — you can edit it any time.</p>
+        <button class="btn-secondary" onclick="wizardGenerateDesc()"><i class="ti ti-sparkles"></i>Generate with AI</button>
+        <textarea class="textarea" id="wDesc" style="min-height:140px;margin-top:12px" placeholder="The generated description will appear here — fully editable..."></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-add-project')">Cancel</button>
+      <button class="btn-secondary" id="wizardBackBtn" onclick="wizardNav(-1)" style="display:none">Back</button>
+      <button class="btn-primary" id="wizardNextBtn" onclick="wizardNav(1)">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add lead -->
+<div class="modal-overlay" id="modal-add-lead">
+  <div class="modal">
+    <div class="modal-head"><h3>Add new lead</h3><button class="modal-close" onclick="closeModal('modal-add-lead')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Full name *</label><input class="input" id="cName" placeholder="e.g. Jane Whitfield"></div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Email</label><input class="input" id="cEmail" placeholder="jane@email.com"></div>
+        <div class="field"><label class="field-label">Phone</label><input class="input" id="cPhone" placeholder="+40 7xx xxx xxx"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Budget (€)</label><input class="input" type="number" id="cBudget" placeholder="e.g. 45000"></div>
+        <div class="field"><label class="field-label">Project type</label><select class="select" id="cType"><option>Full renovation</option><option>Furnishing only</option><option>New build</option><option>Extension</option></select></div>
+      </div>
+      <div class="field"><label class="field-label">Notes</label><textarea class="textarea" id="cNotes" placeholder="Preferences, context, how they were contacted..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-add-lead')">Cancel</button>
+      <button class="btn-primary" onclick="addContact()"><i class="ti ti-check"></i>Add to CRM</button>
+    </div>
+  </div>
+</div>
+
+<!-- Send connection request -->
+<div class="modal-overlay" id="modal-send-request">
+  <div class="modal">
+    <div class="modal-head"><h3>Send a connection request</h3><button class="modal-close" onclick="closeModal('modal-send-request')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Select professional *</label>
+        <select class="select" id="rClient"></select>
+      </div>
+      <div class="field"><label class="field-label">Type of collaboration *</label>
+        <select class="select" id="rMarket"><option>Agent referral partnership</option><option>Developer — off-plan project</option><option>Architect ↔ Designer joint project</option><option>Preferred partner</option></select>
+      </div>
+      <div class="field"><label class="field-label">Message</label><textarea class="textarea" id="rAgent" placeholder="Introduce yourself and the type of collaboration you're proposing...">Hi — I'd love to collaborate on upcoming projects in the Bucharest market.</textarea></div>
+      <div class="field">
+        <label class="field-label">Suggested referral commission: <span id="rPctVal">15</span>%</label>
+        <input type="range" min="5" max="30" value="15" id="rPct" style="width:100%;accent-color:var(--accent)" oninput="document.getElementById('rPctVal').textContent=this.value">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-send-request')">Cancel</button>
+      <button class="btn-primary" onclick="sendReferral()"><i class="ti ti-send"></i>Send request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Upgrade plans -->
+<div class="modal-overlay" id="modal-upgrade">
+  <div class="modal wide">
+    <div class="modal-head"><h3>Post-launch plans</h3><button class="modal-close" onclick="closeModal('modal-upgrade')">&times;</button></div>
+    <div class="modal-body">
+      <div class="grid grid-3">
+        <div class="card"><p class="mt">Starter</p><p class="stat-card value" style="font-size:26px">€0</p><p class="ms">Limited portfolio slots, basic CRM features.</p></div>
+        <div class="card active"><p class="mt">Professional</p><p class="stat-card value" style="font-size:26px">€39/mo</p><p class="ms">Unlimited portfolio, AI tools, international collaboration.</p></div>
+        <div class="card"><p class="mt">Studio</p><p class="stat-card value" style="font-size:26px">Custom</p><p class="ms">For studios and firms — multiple team members, advanced reporting.</p></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-secondary spacer" onclick="closeModal('modal-upgrade')">Close</button><button class="btn-primary" onclick="closeModal('modal-upgrade');toast('info','Founding Member','You are already on the Founding Professional plan — nothing is needed until launch.')">Got it</button></div>
+  </div>
+</div>
+
+<!-- Delete account confirm -->
+<div class="modal-overlay" id="modal-delete-account">
+  <div class="modal">
+    <div class="modal-head"><h3>Delete your account?</h3><button class="modal-close" onclick="closeModal('modal-delete-account')">&times;</button></div>
+    <div class="modal-body">
+      <div class="alert alert-danger"><i class="ti ti-alert-triangle"></i>This action is irreversible. All of your portfolio projects, clients, and project data will be permanently deleted.</div>
+      <p class="ms">Type <strong style="color:var(--text-primary)">DELETE</strong> to confirm.</p>
+      <input class="input" id="deleteConfirmInput" placeholder="DELETE">
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-delete-account')">Cancel</button>
+      <button class="btn-danger" onclick="confirmDeleteAccount()"><i class="ti ti-trash"></i>Delete permanently (demo)</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="architectsdemo.js"></script>
+</body>
+</html>
