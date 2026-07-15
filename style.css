@@ -2401,3 +2401,33 @@ footer.footer-corporate {
 @media (max-width: 760px) {
   .roadmap-item { padding-left: var(--sp-3); }
 }
+
+.spots-progress{
+    width:100%;
+    max-width:420px;
+    height:8px;
+    margin:18px auto 10px;
+    background:#e8edf5;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.spots-progress-bar{
+    height:100%;
+    width:11%; /* 11 spots claimed din 100 */
+    background:linear-gradient(90deg,#1f4e79,#2b6ea8);
+    border-radius:999px;
+    transition:width .4s ease;
+}
+
+.spots-progress-text{
+    text-align:center;
+    font-size:13px;
+    color:#35557b;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+.spots-progress-text strong{
+    color:#173d68;
+}
