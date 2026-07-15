@@ -2410,14 +2410,14 @@ footer.footer-corporate {
     background:#e8edf5;
     border-radius:999px;
     overflow:hidden;
+    display:block;
 }
 
 .spots-progress-bar{
     height:100%;
-    width:11%; /* 11 spots claimed din 100 */
+    width:11%;
     background:linear-gradient(90deg,#1f4e79,#2b6ea8);
     border-radius:999px;
-    transition:width .4s ease;
 }
 
 .spots-progress-text{
@@ -2428,6 +2428,19 @@ footer.footer-corporate {
     text-transform:uppercase;
 }
 
-.spots-progress-text strong{
-    color:#173d68;
+@media (max-width:768px){
+
+    .spots-progress{
+        width:90%;
+        max-width:none;
+        margin:16px auto 8px;
+    }
+
+    .spots-progress-text{
+        width:90%;
+        margin:0 auto;
+        font-size:12px;
+        line-height:1.4;
+    }
+
 }
