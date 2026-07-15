@@ -30,15 +30,15 @@ const state = {
   },
 
   portfolio:[
-    {id:1, title:'Full renovation, park-view apartment', category:'Both', city:'Herastrau, Bucharest', year:2026, size:140, views:412, featured:true, tags:['Modern Luxury','Minimalist'], grad:'#1A73E8'},
-    {id:2, title:'Scandinavian family home interior', category:'Interior Design', city:'Pipera, Bucharest', year:2025, size:210, views:298, featured:true, tags:['Scandinavian'], grad:'#12B5CB'},
-    {id:3, title:'New-build villa, structural design', category:'Architecture', city:'Corbeanca', year:2025, size:320, views:187, featured:false, tags:['Contemporary'], grad:'#8E24AA'},
-    {id:4, title:'Loft conversion, industrial style', category:'Interior Design', city:'Cotroceni, Bucharest', year:2024, size:95, views:255, featured:false, tags:['Industrial'], grad:'#F9AB00'},
-    {id:5, title:'Off-plan residential block — facade', category:'Architecture', city:'Cluj-Napoca', year:2024, size:2400, views:143, featured:false, tags:['Contemporary'], grad:'#34A853'},
-    {id:6, title:'Mediterranean-style seaside villa', category:'Both', city:'Mamaia', year:2023, size:280, views:334, featured:true, tags:['Mediterranean'], grad:'#EA4335'},
-    {id:7, title:'Boutique office fit-out', category:'Interior Design', city:'Floreasca, Bucharest', year:2023, size:410, views:121, featured:false, tags:['Modern Luxury'], grad:'#1A73E8'},
-    {id:8, title:'Extension + full renovation', category:'Architecture', city:'Baneasa, Bucharest', year:2022, size:180, views:98, featured:false, tags:['Classic'], grad:'#12B5CB'},
-    {id:9, title:'Paris pied-à-terre restyling', category:'Interior Design', city:'Paris, FR', year:2022, size:65, views:176, featured:false, tags:['Minimalist'], grad:'#8E24AA'},
+    {id:1, title:'Full renovation, park-view apartment',category:'Both',city:'Herastrau, Bucharest',year:2026,size:140,views:412,featured:true,tags:['Modern Luxury','Minimalist'],image:'renovationarchitects.png',grad:'#1A73E8'},
+    {id:2, title:'Scandinavian family home interior',category:'Interior Design',city:'Pipera, Bucharest',year:2025,size:210,views:298,featured:true,tags:['Scandinavian'],image:'scandinavianarch.png',grad:'#12B5CB'},
+    {id:3, title:'New-build villa, structural design',category:'Architecture',city:'Corbeanca',year:2025,size:320,views:187,featured:false,tags:['Contemporary'],image:'newvillaarch.png',grad:'#8E24AA'},
+    {id:4, title:'Loft conversion, industrial style',category:'Interior Design',city:'Cotroceni, Bucharest',year:2024,size:95,views:255,featured:false,tags:['Industrial'],image:'loftarch.png',grad:'#F9AB00'},
+    {id:5, title:'Off-plan residential block — facade',category:'Architecture',city:'Cluj-Napoca',year:2024,size:2400,views:143,featured:false,tags:['Contemporary'],image:'offplanarch.png',grad:'#34A853'},
+    {id:6, title:'Mediterranean-style seaside villa',category:'Both',city:'Mamaia',year:2023,size:280,views:334,featured:true,tags:['Mediterranean'],image:'mediterraneanstyle.png',grad:'#EA4335'},
+    {id:7, title:'Boutique office fit-out',category:'Interior Design',city:'Floreasca, Bucharest',year:2023,size:410,views:121,featured:false,tags:['Modern Luxury'],image:'boutiquearch.png',grad:'#1A73E8'},
+    {id:8, title:'Extension + full renovation',category:'Architecture',city:'Baneasa, Bucharest',year:2022,size:180,views:98,featured:false,tags:['Classic'],image:'extensionarch.png',grad:'#12B5CB'},
+    {id:9, title:'Paris pied-à-terre restyling',category:'Interior Design',city:'Paris, FR',year:2022,size:65,views:176,featured:false,tags:['Minimalist'],image:'parisarch.png',grad:'#8E24AA'},
   ],
   portfolioView:'grid',
 
@@ -387,7 +387,14 @@ function renderPortfolio(){
 
   grid.innerHTML = list.map(p=>`
     <div class="card listing-card hoverable">
-      <div class="listing-photo" style="background:${p.grad}">
+      <div class="listing-photo"
+     style="
+        background:${p.image ? 'none' : p.grad};
+        background-image:${p.image ? `url('${p.image}')` : 'none'};
+        background-size:cover;
+        background-position:center;
+        background-repeat:no-repeat;
+     ">
         <i class="ti ${categoryIcon[p.category]||'ti-photo'}"></i>
         <span class="spec-badge ${categoryBadge[p.category]} ph-badge">${p.category}</span>
         <span class="ph-views"><i class="ti ti-eye"></i>${p.views}</span>
