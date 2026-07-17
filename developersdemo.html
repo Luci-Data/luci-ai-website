@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQG0HRP6TD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GQG0HRP6TD');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuciHome — Developers Workspace Demo</title>
+<link rel="icon" type="image/png" href="/lucihome.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<link rel="stylesheet" href="workspacedevelopers.css">
+</head>
+<body>
+
+<!-- ============================= TOPBAR ============================= -->
+<header class="topbar">
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu"><i class="ti ti-menu-2"></i></button>
+  <div class="topbar-brand">
+    <div class="mark">
+    <img src="lucihome.png" alt="LuciHome Logo" class="logo-img">
+</div>
+<div class="wordmark">LuciHome</div>
+  </div>
+
+  <div class="topbar-search">
+    <i class="ti ti-search"></i>
+    <input type="text" id="globalSearch" placeholder="Search projects, units, agents...">
+  </div>
+
+  <div class="topbar-actions">
+    <div class="dropdown" id="notifDropdown">
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+        <i class="ti ti-bell"></i>
+        <span class="dot" id="notifCount">4</span>
+      </button>
+      <div class="dropdown-panel notif-panel" id="notifPanel">
+        <div class="dropdown-header"><strong>Notifications</strong>4 unread</div>
+        <div id="notifList"></div>
+        <div class="notif-footer"><button id="markAllReadBtn">Mark all as read</button></div>
+      </div>
+    </div>
+
+    <div class="dropdown" id="msgDropdown">
+      <button class="icon-btn" id="msgBtn" aria-label="Messages">
+        <i class="ti ti-message-dots"></i>
+        <span class="dot">3</span>
+      </button>
+      <div class="dropdown-panel notif-panel">
+        <div class="dropdown-header"><strong>Recent messages</strong>3 unread conversations</div>
+        <div class="notif-item unread"><div class="notif-icon"><i class="ti ti-user"></i></div><div class="notif-text"><p><strong>Sophie Laurent</strong> — "Can you send the updated price list for Skyline Residences?"</p><span>22 min ago</span></div></div>
+        <div class="notif-item unread"><div class="notif-icon"><i class="ti ti-user"></i></div><div class="notif-text"><p><strong>Khalid Al-Farsi</strong> — "Client is ready to sign for unit 3D."</p><span>2 h ago</span></div></div>
+        <div class="notif-item unread"><div class="notif-icon"><i class="ti ti-building-bank"></i></div><div class="notif-text"><p><strong>BRD Partner Loans</strong> — financing pre-approval update</p><span>yesterday</span></div></div>
+        <div class="notif-footer"><button onclick="showSection('agents')">Open Agent Network</button></div>
+      </div>
+    </div>
+
+    <button class="icon-btn" onclick="toast('info','Help center','The LuciHome guides open in a new tab (demo).')" aria-label="Help"><i class="ti ti-help-circle"></i></button>
+
+    <div class="dropdown" id="avatarDropdown">
+      <div class="topbar-avatar" id="avatarBtn" title="Your account">MD</div>
+      <div class="dropdown-panel" id="avatarPanel">
+        <div class="dropdown-header"><strong>Meridian Developments</strong>Developer · LuciHome Romania</div>
+        <div class="dropdown-item" onclick="showSection('brand');closeAllDropdowns()"><i class="ti ti-building-skyscraper"></i>Company profile</div>
+        <div class="dropdown-item" onclick="showSection('settings');closeAllDropdowns()"><i class="ti ti-settings"></i>Settings</div>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-item danger" onclick="logoutDemo()"><i class="ti ti-logout"></i>Log out</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="app-shell">
+<!-- ============================= LEFT NAV ============================= -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="nav-quick-create">
+    <button id="quickCreateBtn" onclick="toggleQuickCreate(event)"><i class="ti ti-plus"></i>New</button>
+    <div class="nav-quick-menu" id="quickCreateMenu">
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-project')"><i class="ti ti-crane"></i>New project</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-unit')"><i class="ti ti-square-plus"></i>New unit</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-invite-agent')"><i class="ti ti-user-plus"></i>Invite agent</div>
+    </div>
+  </div>
+
+  <div class="nav-group-label">Workspace</div>
+  <button class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+  <button class="nav-item" data-section="projects" onclick="showSection('projects')"><i class="ti ti-crane"></i>Projects<span class="nbadge">4</span></button>
+  <button class="nav-item" data-section="inventory" onclick="showSection('inventory')"><i class="ti ti-layout-grid"></i>Unit Inventory</button>
+  <button class="nav-item" data-section="sales" onclick="showSection('sales')"><i class="ti ti-chart-line"></i>Sales Tracker</button>
+  <button class="nav-item" data-section="documents" onclick="showSection('documents')"><i class="ti ti-folder"></i>Documents</button>
+
+  <div class="nav-group-label">Network</div>
+  <button class="nav-item" data-section="agents" onclick="showSection('agents')"><i class="ti ti-users"></i>Agent Network<span class="nbadge">6</span></button>
+  <button class="nav-item" data-section="network" onclick="showSection('network')"><i class="ti ti-network"></i>Professional Network</button>
+  <button class="nav-item" data-section="analytics" onclick="showSection('analytics')"><i class="ti ti-chart-bar"></i>Analytics</button>
+
+  <div class="nav-group-label">Account</div>
+  <button class="nav-item" data-section="brand" onclick="showSection('brand')"><i class="ti ti-building-skyscraper"></i>Brand &amp; Profile</button>
+  <button class="nav-item" data-section="settings" onclick="showSection('settings')"><i class="ti ti-settings"></i>Settings</button>
+
+  <div class="sidebar-foot">
+    <p><strong>Founding Developer Plan</strong><br>40 spots available at launch — August 30, 2026.</p>
+    <button class="btn-secondary btn-sm btn-block" onclick="showSection('settings');switchTab('settings','settings-billing')">View subscription</button>
+  </div>
+</nav>
+
+<!-- ============================= MAIN ============================= -->
+<main class="main">
+<div class="content-wrap">
+
+<!-- ======================================================================
+     DASHBOARD
+====================================================================== -->
+<section class="module-section visible" id="section-dashboard">
+  <div class="breadcrumb"><i class="ti ti-layout-dashboard"></i> Workspace / Dashboard</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Good morning, Radu</h1>
+      <p class="page-sub">Here's what's happening across your portfolio today, July 11, 2026. 2 reservations expire within 24h and 3 agent inquiries are waiting for a reply.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="showSection('analytics')"><i class="ti ti-chart-bar"></i>View full report</button>
+      <button class="btn-primary" onclick="openModal('modal-add-project')"><i class="ti ti-plus"></i>New project</button>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Company-wide KPIs</div>
+  <div class="grid grid-4" style="margin-bottom:28px">
+    <div class="stat-card"><div class="value">4</div><div class="label">Active projects</div><div class="delta up"><i class="ti ti-trending-up"></i> +1 vs last quarter</div></div>
+    <div class="stat-card"><div class="value">312</div><div class="label">Total units</div><div class="delta down"><i class="ti ti-minus"></i> unchanged</div></div>
+    <div class="stat-card"><div class="value">187</div><div class="label">Units sold</div><div class="delta up"><i class="ti ti-trending-up"></i> +9 this month</div></div>
+    <div class="stat-card"><div class="value">€48.2M</div><div class="label">Sales volume</div><div class="delta up"><i class="ti ti-trending-up"></i> +€3.1M this month</div></div>
+  </div>
+
+  <div class="section-label">This week</div>
+  <div class="grid grid-12" style="margin-bottom:28px">
+    <div class="span-8">
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:14px">Units sold &amp; agent inquiries, last 7 days</p>
+        <div class="chart-wrap" id="dashTrendChart"></div>
+      </div>
+    </div>
+    <div class="span-4">
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:14px">Units by status</p>
+        <div class="chart-wrap" id="dashFunnelDonut"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Today</div>
+  <div class="grid grid-12" style="margin-bottom:8px">
+    <div class="span-8">
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:6px">
+          <p class="mt" style="font-size:15px">Recent activity</p>
+          <button class="btn-ghost btn-sm" id="markAllReadBtn2" onclick="markAllFeedRead()">Mark all read</button>
+        </div>
+        <div id="feedList"></div>
+      </div>
+    </div>
+
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt" style="font-size:15px;margin-bottom:4px">Milestones this week</p>
+        <div id="agendaList"></div>
+      </div>
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:4px">Needs attention</p>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-lock"></i></div><div class="fi-text"><p>Reservation expiring — Unit 2A, Skyline Residences</p><span>in 14 hours</span></div></div>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-message-dots"></i></div><div class="fi-text"><p>2 agent inquiries awaiting reply</p><span>Herastrau Gardens Phase II</span></div></div>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-calendar-x"></i></div><div class="fi-text"><p>Construction milestone overdue — Foundation</p><span>Downtown Business Hub, 3 days late</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PROJECTS
+====================================================================== -->
+<section class="module-section" id="section-projects">
+  <div class="breadcrumb"><i class="ti ti-crane"></i> Workspace / Projects</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Projects</h1>
+      <p class="page-sub">Manage your off-plan developments — public-facing pages for buyers and agents, private tools for your team.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="openModal('modal-add-project')"><i class="ti ti-plus"></i>Add new project</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="flex flex-gap" style="flex-wrap:wrap;align-items:center">
+      <div class="topbar-search" style="max-width:280px">
+        <i class="ti ti-search"></i>
+        <input type="text" class="input" style="padding-left:34px;border-radius:8px" id="projectSearch" placeholder="Search by name or location..." oninput="renderProjects()">
+      </div>
+      <select class="select" id="projectStatusFilter" style="max-width:180px" onchange="renderProjects()">
+        <option value="all">All statuses</option>
+        <option value="prelaunch">Pre-launch</option>
+        <option value="active">Active</option>
+        <option value="soldout">Sold out</option>
+        <option value="completed">Completed</option>
+      </select>
+      <select class="select" id="projectSort" style="max-width:180px" onchange="renderProjects()">
+        <option value="sold">Sort: % sold</option>
+        <option value="units">Sort: Units</option>
+        <option value="delivery">Sort: Delivery date</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="projectsGrid" class="grid grid-3"></div>
+
+  <div class="section-label">Project launch flow</div>
+  <div class="flow-row">
+    <div class="fs">Create project</div><span class="fa">→</span>
+    <div class="fs">Upload media &amp; docs</div><span class="fa">→</span>
+    <div class="fs">Configure unit inventory</div><span class="fa">→</span>
+    <div class="fs">Set payment plans</div><span class="fa">→</span>
+    <div class="fs">Invite agent network</div><span class="fa">→</span>
+    <div class="fs done"><i class="ti ti-check"></i> Set to Active</div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     UNIT INVENTORY
+====================================================================== -->
+<section class="module-section" id="section-inventory">
+  <div class="breadcrumb"><i class="ti ti-layout-grid"></i> Workspace / Unit Inventory</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Unit Inventory</h1>
+      <p class="page-sub">Every unit tracked individually. When an agent reserves a unit it locks automatically — no double-booking, no confusion.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="exportInventory()"><i class="ti ti-file-export"></i>Export availability</button>
+      <button class="btn-primary" onclick="openModal('modal-add-unit')"><i class="ti ti-plus"></i>Add unit</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="field" style="margin-bottom:0;max-width:360px">
+      <label class="field-label">Project</label>
+      <select class="select" id="inventoryProjectSelect" onchange="renderInventory()"></select>
+    </div>
+  </div>
+
+  <div class="grid grid-4" id="inventoryStats" style="margin-bottom:20px"></div>
+
+  <div class="card" style="margin-bottom:24px">
+    <div class="unit-legend">
+      <span class="ul" style="background:var(--success-tint);color:var(--success)">Available</span>
+      <span class="ul" style="background:var(--warning-tint);color:#B06000">Reserved (locked)</span>
+      <span class="ul" style="background:var(--bg-selected);color:var(--accent-pressed)">Sold</span>
+    </div>
+    <div class="unit-grid" id="unitGrid"></div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Unit history log</div>
+  <div class="card">
+    <div id="unitHistoryList"></div>
+  </div>
+</section>
+<!-- ======================================================================
+     SALES TRACKER
+====================================================================== -->
+<section class="module-section" id="section-sales">
+  <div class="breadcrumb"><i class="ti ti-chart-line"></i> Workspace / Sales Tracker</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Sales Tracker</h1>
+      <p class="page-sub">Real-time sales intelligence — how units are selling, which types move fastest, and whether pace will hit the delivery target.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="exportSalesReport()"><i class="ti ti-file-export"></i>Export sales report</button>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="margin-bottom:24px">
+    <div class="mini-stat"><p class="v">€12.0M</p><p class="l">Revenue at 25%</p></div>
+    <div class="mini-stat"><p class="v">€24.0M</p><p class="l">Revenue at 50%</p></div>
+    <div class="mini-stat"><p class="v">€36.5M</p><p class="l">Revenue at 75%</p></div>
+    <div class="mini-stat"><p class="v">€48.2M</p><p class="l">Revenue at 100%</p></div>
+  </div>
+
+  <div class="grid grid-12" style="margin-bottom:20px">
+    <div class="span-8">
+      <div class="card">
+        <p class="mt">Sales velocity — units sold per week vs. target pace</p>
+        <div class="chart-wrap" id="velocityChart"></div>
+      </div>
+    </div>
+    <div class="span-4">
+      <div class="card">
+        <p class="mt">Buyer origin</p>
+        <div class="chart-wrap" id="salesBuyerOriginChart"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-12" style="margin-bottom:20px">
+    <div class="span-6">
+      <div class="card">
+        <p class="mt" style="margin-bottom:14px">Sold-out progress by unit type</p>
+        <div id="unitTypeProgress"></div>
+      </div>
+    </div>
+    <div class="span-6">
+      <div class="card">
+        <p class="mt" style="margin-bottom:14px">Sales by agent</p>
+        <table class="data-table">
+          <thead><tr><th>Agent</th><th>Market</th><th>Units sold</th><th>Revenue</th></tr></thead>
+          <tbody id="agentSalesBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Reservation → contract pipeline</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Unit</th><th>Project</th><th>Agent</th><th>Reserved</th><th>Status</th><th></th></tr></thead>
+      <tbody id="pipelineBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ======================================================================
+     DOCUMENTS
+====================================================================== -->
+<section class="module-section" id="section-documents">
+  <div class="breadcrumb"><i class="ti ti-folder"></i> Workspace / Documents</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Document Library</h1>
+      <p class="page-sub">Legal documents, technical drawings and sales materials — organized per project, with role-based access.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="simulateDocUpload()"><i class="ti ti-cloud-upload"></i>Upload document</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="documents-legal" onclick="switchTab('documents',this.dataset.tab)"><i class="ti ti-certificate"></i> Legal</button>
+    <button class="tab-btn" data-tab="documents-technical" onclick="switchTab('documents',this.dataset.tab)"><i class="ti ti-blueprint"></i> Technical drawings</button>
+    <button class="tab-btn" data-tab="documents-sales" onclick="switchTab('documents',this.dataset.tab)"><i class="ti ti-file-invoice"></i> Sales materials</button>
+  </div>
+
+  <div class="tab-panel visible" id="documents-legal"><div id="legalDocsList"></div></div>
+  <div class="tab-panel" id="documents-technical"><div id="technicalDocsList"></div></div>
+  <div class="tab-panel" id="documents-sales"><div id="salesDocsList"></div></div>
+</section>
+
+<!-- ======================================================================
+     AGENT NETWORK
+====================================================================== -->
+<section class="module-section" id="section-agents">
+  <div class="breadcrumb"><i class="ti ti-users"></i> Workspace / Agent Network</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Agent Network</h1>
+      <p class="page-sub">The LuciHome agents around the world authorized to sell your projects — your entire distribution network, in one place.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="openModal('modal-broadcast')"><i class="ti ti-message-dots"></i>Broadcast</button>
+      <button class="btn-primary" onclick="openModal('modal-invite-agent')"><i class="ti ti-user-plus"></i>Invite agents</button>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="margin-bottom:24px">
+    <div class="mini-stat"><p class="v" id="rosterCount">0</p><p class="l">Authorized agents</p></div>
+    <div class="mini-stat"><p class="v" id="rosterActiveCount">0</p><p class="l">Active this month</p></div>
+    <div class="mini-stat"><p class="v">22%</p><p class="l">Avg. commission rate</p></div>
+    <div class="mini-stat"><p class="v">€9,400</p><p class="l">Commission pending</p></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="agents-roster" onclick="switchTab('agents',this.dataset.tab)">Authorized roster</button>
+    <button class="tab-btn" data-tab="agents-leaderboard" onclick="switchTab('agents',this.dataset.tab)">Leaderboard</button>
+    <button class="tab-btn" data-tab="agents-commission" onclick="switchTab('agents',this.dataset.tab)">Commission &amp; rules</button>
+  </div>
+
+  <div class="tab-panel visible" id="agents-roster">
+    <div class="card">
+      <table class="data-table">
+        <thead><tr><th>Agent</th><th>Market</th><th>Status</th><th>Units sold</th><th>Commission</th><th></th></tr></thead>
+        <tbody id="rosterBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="agents-leaderboard">
+    <div class="card">
+      <p class="mt" style="margin-bottom:14px">Top selling agents this month</p>
+      <div id="leaderboardList"></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="agents-commission">
+    <div class="card">
+      <p class="mt">Commission configuration</p>
+      <p class="ms" style="margin-bottom:14px">Applied automatically when an authorized agent closes a sale on any active project.</p>
+      <div class="field">
+        <label class="field-label">Standard commission rate: <span id="commissionPctVal">22</span>%</label>
+        <input type="range" min="10" max="30" value="22" id="commissionPct" style="width:100%;accent-color:var(--accent)" oninput="document.getElementById('commissionPctVal').textContent=this.value">
+      </div>
+      <div class="field">
+        <label class="field-label">Reservation hold duration</label>
+        <select class="select" id="holdDuration"><option>24 hours</option><option selected>48 hours</option><option>72 hours</option></select>
+      </div>
+      <button class="btn-primary" onclick="toast('success','Saved','Agent network rules have been updated.')"><i class="ti ti-device-floppy"></i>Save rules</button>
+    </div>
+  </div>
+
+  <div class="section-label">Agent network flow</div>
+  <div class="flow-row">
+    <div class="fs">Developer invites agents</div><span class="fa">→</span>
+    <div class="fs">Agent accepts &amp; gets access</div><span class="fa">→</span>
+    <div class="fs">Agent presents project to client</div><span class="fa">→</span>
+    <div class="fs">Agent reserves unit</div><span class="fa">→</span>
+    <div class="fs">Developer confirms reservation</div><span class="fa">→</span>
+    <div class="fs">Contract signed</div><span class="fa">→</span>
+    <div class="fs done"><i class="ti ti-check"></i> Commission auto-calculated</div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PROFESSIONAL NETWORK
+====================================================================== -->
+<section class="module-section" id="section-network">
+  <div class="breadcrumb"><i class="ti ti-network"></i> Workspace / Professional Network</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Professional Network</h1>
+      <p class="page-sub">Connect with architects, designers, notaries, lawyers, banks and agencies — build the full project team from inside the workspace.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="network-directory" onclick="switchTab('network',this.dataset.tab)">Professional directory</button>
+    <button class="tab-btn" data-tab="network-mine" onclick="switchTab('network',this.dataset.tab)">My network</button>
+    <button class="tab-btn" data-tab="network-agencies" onclick="switchTab('network',this.dataset.tab)">Agency partnerships</button>
+    <button class="tab-btn" data-tab="network-preferred" onclick="switchTab('network',this.dataset.tab)">Preferred partners</button>
+  </div>
+
+  <div class="tab-panel visible" id="network-directory">
+    <div class="card" style="margin-bottom:18px">
+      <div class="flex flex-gap" style="flex-wrap:wrap">
+        <input class="input" style="max-width:220px" id="dirSearch" placeholder="Search by name..." oninput="renderDirectory()">
+        <select class="select" style="max-width:200px" id="dirType" onchange="renderDirectory()">
+          <option value="all">All types</option>
+          <option value="Architect">Architect</option>
+          <option value="Notary">Notary</option>
+          <option value="Lawyer">Lawyer</option>
+          <option value="Bank">Bank</option>
+          <option value="Agency">Agency</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid grid-3" id="directoryGrid"></div>
+  </div>
+
+  <div class="tab-panel" id="network-mine">
+    <div class="grid grid-3" id="myNetworkGrid"></div>
+  </div>
+
+  <div class="tab-panel" id="network-agencies">
+    <div class="grid grid-2" id="agencyGrid"></div>
+  </div>
+
+  <div class="tab-panel" id="network-preferred">
+    <div class="grid grid-3" id="preferredGrid"></div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     BRAND & PROFILE
+====================================================================== -->
+<section class="module-section" id="section-brand">
+  <div class="breadcrumb"><i class="ti ti-building-skyscraper"></i> Workspace / Brand &amp; Profile</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Company Profile</h1>
+      <p class="page-sub">What buyers, agents and investors see when they search for your company on LuciHome.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" id="editProfileBtn" onclick="toggleProfileEdit()"><i class="ti ti-edit"></i>Edit profile</button>
+    </div>
+  </div>
+
+  <div class="grid grid-12">
+    <div class="span-8">
+      <div class="card">
+        <div class="flex flex-gap" style="align-items:flex-start">
+          <div class="avatar-circle lg">MD</div>
+          <div style="flex:1">
+            <p class="mt" style="font-size:20px;font-family:var(--font-display)" id="profName">Meridian Developments</p>
+            <p class="ms" id="profRole">Residential &amp; mixed-use developer · Founded 2014 · Bucharest &amp; Cluj-Napoca</p>
+            <div class="pill-row" style="margin-top:10px">
+              <span class="badge badge-active"><i class="ti ti-rosette-discount-check"></i>ID verified</span>
+              <span class="badge badge-info"><i class="ti ti-certificate"></i>License RO-DEV-1187</span>
+              <span class="badge badge-neutral"><i class="ti ti-building"></i>Association member</span>
+            </div>
+          </div>
+        </div>
+        <hr class="rule">
+        <p class="ms" id="profBio" contenteditable="false">Meridian Developments delivers premium residential and mixed-use projects across Romania, with a growing footprint on the Black Sea coast. Over the past decade we've delivered 640+ units and built a distribution network of 50+ selling agents across 6 countries.</p>
+        <div class="field-row" style="margin-top:16px" id="profEditFields">
+          <div class="field"><label class="field-label">Headquarters</label><input class="input" value="Bucharest, Romania" disabled></div>
+          <div class="field"><label class="field-label">Contact email</label><input class="input" value="sales@meridiandevelopments.ro" disabled></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <p class="mt">Completed projects showcase</p>
+        <div class="grid grid-3" style="margin-top:12px">
+          <div class="mini-stat"><p class="v">Old Town Lofts</p><p class="l">Cluj-Napoca · 38 units · 2025</p></div>
+          <div class="mini-stat"><p class="v">Grigorescu Court</p><p class="l">Cluj-Napoca · 52 units · 2023</p></div>
+          <div class="mini-stat"><p class="v">Herastrau Gardens I</p><p class="l">Bucharest · 74 units · 2021</p></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <p class="mt">Reviews &amp; ratings</p>
+        <p class="ms" style="margin-bottom:10px"><span class="stars">★★★★★</span> 4.8 out of 5 · 63 verified reviews</p>
+        <div class="feed-item"><div class="fi-icon"><i class="ti ti-quote"></i></div><div class="fi-text"><p>"Delivered Old Town Lofts three weeks ahead of schedule." — Verified buyer</p><span>Completed project, Cluj-Napoca</span></div></div>
+        <div class="feed-item"><div class="fi-icon"><i class="ti ti-quote"></i></div><div class="fi-text"><p>"Clear commission terms and fast material distribution to agents." — Partner agent, Paris</p><span>Skyline Residences</span></div></div>
+      </div>
+    </div>
+
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Active markets</p>
+        <div class="pill-row">
+          <span class="pill on">Bucharest</span><span class="pill on">Cluj-Napoca</span><span class="pill on">Constanta</span><span class="pill">Brasov</span>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Achievements</p>
+        <div class="grid grid-2" style="gap:10px">
+          <div class="mini-stat"><p class="v">640+</p><p class="l">Units delivered</p></div>
+          <div class="mini-stat"><p class="v">€142M</p><p class="l">Total volume</p></div>
+          <div class="mini-stat"><p class="v">4</p><p class="l">Active projects</p></div>
+          <div class="mini-stat"><p class="v">52</p><p class="l">Authorized agents</p></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Awards &amp; recognitions</p>
+        <div class="pill-row">
+          <span class="pill">Best Mixed-Use Project 2023</span>
+          <span class="pill">Green Building Certified</span>
+          <span class="pill">Top Developer, Cluj 2022</span>
+        </div>
+      </div>
+      <div class="card">
+        <p class="mt">Brand tools</p>
+        <div class="pill-row" style="flex-direction:column;align-items:stretch">
+          <a class="btn-secondary btn-sm" style="justify-content:flex-start" href="https://lucihome.com/developers/meridian-developments" target="_blank" rel="noopener"><i class="ti ti-link"></i>lucihome.com/developers/meridian-developments</a>
+          <button class="btn-secondary btn-sm" style="justify-content:flex-start" onclick="toast('info','Widget code copied','Embed this widget on your own website — always live-synced with LuciHome data.')"><i class="ti ti-code"></i>Copy embeddable widget</button>
+          <a class="btn-secondary btn-sm" style="justify-content:flex-start" href="mailto:sales@meridiandevelopments.ro"><i class="ti ti-mail"></i>sales@meridiandevelopments.ro</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     ANALYTICS
+====================================================================== -->
+<section class="module-section" id="section-analytics">
+  <div class="breadcrumb"><i class="ti ti-chart-bar"></i> Workspace / Analytics</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Performance Analytics</h1>
+      <p class="page-sub">Which markets convert, which unit types sell fastest, which agents perform — all measurable from inside the workspace.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="exportReport()"><i class="ti ti-file-export"></i>Export all reports</button>
+    </div>
+  </div>
+
+  <div class="grid grid-12">
+    <div class="span-8">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Sales performance per project — units sold</p>
+        <div class="chart-wrap" id="salesPerfChart"></div>
+      </div>
+
+      <div class="card">
+        <p class="mt">Unit type performance — units sold</p>
+        <div class="chart-wrap" id="unitTypePerfChart"></div>
+      </div>
+    </div>
+
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Buyer origin analytics</p>
+        <div class="chart-wrap" id="analyticsOriginChart"></div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Revenue &amp; commissions</p>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">€48.2M</p><p class="l">Revenue collected</p></div>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">€9,400</p><p class="l">Commissions pending</p></div>
+        <div class="mini-stat"><p class="v">€6.1M</p><p class="l">Projected (pipeline)</p></div>
+      </div>
+      <div class="card">
+        <p class="mt">Agent performance — units sold</p>
+        <div class="chart-wrap" id="agentPerfChart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     SETTINGS
+====================================================================== -->
+<section class="module-section" id="section-settings">
+  <div class="breadcrumb"><i class="ti ti-settings"></i> Workspace / Settings</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Developer Account Settings</h1>
+      <p class="page-sub">Subscription, team access, agent network rules, notifications, integrations and compliance — configured once, applied across all projects.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="settings-billing" onclick="switchTab('settings',this.dataset.tab)">Plan &amp; billing</button>
+    <button class="tab-btn" data-tab="settings-team" onclick="switchTab('settings',this.dataset.tab)">Team access</button>
+    <button class="tab-btn" data-tab="settings-notif" onclick="switchTab('settings',this.dataset.tab)">Notifications</button>
+    <button class="tab-btn" data-tab="settings-integrations" onclick="switchTab('settings',this.dataset.tab)">Integrations</button>
+    <button class="tab-btn" data-tab="settings-compliance" onclick="switchTab('settings',this.dataset.tab)">Compliance</button>
+    <button class="tab-btn" data-tab="settings-account" onclick="switchTab('settings',this.dataset.tab)">Account</button>
+  </div>
+
+  <div class="tab-panel visible" id="settings-billing">
+    <div class="grid grid-12">
+      <div class="span-8">
+        <div class="card">
+          <div class="flex-between"><p class="mt">Current plan</p><span class="badge badge-active">Founding Developer</span></div>
+          <p class="ms">50 Founding Developer spots at launch — lifetime benefits for early sign-ups. Next billing date: August 30, 2026.</p>
+          <div class="grid grid-2" style="margin-top:14px">
+            <div class="mini-stat"><p class="v">€0</p><p class="l">Cost during beta</p></div>
+            <div class="mini-stat"><p class="v">0%</p><p class="l">Platform commission (beta)</p></div>
+          </div>
+          <button class="btn-primary" style="margin-top:16px" onclick="openModal('modal-upgrade')"><i class="ti ti-rocket"></i>View post-launch plans</button>
+        </div>
+      </div>
+      <div class="span-4">
+        <div class="card">
+          <p class="mt">Payment method</p>
+          <p class="ms">No payment method is required during the Founding Member period.</p>
+          <button class="btn-secondary btn-block" style="margin-top:10px" onclick="toast('info','Billing','Adding a payment method will be available starting August 2026.')">Add card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-team">
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:10px"><p class="mt" style="margin:0">Internal team access</p><button class="btn-secondary btn-sm" onclick="toast('success','Invitation sent','A team invitation has been sent (demo).')"><i class="ti ti-user-plus"></i>Add team member</button></div>
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Role</th><th>Access</th><th></th></tr></thead>
+        <tbody id="teamBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-notif">
+    <div class="card">
+      <div class="switch-row"><div><p class="st-label">New unit reservation</p><p class="st-sub">Get notified when an agent reserves a unit</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Reservation expiry</p><p class="st-sub">Alert before a hold period runs out</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Contract signed</p><p class="st-sub">Notification when a sale contract is completed</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Agent inquiries</p><p class="st-sub">New messages from your agent network</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Construction milestone due</p><p class="st-sub">Upcoming and overdue milestones</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Weekly performance summary</p><p class="st-sub">Sales and pipeline summary every Monday</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-integrations">
+    <div class="grid grid-3">
+      <div class="card">
+        <i class="ti ti-crane mi"></i><p class="mt">Construction management</p><p class="ms">Sync milestones with Procore or Autodesk</p>
+        <button class="btn-secondary btn-block int-btn" style="margin-top:10px" data-name="Construction management" onclick="toggleIntegration(this)">Connect</button>
+      </div>
+      <div class="card">
+        <i class="ti ti-signature mi"></i><p class="mt">e-Signing (DocuSign)</p><p class="ms">Send reservation and sale contracts for digital signature</p>
+        <button class="btn-secondary btn-block int-btn connected" style="margin-top:10px" data-name="e-Signing (DocuSign)" onclick="toggleIntegration(this)">Connected <i class="ti ti-check"></i></button>
+      </div>
+      <div class="card">
+        <i class="ti ti-mail mi"></i><p class="mt">Email marketing</p><p class="ms">Sync buyer and agent campaigns</p>
+        <button class="btn-secondary btn-block int-btn" style="margin-top:10px" data-name="Email marketing" onclick="toggleIntegration(this)">Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-compliance">
+    <div class="card">
+      <p class="mt">GDPR &amp; data settings</p>
+      <p class="ms" style="margin-bottom:14px">Buyer data handling, document retention and agent data management — compliant by default across all EU and international markets.</p>
+      <div class="switch-row"><div><p class="st-label">Buyer data sharing with agents</p><p class="st-sub">Share buyer contact details with the reserving agent only</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Document retention (7 years)</p><p class="st-sub">Legal documents retained per local regulation</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Marketing opt-out respected</p><p class="st-sub">Buyers who opt out are excluded from campaigns</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-account">
+    <div class="grid grid-2">
+      <div class="card">
+        <p class="mt">Change password</p>
+        <div class="field"><label class="field-label">Current password</label><input class="input" type="password" placeholder="••••••••"></div>
+        <div class="field"><label class="field-label">New password</label><input class="input" type="password" placeholder="••••••••"></div>
+        <button class="btn-primary" onclick="toast('success','Password updated','Your password has been changed successfully (demo).')">Update password</button>
+        <hr class="rule">
+        <div class="switch-row" style="border:none;padding-bottom:0"><div><p class="st-label">Two-factor authentication (2FA)</p><p class="st-sub">Extra security at login</p></div><label class="switch"><input type="checkbox"><span class="track"></span></label></div>
+      </div>
+      <div class="card">
+        <p class="mt">Your data</p>
+        <p class="ms" style="margin-bottom:12px">Export all of your company's account data (GDPR) or delete your account permanently.</p>
+        <button class="btn-secondary btn-block" style="margin-bottom:10px" onclick="exportAccountData()"><i class="ti ti-download"></i>Export my data (JSON)</button>
+        <button class="btn-danger btn-block" onclick="openModal('modal-delete-account')"><i class="ti ti-trash"></i>Delete account</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<!-- ======================================================================
+     UNIT DETAIL DRAWER (Gmail-style slide-over reading pane)
+====================================================================== -->
+<div class="detail-drawer-backdrop" id="unitDrawerBackdrop" onclick="closeUnitDrawer()"></div>
+<div class="detail-drawer" id="unitDrawer">
+  <div class="detail-drawer-head">
+    <h3 id="udName">Unit</h3>
+    <button class="detail-drawer-close" onclick="closeUnitDrawer()">&times;</button>
+  </div>
+  <div class="detail-drawer-body" id="udBody"></div>
+  <div class="detail-drawer-foot">
+    <button class="btn-ghost spacer" onclick="closeUnitDrawer()">Close</button>
+    <button class="btn-primary" onclick="saveUnitDetail()"><i class="ti ti-device-floppy"></i>Save</button>
+  </div>
+</div>
+
+<!-- ======================================================================
+     MODALS
+====================================================================== -->
+
+<!-- Add project wizard -->
+<div class="modal-overlay" id="modal-add-project">
+  <div class="modal wide">
+    <div class="modal-head"><h3>Add new project</h3><button class="modal-close" onclick="closeModal('modal-add-project')">&times;</button></div>
+    <div class="modal-body">
+      <div class="wizard-steps" id="wizardDots"></div>
+      <div id="wizardStep1">
+        <div class="field-row">
+          <div class="field"><label class="field-label">Project name *</label><input class="input" id="wName" placeholder="e.g. Skyline Residences"></div>
+          <div class="field"><label class="field-label">Project type *</label><select class="select" id="wType"><option>Residential</option><option>Mixed-use</option><option>Commercial</option></select></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label class="field-label">Total units *</label><input class="input" type="number" id="wUnits" placeholder="e.g. 120"></div>
+          <div class="field"><label class="field-label">Estimated delivery</label><input class="input" id="wDelivery" placeholder="e.g. Q4 2027"></div>
+        </div>
+      </div>
+      <div id="wizardStep2" style="display:none">
+        <div class="field"><label class="field-label">City *</label><input class="input" id="wCity" placeholder="e.g. Cluj-Napoca"></div>
+        <div class="field"><label class="field-label">Neighborhood / area</label><input class="input" id="wZone" placeholder="e.g. Grigorescu"></div>
+        <div class="note-box"><i class="ti ti-map-pin"></i> <strong>Map placement:</strong> in the live version, nearby amenities (schools, transport, airport distance) are auto-displayed on the public project page.</div>
+      </div>
+      <div id="wizardStep3" style="display:none">
+        <label class="field-label">Renders &amp; media</label>
+        <div class="empty-state" style="border:1.5px dashed var(--border-strong);border-radius:12px;cursor:pointer" onclick="simulateUpload()">
+          <i class="ti ti-cloud-upload"></i>
+          <p style="margin:0 0 4px;color:var(--text-secondary)">Drag renders here or click to upload</p>
+          <p style="margin:0;font-size:11px">JPG, PNG, MP4 — up to 25 files</p>
+        </div>
+        <div id="uploadedFilesList" style="margin-top:12px"></div>
+      </div>
+      <div id="wizardStep4" style="display:none">
+        <div class="field-row">
+          <div class="field"><label class="field-label">Price range from (€) *</label><input class="input" type="number" id="wPriceFrom" placeholder="e.g. 95000"></div>
+          <div class="field"><label class="field-label">Price range to (€)</label><input class="input" type="number" id="wPriceTo" placeholder="e.g. 340000"></div>
+        </div>
+        <label class="field-label">Payment plan</label>
+        <div class="pill-row" id="wTags">
+          <span class="pill clickable on" onclick="selectPaymentPlan(this)">30/70</span>
+          <span class="pill clickable" onclick="selectPaymentPlan(this)">50/50</span>
+          <span class="pill clickable" onclick="selectPaymentPlan(this)">Post-delivery</span>
+          <span class="pill clickable" onclick="selectPaymentPlan(this)">Custom</span>
+        </div>
+      </div>
+      <div id="wizardStep5" style="display:none">
+        <p class="ms" style="margin-bottom:10px">Fill in the basic details and let LuciHome AI write the final project description — you can edit it any time.</p>
+        <button class="btn-secondary" onclick="wizardGenerateDesc()"><i class="ti ti-sparkles"></i>Generate with AI</button>
+        <textarea class="textarea" id="wDesc" style="min-height:140px;margin-top:12px" placeholder="The generated description will appear here — fully editable..."></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-add-project')">Cancel</button>
+      <button class="btn-secondary" id="wizardBackBtn" onclick="wizardNav(-1)" style="display:none">Back</button>
+      <button class="btn-primary" id="wizardNextBtn" onclick="wizardNav(1)">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add unit -->
+<div class="modal-overlay" id="modal-add-unit">
+  <div class="modal">
+    <div class="modal-head"><h3>Add / configure unit</h3><button class="modal-close" onclick="closeModal('modal-add-unit')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Project *</label>
+        <select class="select" id="uProject"></select>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Unit code *</label><input class="input" id="uCode" placeholder="e.g. 4A"></div>
+        <div class="field"><label class="field-label">Unit type *</label><select class="select" id="uType"><option>Studio</option><option>1BR</option><option selected>2BR</option><option>3BR</option><option>Penthouse</option></select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Floor</label><input class="input" type="number" id="uFloor" placeholder="e.g. 4"></div>
+        <div class="field"><label class="field-label">Orientation</label><select class="select" id="uOrientation"><option>Sea view</option><option>Garden</option><option>City</option><option selected>Park view</option></select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Size (m²) *</label><input class="input" type="number" id="uSize" placeholder="e.g. 82"></div>
+        <div class="field"><label class="field-label">Price (€) *</label><input class="input" type="number" id="uPrice" placeholder="e.g. 178000"></div>
+      </div>
+      <label class="field-label">Included</label>
+      <div class="pill-row">
+        <span class="pill clickable on" onclick="this.classList.toggle('on')">Parking</span>
+        <span class="pill clickable" onclick="this.classList.toggle('on')">Storage</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-add-unit')">Cancel</button>
+      <button class="btn-primary" onclick="addUnit()"><i class="ti ti-check"></i>Add unit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Invite agent -->
+<div class="modal-overlay" id="modal-invite-agent">
+  <div class="modal wide">
+    <div class="modal-head"><h3>Invite agents to sell</h3><button class="modal-close" onclick="closeModal('modal-invite-agent')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Project</label>
+        <select class="select" id="inviteProject"></select>
+      </div>
+      <div class="flex flex-gap" style="flex-wrap:wrap;margin-bottom:14px">
+        <input class="input" style="max-width:220px" id="inviteSearch" placeholder="Search by name or market..." oninput="renderInviteCandidates()">
+      </div>
+      <div id="inviteCandidatesList"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-invite-agent')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- Broadcast to agents -->
+<div class="modal-overlay" id="modal-broadcast">
+  <div class="modal">
+    <div class="modal-head"><h3>Broadcast to all agents</h3><button class="modal-close" onclick="closeModal('modal-broadcast')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Send to</label>
+        <select class="select" id="broadcastAudience"><option>All authorized agents</option><option>Skyline Residences agents only</option><option>Herastrau Gardens Phase II agents only</option></select>
+      </div>
+      <div class="field"><label class="field-label">Message *</label>
+        <textarea class="textarea" id="broadcastMsg" placeholder="e.g. Updated price list for Skyline Residences is now live — 4 units released on floor 5."></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-broadcast')">Cancel</button>
+      <button class="btn-primary" onclick="sendBroadcast()"><i class="ti ti-send"></i>Send broadcast</button>
+    </div>
+  </div>
+</div>
+
+<!-- Upgrade plans -->
+<div class="modal-overlay" id="modal-upgrade">
+  <div class="modal wide">
+    <div class="modal-head"><h3>Post-launch plans</h3><button class="modal-close" onclick="closeModal('modal-upgrade')">&times;</button></div>
+    <div class="modal-body">
+      <div class="grid grid-3">
+        <div class="card"><p class="mt">Starter</p><p class="stat-card value" style="font-size:26px">€0</p><p class="ms">Up to 1 active project, basic inventory tools.</p></div>
+        <div class="card active"><p class="mt">Pro</p><p class="stat-card value" style="font-size:26px">€149/mo</p><p class="ms">Unlimited projects, full agent network, analytics.</p></div>
+        <div class="card"><p class="mt">Enterprise</p><p class="stat-card value" style="font-size:26px">Custom</p><p class="ms">Multi-brand portfolios, dedicated account manager, API access.</p></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-secondary spacer" onclick="closeModal('modal-upgrade')">Close</button><button class="btn-primary" onclick="closeModal('modal-upgrade');toast('info','Founding Member','You are already on the Founding Developer plan — nothing is needed until launch.')">Got it</button></div>
+  </div>
+</div>
+
+<!-- Delete account confirm -->
+<div class="modal-overlay" id="modal-delete-account">
+  <div class="modal">
+    <div class="modal-head"><h3>Delete your account?</h3><button class="modal-close" onclick="closeModal('modal-delete-account')">&times;</button></div>
+    <div class="modal-body">
+      <div class="alert alert-danger"><i class="ti ti-alert-triangle"></i>This action is irreversible. All of your projects, unit inventories, and agent network data will be permanently deleted.</div>
+      <p class="ms">Type <strong style="color:var(--text-primary)">DELETE</strong> to confirm.</p>
+      <input class="input" id="deleteConfirmInput" placeholder="DELETE">
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-delete-account')">Cancel</button>
+      <button class="btn-danger" onclick="confirmDeleteAccount()"><i class="ti ti-trash"></i>Delete permanently (demo)</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="developersdemo.js"></script>
+</body>
+</html>
