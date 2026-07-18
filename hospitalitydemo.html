@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQG0HRP6TD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GQG0HRP6TD');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuciHome — Hospitality Workspace Demo</title>
+<link rel="icon" type="image/png" href="/lucihome.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<link rel="stylesheet" href="workspacehospitality.css">
+</head>
+<body>
+
+<!-- ============================= TOPBAR ============================= -->
+<header class="topbar">
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu"><i class="ti ti-menu-2"></i></button>
+  <div class="topbar-brand">
+    <div class="mark">
+    <img src="lucihome.png" alt="LuciHome Logo" class="logo-img">
+</div>
+<div class="wordmark">LuciHome</div>
+  </div>
+
+  <div class="topbar-search">
+    <i class="ti ti-search"></i>
+    <input type="text" id="globalSearch" placeholder="Search properties, rooms, guests...">
+  </div>
+
+  <div class="topbar-actions">
+    <div class="dropdown" id="notifDropdown">
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+        <i class="ti ti-bell"></i>
+        <span class="dot" id="notifCount">5</span>
+      </button>
+      <div class="dropdown-panel notif-panel" id="notifPanel">
+        <div class="dropdown-header"><strong>Notifications</strong>5 unread</div>
+        <div id="notifList"></div>
+        <div class="notif-footer"><button id="markAllReadBtn">Mark all as read</button></div>
+      </div>
+    </div>
+
+    <div class="dropdown" id="msgDropdown">
+      <button class="icon-btn" id="msgBtn" aria-label="Messages">
+        <i class="ti ti-message-dots"></i>
+        <span class="dot">2</span>
+      </button>
+      <div class="dropdown-panel notif-panel">
+        <div class="dropdown-header"><strong>Recent messages</strong>2 unread conversations</div>
+        <div class="notif-item unread"><div class="notif-icon"><i class="ti ti-user"></i></div><div class="notif-text"><p><strong>Ioana Marinescu</strong> (front desk) — "Room 214 needs a maintenance check before check-in."</p><span>18 min ago</span></div></div>
+        <div class="notif-item unread"><div class="notif-icon"><i class="ti ti-building"></i></div><div class="notif-text"><p><strong>Paris Prestige Immobilier</strong> — new guest referral received</p><span>2 h ago</span></div></div>
+        <div class="notif-footer"><button onclick="showSection('properties')">Open Properties</button></div>
+      </div>
+    </div>
+
+    <button class="icon-btn" onclick="toast('info','Help center','The LuciHome guides open in a new tab (demo).')" aria-label="Help"><i class="ti ti-help-circle"></i></button>
+
+    <div class="dropdown" id="avatarDropdown">
+      <div class="topbar-avatar" id="avatarBtn" title="Your account">AI</div>
+      <div class="dropdown-panel" id="avatarPanel">
+        <div class="dropdown-header"><strong>Alexandra Ionescu</strong>Property Manager · Golden Horizon Hospitality</div>
+        <div class="dropdown-item" onclick="showSection('brand');closeAllDropdowns()"><i class="ti ti-star"></i>Brand &amp; profile</div>
+        <div class="dropdown-item" onclick="showSection('settings');closeAllDropdowns()"><i class="ti ti-settings"></i>Settings</div>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-item danger" onclick="logoutDemo()"><i class="ti ti-logout"></i>Log out</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="app-shell">
+<!-- ============================= LEFT NAV ============================= -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="nav-quick-create">
+    <button id="quickCreateBtn" onclick="toggleQuickCreate(event)"><i class="ti ti-plus"></i>New</button>
+    <div class="nav-quick-menu" id="quickCreateMenu">
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-reservation')"><i class="ti ti-calendar-plus"></i>New reservation</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-room')"><i class="ti ti-door"></i>New room / unit</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-add-guest')"><i class="ti ti-user-plus"></i>New guest lead</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-send-referral')"><i class="ti ti-send"></i>New referral</div>
+      <div class="dropdown-item" onclick="closeQuickCreate();openModal('modal-invite-staff')"><i class="ti ti-mail-plus"></i>Invite staff member</div>
+    </div>
+  </div>
+
+  <div class="nav-group-label">Workspace</div>
+  <button class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+  <button class="nav-item" data-section="properties" onclick="showSection('properties')"><i class="ti ti-building"></i>Properties<span class="nbadge">3</span></button>
+  <button class="nav-item" data-section="rooms" onclick="showSection('rooms')"><i class="ti ti-door"></i>Rooms &amp; Units<span class="nbadge">9</span></button>
+  <button class="nav-item" data-section="reservations" onclick="showSection('reservations')"><i class="ti ti-calendar-event"></i>Reservations<span class="nbadge">3</span></button>
+  <button class="nav-item" data-section="guests" onclick="showSection('guests')"><i class="ti ti-users"></i>Guests &amp; CRM<span class="nbadge">9</span></button>
+
+  <div class="nav-group-label">Intelligence</div>
+  <button class="nav-item" data-section="ecosystem" onclick="showSection('ecosystem')"><i class="ti ti-network"></i>Ecosystem</button>
+  <button class="nav-item" data-section="ai" onclick="showSection('ai')"><i class="ti ti-robot"></i>AI Tools</button>
+  <button class="nav-item" data-section="analytics" onclick="showSection('analytics')"><i class="ti ti-chart-bar"></i>Analytics</button>
+
+  <div class="nav-group-label">Account</div>
+  <button class="nav-item" data-section="brand" onclick="showSection('brand')"><i class="ti ti-star"></i>Brand &amp; Profile</button>
+  <button class="nav-item" data-section="settings" onclick="showSection('settings')"><i class="ti ti-settings"></i>Settings</button>
+
+  <div class="sidebar-foot">
+    <p><strong>Founding Property Plan</strong><br>500 Free Spots Founding Members &amp; rooms at launch — August 30, 2026.</p>
+    <button class="btn-secondary btn-sm btn-block" onclick="showSection('settings');switchTab('settings','settings-billing')">View subscription</button>
+  </div>
+</nav>
+
+<!-- ============================= MAIN ============================= -->
+<main class="main">
+<div class="content-wrap">
+
+<!-- ======================================================================
+     DASHBOARD
+====================================================================== -->
+<section class="module-section visible" id="section-dashboard">
+  <div class="breadcrumb"><i class="ti ti-layout-dashboard"></i> Hospitality Workspace / Dashboard</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Good morning, Alexandra</h1>
+      <p class="page-sub">Here's how Golden Horizon Hospitality is doing today, July 18, 2026 — across all 3 properties. 3 items need your attention and 2 guest inquiries are still unassigned.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="showSection('analytics')"><i class="ti ti-chart-bar"></i>View full report</button>
+      <button class="btn-primary" onclick="openModal('modal-add-reservation')"><i class="ti ti-calendar-plus"></i>New reservation</button>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Portfolio-wide overview</div>
+  <div class="grid grid-4" style="margin-bottom:28px">
+    <div class="stat-card"><div class="value">3</div><div class="label">Active properties</div><div class="delta up"><i class="ti ti-trending-up"></i> +1 this quarter</div></div>
+    <div class="stat-card"><div class="value">87%</div><div class="label">Occupancy tonight</div><div class="delta up"><i class="ti ti-trending-up"></i> +6% vs last week</div></div>
+    <div class="stat-card"><div class="value">12</div><div class="label">Upcoming arrivals</div><div class="delta down"><i class="ti ti-minus"></i> unchanged</div></div>
+    <div class="stat-card"><div class="value">€4.2k</div><div class="label">Revenue this week</div><div class="delta up"><i class="ti ti-trending-up"></i> +€380 this week</div></div>
+  </div>
+
+  <div class="section-label">This week, across the portfolio</div>
+  <div class="grid grid-12" style="margin-bottom:28px">
+    <div class="span-8">
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:14px">Portfolio-wide profile views &amp; new inquiries, last 7 days</p>
+        <div class="chart-wrap" id="dashTrendChart"></div>
+      </div>
+    </div>
+    <div class="span-4">
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:14px">Guest pipeline by stage</p>
+        <div class="chart-wrap" id="dashFunnelDonut"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Priority modules</div>
+  <div class="grid grid-12" style="margin-bottom:8px">
+    <div class="span-8">
+      <div class="card" style="margin-bottom:16px">
+        <div class="flex-between" style="margin-bottom:6px">
+          <p class="mt" style="font-size:15px">Activity feed</p>
+          <button class="btn-ghost btn-sm" onclick="markAllFeedRead()">Mark all read</button>
+        </div>
+        <p class="ms" style="margin-bottom:6px">Every event across the portfolio — new reservations, referrals, reviews, cancellations — in one real-time feed.</p>
+        <div id="feedList"></div>
+      </div>
+      <div class="card">
+        <p class="mt" style="font-size:15px;margin-bottom:4px">Needs attention</p>
+        <p class="ms" style="margin-bottom:6px">Inquiries unanswered over 24h, rooms needing maintenance, reservations awaiting confirmation, reviews without a response.</p>
+        <div id="attentionList"></div>
+      </div>
+    </div>
+
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <div class="flex-between" style="margin-bottom:4px"><p class="mt">Today's arrivals &amp; departures</p><span class="badge badge-info"><i class="ti ti-calendar"></i>Today</span></div>
+        <p class="ms" style="margin-bottom:6px">Who arrives, who checks out — with room, guest name, nights and special requests.</p>
+        <div id="leaderboardList"></div>
+      </div>
+      <div class="card">
+        <p class="mt">Revenue this month</p>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">€41,300</p><p class="l">Earned (completed stays)</p></div>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">€22,600</p><p class="l">Pending (upcoming stays)</p></div>
+        <div class="mini-stat"><p class="v">€96,000</p><p class="l">Projected (full pipeline)</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PROPERTIES
+====================================================================== -->
+<section class="module-section" id="section-properties">
+  <div class="breadcrumb"><i class="ti ti-building"></i> Hospitality Workspace / Properties</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Properties</h1>
+      <p class="page-sub">Manage every accommodation property in one place. Whether it's one boutique hotel or a portfolio of villas across three cities — each property has its own dedicated page, management tools and public profile on LuciHome.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="openModal('modal-add-property')"><i class="ti ti-plus"></i>Add property</button>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="margin-bottom:24px">
+    <div class="mini-stat"><p class="v">3</p><p class="l">Active properties</p></div>
+    <div class="mini-stat"><p class="v">74</p><p class="l">Total rooms / units</p></div>
+    <div class="mini-stat"><p class="v">4.7h</p><p class="l">Avg. inquiry response time</p></div>
+    <div class="mini-stat"><p class="v">4.8 ★</p><p class="l">Avg. portfolio rating</p></div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="flex flex-gap" style="flex-wrap:wrap;align-items:center">
+      <div class="topbar-search" style="max-width:280px">
+        <i class="ti ti-search"></i>
+        <input type="text" class="input" style="padding-left:34px;border-radius:8px" id="propertySearch" placeholder="Search properties by name or city..." oninput="renderProperties()">
+      </div>
+      <select class="select" id="propertyTypeFilter" style="max-width:200px" onchange="renderProperties()">
+        <option value="all">All types</option>
+        <option value="Hotel & Resort">Hotel &amp; Resort</option>
+        <option value="Villas & Private Rentals">Villas &amp; Private Rentals</option>
+        <option value="Serviced Apartments">Serviced Apartments</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Property portfolio</div>
+  <div id="propertiesGrid" class="grid grid-3" style="margin-bottom:28px"></div>
+
+  <div class="section-label">Property operations</div>
+  <div class="grid grid-12">
+    <div class="span-8">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Housekeeping &amp; maintenance calendar</p>
+        <p class="ms" style="margin-bottom:6px">Shared calendar — cleaning schedules, maintenance visits, property inspections. Visible to the whole team.</p>
+        <div id="teamAgendaList"></div>
+      </div>
+      <div class="card">
+        <p class="mt">Standard operating procedures &amp; resources</p>
+        <p class="ms" style="margin-bottom:10px">Upload check-in guides, cleaning checklists, supplier contacts and local area guides — accessible to every property manager.</p>
+        <div id="resourcesList"></div>
+        <button class="btn-secondary btn-sm" style="margin-top:12px" onclick="uploadResource()"><i class="ti ti-cloud-upload"></i>Upload resource</button>
+      </div>
+    </div>
+    <div class="span-4">
+      <div class="card">
+        <p class="mt">Roles &amp; permissions</p>
+        <p class="ms" style="margin-bottom:12px">Each role controls what a team member can see, edit, publish and access.</p>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-shield-check"></i></div><div class="fi-text"><p><strong>Property Manager</strong> — full portfolio control</p></div></div>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-star"></i></div><div class="fi-text"><p><strong>Reservations Manager</strong> — manages bookings &amp; rates</p></div></div>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-user"></i></div><div class="fi-text"><p><strong>Front Desk Manager</strong> — check-in/out &amp; guest CRM</p></div></div>
+        <div class="feed-item" style="border:none;padding:8px 0"><div class="fi-icon"><i class="ti ti-alert-triangle"></i></div><div class="fi-text"><p><strong>Owner</strong> — analytics &amp; billing only</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     ROOMS & UNITS
+====================================================================== -->
+<section class="module-section" id="section-rooms">
+  <div class="breadcrumb"><i class="ti ti-door"></i> Hospitality Workspace / Rooms &amp; Units</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Rooms &amp; Units</h1>
+      <p class="page-sub">Every bookable room, suite, villa or apartment across the portfolio. Edit, republish, reassign availability or feature any unit.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="openModal('modal-add-room')"><i class="ti ti-plus"></i>Add new room / unit</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="flex flex-gap" style="flex-wrap:wrap;align-items:center">
+      <div class="topbar-search" style="max-width:260px">
+        <i class="ti ti-search"></i>
+        <input type="text" class="input" style="padding-left:34px;border-radius:8px" id="roomSearch" placeholder="Search by name or property..." oninput="renderRooms()">
+      </div>
+      <select class="select assignee-select" id="roomPropertyFilter" onchange="renderRooms()">
+        <option value="all">All properties</option>
+      </select>
+      <select class="select" id="roomStatusFilter" style="max-width:170px" onchange="renderRooms()">
+        <option value="all">All statuses</option>
+        <option value="pending">Pending approval</option>
+        <option value="draft">Draft</option>
+        <option value="active">Available</option>
+        <option value="offer">Booked</option>
+        <option value="sold">Out of service</option>
+      </select>
+      <div class="flex flex-gap" style="margin-left:auto">
+        <button class="btn-icon btn-secondary" id="gridViewBtn" onclick="setRoomView('grid')" title="Grid"><i class="ti ti-layout-grid"></i></button>
+        <button class="btn-icon btn-secondary" id="listViewBtn" onclick="setRoomView('list')" title="List"><i class="ti ti-list"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Pending your approval</div>
+  <div id="approvalList" style="margin-bottom:8px"></div>
+
+  <div class="section-label">All rooms &amp; units</div>
+  <div id="roomsGrid" class="grid grid-3"></div>
+
+  <div class="section-label">Room creation flow (with approval)</div>
+  <div class="flow-row">
+    <div class="fs">Staff member adds room / unit</div><span class="fa">→</span>
+    <div class="fs">Submits for review</div><span class="fa">→</span>
+    <div class="fs">Manager reviews</div><span class="fa">→</span>
+    <div class="fs">Changes requested or approved</div><span class="fa">→</span>
+    <div class="fs done"><i class="ti ti-check"></i> Published on LuciHome</div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     RESERVATIONS
+====================================================================== -->
+<section class="module-section" id="section-reservations">
+  <div class="breadcrumb"><i class="ti ti-calendar-event"></i> Hospitality Workspace / Reservations</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Reservation Room — All Bookings</h1>
+      <p class="page-sub">Every open reservation across all properties, in one place — monitor timelines, documents and payment status, and step in before a stay is at risk.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="toggleArchive()"><i class="ti ti-archive"></i><span id="archiveBtnLabel">Completed stays archive</span></button>
+    </div>
+  </div>
+
+  <div class="workspace-grid">
+    <div class="panel-list">
+      <div class="section-label" style="margin-top:0">Open reservations</div>
+      <div id="txList" class="tx-stack"></div>
+      <div id="txArchive" style="display:none;margin-top:20px"></div>
+    </div>
+    <div class="panel-detail">
+      <div class="card" id="dealRoom">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     GUESTS & CRM
+====================================================================== -->
+<section class="module-section" id="section-guests">
+  <div class="breadcrumb"><i class="ti ti-users"></i> Hospitality Workspace / Guests &amp; CRM</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Guests &amp; CRM</h1>
+      <p class="page-sub">Every guest inquiry across the portfolio — assign to the right staff member, track response times, and keep a shared guest database that outlasts any single booking.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="openModal('modal-add-guest')"><i class="ti ti-user-plus"></i>Add guest lead</button>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="margin-bottom:20px">
+    <div class="mini-stat"><p class="v" id="crmUnassignedCount">0</p><p class="l">Unassigned inquiries</p></div>
+    <div class="mini-stat"><p class="v">4.7h</p><p class="l">Avg. response time</p></div>
+    <div class="mini-stat"><p class="v" id="crmOver24Count">0</p><p class="l">Over 24h, no reply</p></div>
+    <div class="mini-stat"><p class="v" id="crmClosedCount">0</p><p class="l">Checked out this month</p></div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="flex flex-gap" style="flex-wrap:wrap;align-items:center">
+      <div class="topbar-search" style="max-width:300px">
+        <i class="ti ti-search"></i>
+        <input type="text" class="input" style="padding-left:34px;border-radius:8px" id="crmSearch" placeholder="Search guest by name or tag..." oninput="renderKanban()">
+      </div>
+      <select class="select assignee-select" id="crmAgentFilter" onchange="renderKanban()">
+        <option value="all">All staff</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Guest pipeline board</div>
+  <div class="kanban" id="kanbanBoard"></div>
+</section>
+
+<!-- ======================================================================
+     ECOSYSTEM
+====================================================================== -->
+<section class="module-section" id="section-ecosystem">
+  <div class="breadcrumb"><i class="ti ti-network"></i> Hospitality Workspace / Ecosystem</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">LuciHome Ecosystem</h1>
+      <p class="page-sub">This is not Booking.com. LuciHome Hospitality connects your properties to the real estate ecosystem — agencies, developers and corporate partners refer professionals traveling for projects, investors scouting markets, and relocating buyers straight to your rooms.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-primary" onclick="openModal('modal-send-referral')"><i class="ti ti-send"></i>Send a referral</button>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="margin-bottom:24px">
+    <div class="mini-stat"><p class="v" id="refSentCount">0</p><p class="l">Sent</p></div>
+    <div class="mini-stat"><p class="v" id="refReceivedCount">0</p><p class="l">Received</p></div>
+    <div class="mini-stat"><p class="v" id="refProgressCount">0</p><p class="l">In progress</p></div>
+    <div class="mini-stat"><p class="v" id="refClosedCount">0</p><p class="l">Closed</p></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="ecosystem-directory" onclick="switchTab('ecosystem',this.dataset.tab)">Professional directory</button>
+    <button class="tab-btn" data-tab="ecosystem-sent" onclick="switchTab('ecosystem',this.dataset.tab)">Referrals sent</button>
+    <button class="tab-btn" data-tab="ecosystem-received" onclick="switchTab('ecosystem',this.dataset.tab)">Referrals received</button>
+    <button class="tab-btn" data-tab="ecosystem-groups" onclick="switchTab('ecosystem',this.dataset.tab)">Market groups</button>
+  </div>
+
+  <div class="tab-panel visible" id="ecosystem-directory">
+    <div class="card" style="margin-bottom:18px">
+      <div class="flex flex-gap" style="flex-wrap:wrap">
+        <input class="input" style="max-width:220px" id="dirSearch" placeholder="Search by name..." oninput="renderDirectory()">
+        <select class="select" style="max-width:210px" id="dirType" onchange="renderDirectory()">
+          <option value="all">All types</option>
+          <option value="Agency">Real Estate Agency</option>
+          <option value="Developer">Developer</option>
+          <option value="Corporate">Corporate Travel Manager</option>
+          <option value="Planner">Event Planner</option>
+          <option value="Operator">Tour Operator</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid grid-3" id="directoryGrid"></div>
+  </div>
+
+  <div class="tab-panel" id="ecosystem-sent"><div id="sentReferralsList" class="grid grid-2"></div></div>
+  <div class="tab-panel" id="ecosystem-received"><div id="receivedReferralsList" class="grid grid-2"></div></div>
+
+  <div class="tab-panel" id="ecosystem-groups">
+    <div class="grid grid-3" id="marketGroupsGrid"></div>
+  </div>
+
+  <div class="section-label">Referral flow</div>
+  <div class="flow-row">
+    <div class="fs">Agency or developer has a client who needs a stay</div><span class="fa">→</span>
+    <div class="fs">Referral sent with dates &amp; brief</div><span class="fa">→</span>
+    <div class="fs">Property accepts + confirms availability</div><span class="fa">→</span>
+    <div class="fs">Guest checks in</div><span class="fa">→</span>
+    <div class="fs done"><i class="ti ti-check"></i> Commission auto-applied</div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     AI TOOLS
+====================================================================== -->
+<section class="module-section" id="section-ai">
+  <div class="breadcrumb"><i class="ti ti-robot"></i> Hospitality Workspace / AI Tools</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">AI Tools</h1>
+      <p class="page-sub">LuciHome AI helps run the property faster — write listing descriptions, suggest nightly rates, and draft review replies. Every suggestion is fully editable before it goes live.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-12">
+    <div class="span-8">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">LuciHome AI concierge (demo)</p>
+        <p class="ms" style="margin-bottom:10px">Ask it to draft a description, suggest a rate, or summarize a guest thread.</p>
+        <div class="chat-box" id="aiChatBox"></div>
+        <div class="chat-input-row">
+          <input class="input" id="aiChatInput" placeholder="e.g. Write a description for the Executive Suite" onkeydown="if(event.key==='Enter')sendAiChat()">
+          <button class="btn-primary" onclick="sendAiChat()"><i class="ti ti-send"></i></button>
+        </div>
+      </div>
+      <div class="card">
+        <p class="mt">Auto-reply to a review</p>
+        <p class="ms" style="margin-bottom:10px">Paste or pick a recent review and let AI draft a warm, on-brand reply.</p>
+        <select class="select" id="aiReviewSelect" style="margin-bottom:10px"></select>
+        <button class="btn-secondary" onclick="generateReviewReply()"><i class="ti ti-sparkles"></i>Generate reply</button>
+        <textarea class="textarea" id="aiReviewReply" style="min-height:110px;margin-top:12px" placeholder="The generated reply will appear here — fully editable..."></textarea>
+      </div>
+    </div>
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Dynamic pricing suggestion</p>
+        <p class="ms" style="margin-bottom:10px">Based on demand, season and comparable properties nearby.</p>
+        <div class="field"><label class="field-label">Room / unit</label><select class="select" id="aiPriceRoom"></select></div>
+        <button class="btn-secondary btn-block" onclick="suggestPrice()"><i class="ti ti-sparkles"></i>Suggest rate</button>
+        <div id="aiPriceResult" style="margin-top:12px"></div>
+      </div>
+      <div class="card">
+        <p class="mt">AI tools usage this month</p>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">24</p><p class="l">Descriptions generated</p></div>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">11</p><p class="l">Pricing suggestions applied</p></div>
+        <div class="mini-stat"><p class="v">9</p><p class="l">Review replies drafted</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     BRAND & PROFILE
+====================================================================== -->
+<section class="module-section" id="section-brand">
+  <div class="breadcrumb"><i class="ti ti-star"></i> Hospitality Workspace / Brand &amp; Profile</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Portfolio Brand &amp; Public Profile</h1>
+      <p class="page-sub">What travelers, investors and partner agencies see when they visit your portfolio page on LuciHome.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" id="editProfileBtn" onclick="toggleProfileEdit()"><i class="ti ti-edit"></i>Edit profile</button>
+    </div>
+  </div>
+
+  <div class="grid grid-12">
+    <div class="span-8">
+      <div class="card">
+        <div class="flex flex-gap" style="align-items:flex-start">
+          <div class="avatar-circle lg">GH</div>
+          <div style="flex:1">
+            <p class="mt" style="font-size:20px;font-family:var(--font-display)" id="profName">Golden Horizon Hospitality</p>
+            <p class="ms" id="profRole">Founded 2020 · Headquartered in Bucharest, Romania</p>
+            <div class="pill-row" style="margin-top:10px">
+              <span class="badge badge-active"><i class="ti ti-rosette-discount-check"></i>Verified host</span>
+              <span class="badge badge-info"><i class="ti ti-certificate"></i>License RO-HSP-0442</span>
+              <span class="badge badge-neutral"><i class="ti ti-certificate"></i>Romanian Hospitality Association member</span>
+            </div>
+          </div>
+        </div>
+        <hr class="rule">
+        <p class="ms" id="profBio" contenteditable="false">A boutique hospitality group spanning a city hotel, mountain villas and seaside serviced apartments across Bucharest, Brasov and Constanta, with a growing referral network connecting relocating professionals, investors and travel partners across Europe. 3 properties, 74 rooms, and a reputation built on fast, transparent bookings.</p>
+        <div class="field-row" style="margin-top:16px" id="profEditFields">
+          <div class="field"><label class="field-label">Portfolio URL</label><input class="input" value="lucihome.com/hospitality/golden-horizon" disabled></div>
+          <div class="field"><label class="field-label">Contact WhatsApp</label><input class="input" value="+40 7xx xxx xxx" disabled></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <p class="mt">Reviews &amp; ratings</p>
+        <p class="ms" style="margin-bottom:10px"><span class="stars">★★★★★</span> 4.8 out of 5 · 63 verified reviews</p>
+        <div class="feed-item"><div class="fi-icon"><i class="ti ti-quote"></i></div><div class="fi-text"><p>Warm, professional and the villa was spotless — booked through LuciHome in minutes.</p><span>Stay completed, Carpathian Pines Villas</span></div></div>
+        <div class="feed-item"><div class="fi-icon"><i class="ti ti-quote"></i></div><div class="fi-text"><p>Reliable referral partner, fast confirmation on every booking.</p><span>Referral completed, Paris Prestige Immobilier</span></div></div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <p class="mt">Property roster (public)</p>
+        <p class="ms" style="margin-bottom:10px">Every property listed on the public profile, each with a mini-profile card.</p>
+        <div id="publicRosterList" class="grid grid-3"></div>
+      </div>
+    </div>
+
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Markets covered</p>
+        <div class="pill-row market-tag-row">
+          <span class="pill on">Bucharest</span><span class="pill on">Brasov</span><span class="pill">Constanta</span>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Stats &amp; milestones</p>
+        <div class="grid grid-2" style="gap:10px">
+          <div class="mini-stat"><p class="v">2,140</p><p class="l">Guests hosted</p></div>
+          <div class="mini-stat"><p class="v">€612k</p><p class="l">Total revenue</p></div>
+          <div class="mini-stat"><p class="v">3</p><p class="l">Markets covered</p></div>
+          <div class="mini-stat"><p class="v">6</p><p class="l">Years active</p></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Brand color</p>
+        <p class="ms" style="margin-bottom:10px">Applied to your public profile header and room cards.</p>
+        <div class="color-swatches" id="colorSwatches"></div>
+      </div>
+      <div class="card">
+        <p class="mt">Embeddable availability widget</p>
+        <p class="ms" style="margin-bottom:10px">Show live availability and rates on your own website, always synced with LuciHome. No double-booking risk.</p>
+        <div class="embed-box">&lt;script src="lucihome.com/embed/golden-horizon.js"&gt;&lt;/script&gt;</div>
+        <button class="btn-secondary btn-sm btn-block" onclick="copyEmbed()"><i class="ti ti-copy"></i>Copy embed code</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     ANALYTICS
+====================================================================== -->
+<section class="module-section" id="section-analytics">
+  <div class="breadcrumb"><i class="ti ti-chart-bar"></i> Hospitality Workspace / Analytics</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Portfolio Performance Analytics</h1>
+      <p class="page-sub">Not just occupancy — which guest types convert best, where bookings come from, which rooms perform, and how the ecosystem connection is generating value.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn-secondary" onclick="exportReport()"><i class="ti ti-file-export"></i>Export report</button>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:0">Property performance comparison</div>
+  <div class="card" style="margin-bottom:24px">
+    <table class="data-table">
+      <thead><tr><th>Property</th><th>Rooms</th><th>Occupancy</th><th>ADR</th><th>RevPAR</th><th>Score</th></tr></thead>
+      <tbody id="agentPerfBody"></tbody>
+    </table>
+  </div>
+
+  <div class="grid grid-12">
+    <div class="span-8">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Occupancy per property (views this period)</p>
+        <div class="chart-wrap" id="marketPerfChart"></div>
+      </div>
+      <div class="card">
+        <p class="mt">Portfolio-wide guest funnel</p>
+        <div class="chart-wrap" id="leadFunnelChart"></div>
+      </div>
+    </div>
+
+    <div class="span-4">
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Guest origin</p>
+        <div class="chart-wrap" id="buyerOriginChart"></div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="mt">Revenue &amp; commission</p>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">€41,300</p><p class="l">Earned</p></div>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">€22,600</p><p class="l">Pending</p></div>
+        <div class="mini-stat"><p class="v">€96,000</p><p class="l">Projected (pipeline)</p></div>
+      </div>
+      <div class="card">
+        <p class="mt">Ecosystem value tracker</p>
+        <div class="mini-stat" style="margin-bottom:8px"><p class="v">18</p><p class="l">Sent vs 11 received</p></div>
+        <div class="mini-stat"><p class="v">€9,400</p><p class="l">Revenue from referrals</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Room performance overview</div>
+  <div class="card">
+    <p class="mt">Top rooms &amp; units by views — portfolio-wide</p>
+    <div class="chart-wrap" id="listingViewsChart"></div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     SETTINGS
+====================================================================== -->
+<section class="module-section" id="section-settings">
+  <div class="breadcrumb"><i class="ti ti-settings"></i> Hospitality Workspace / Settings</div>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Property Account Settings</h1>
+      <p class="page-sub">Configured once by the manager — subscription, staff access, booking policies, notification rules, integrations, and compliance settings for the whole portfolio.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="settings-billing" onclick="switchTab('settings',this.dataset.tab)">Plan &amp; billing</button>
+    <button class="tab-btn" data-tab="settings-team" onclick="switchTab('settings',this.dataset.tab)">Staff access</button>
+    <button class="tab-btn" data-tab="settings-policies" onclick="switchTab('settings',this.dataset.tab)">Booking policies</button>
+    <button class="tab-btn" data-tab="settings-notif" onclick="switchTab('settings',this.dataset.tab)">Notifications</button>
+    <button class="tab-btn" data-tab="settings-integrations" onclick="switchTab('settings',this.dataset.tab)">Integrations</button>
+    <button class="tab-btn" data-tab="settings-compliance" onclick="switchTab('settings',this.dataset.tab)">Compliance</button>
+    <button class="tab-btn" data-tab="settings-prefs" onclick="switchTab('settings',this.dataset.tab)">Language &amp; regional</button>
+  </div>
+
+  <div class="tab-panel visible" id="settings-billing">
+    <div class="grid grid-12">
+      <div class="span-8">
+        <div class="card" style="margin-bottom:16px">
+          <div class="flex-between"><p class="mt">Current plan</p><span class="badge badge-active">Founding Property</span></div>
+          <p class="ms">Unlimited properties &amp; rooms during the beta — lifetime benefits for early sign-ups. Next billing date: August 30, 2026.</p>
+          <div class="grid grid-2" style="margin-top:14px">
+            <div class="mini-stat"><p class="v">€0</p><p class="l">Cost during beta</p></div>
+            <div class="mini-stat"><p class="v">0%</p><p class="l">Platform commission (beta)</p></div>
+          </div>
+          <button class="btn-primary" style="margin-top:16px" onclick="openModal('modal-upgrade')"><i class="ti ti-rocket"></i>View post-launch plans</button>
+        </div>
+        <div class="card">
+          <p class="mt">Room / unit inventory</p>
+          <p class="ms" style="margin-bottom:6px">74 of 100 included rooms &amp; units used.</p>
+          <div class="seat-meter"><div class="seat-meter-fill" style="width:74%"></div></div>
+          <button class="btn-secondary btn-sm" onclick="toast('info','Inventory','Additional room capacity can be added without upgrading the whole plan (demo).')"><i class="ti ti-plus"></i>Add more capacity</button>
+        </div>
+      </div>
+      <div class="span-4">
+        <div class="card">
+          <p class="mt">Payment method</p>
+          <p class="ms">No payment method is required during the Founding Property period.</p>
+          <button class="btn-secondary btn-block" style="margin-top:10px" onclick="toast('info','Billing','Adding a payment method will be available starting August 2026.')">Add card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-team">
+    <div class="grid grid-4" style="margin-bottom:20px">
+      <div class="mini-stat"><p class="v">8</p><p class="l">Active staff</p></div>
+      <div class="mini-stat"><p class="v">1</p><p class="l">Pending invites</p></div>
+      <div class="mini-stat"><p class="v">4.7h</p><p class="l">Avg. inquiry response time</p></div>
+      <div class="mini-stat"><p class="v">8 / 15</p><p class="l">Seats used</p></div>
+    </div>
+    <div class="card">
+      <p class="mt">Add team members</p>
+      <p class="ms" style="margin-bottom:12px">Front Desk Manager, Reservations Manager, Owner. Each with role-based access: some can manage reservations, others see analytics only.</p>
+      <button class="btn-primary" onclick="openModal('modal-invite-staff')"><i class="ti ti-user-plus"></i>Invite staff member</button>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-policies">
+    <div class="card">
+      <p class="mt">Booking policies</p>
+      <p class="ms" style="margin-bottom:14px">Cancellation policy, check-in / check-out times, minimum stay rules, deposit requirements — displayed on the public profile.</p>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Cancellation policy</label><select class="select"><option>Flexible</option><option selected>Moderate</option><option>Strict</option></select></div>
+        <div class="field"><label class="field-label">Minimum stay</label><select class="select"><option>1 night</option><option selected>2 nights</option><option>3+ nights</option></select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Check-in time</label><input class="input" value="15:00"></div>
+        <div class="field"><label class="field-label">Check-out time</label><input class="input" value="11:00"></div>
+      </div>
+      <button class="btn-primary" onclick="toast('success','Saved','Your booking policies have been updated.')"><i class="ti ti-device-floppy"></i>Save policies</button>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-notif">
+    <div class="card">
+      <div class="switch-row"><div><p class="st-label">New inquiry (unassigned)</p><p class="st-sub">Get notified when a new guest inquiry needs assignment</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Reservation approaching</p><p class="st-sub">Arrival is within 48 hours</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Room needs maintenance</p><p class="st-sub">A room or unit is flagged out of service</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Referrals received</p><p class="st-sub">Notification when a referral is received or accepted</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">New reviews</p><p class="st-sub">A guest or partner leaves a review</p></div><label class="switch"><input type="checkbox"><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Weekly email summary</p><p class="st-sub">Portfolio performance summary every Monday</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-integrations">
+    <div class="grid grid-3">
+      <div class="card">
+        <i class="ti ti-building-warehouse mi"></i><p class="mt">Property Management System</p><p class="ms">Sync room inventory and reservations</p>
+        <button class="btn-secondary btn-block int-btn connected" style="margin-top:10px" data-name="PMS sync" onclick="toggleIntegration(this)">Connected <i class="ti ti-check"></i></button>
+      </div>
+      <div class="card">
+        <i class="ti ti-calendar mi"></i><p class="mt">Channel manager</p><p class="ms">Sync availability with Booking.com &amp; Airbnb — no double-bookings</p>
+        <button class="btn-secondary btn-block int-btn" style="margin-top:10px" data-name="Channel manager" onclick="toggleIntegration(this)">Connect</button>
+      </div>
+      <div class="card">
+        <i class="ti ti-credit-card mi"></i><p class="mt">Payment gateway</p><p class="ms">Process deposits and guest payments securely</p>
+        <button class="btn-secondary btn-block int-btn connected" style="margin-top:10px" data-name="Payment gateway" onclick="toggleIntegration(this)">Connected <i class="ti ti-check"></i></button>
+      </div>
+      <div class="card">
+        <i class="ti ti-brand-whatsapp mi"></i><p class="mt">WhatsApp Business API</p><p class="ms">Receive guest messages directly in LuciHome</p>
+        <button class="btn-secondary btn-block int-btn" style="margin-top:10px" data-name="WhatsApp Business API" onclick="toggleIntegration(this)">Connect</button>
+      </div>
+      <div class="card">
+        <i class="ti ti-mail mi"></i><p class="mt">Brevo / Mailchimp</p><p class="ms">Email marketing campaigns to past guests</p>
+        <button class="btn-secondary btn-block int-btn" style="margin-top:10px" data-name="Email marketing" onclick="toggleIntegration(this)">Connect</button>
+      </div>
+      <div class="card">
+        <i class="ti ti-api mi"></i><p class="mt">API access</p><p class="ms">Future programmatic access to your property data</p>
+        <button class="btn-secondary btn-block int-btn" style="margin-top:10px" data-name="API access" onclick="toggleIntegration(this)">Request access</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-compliance">
+    <div class="card">
+      <p class="mt">GDPR &amp; data settings</p>
+      <p class="ms" style="margin-bottom:14px">Guest data handling, retention policies, opt-out management and data export on request — GDPR compliant by default across all EU and international markets.</p>
+      <div class="switch-row"><div><p class="st-label">Retain guest data after staff departure</p><p class="st-sub">Keeps the relationship with the property instead of the individual staff member</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <div class="switch-row"><div><p class="st-label">Allow guests to request data deletion</p><p class="st-sub">Self-service GDPR opt-out from the guest portal</p></div><label class="switch"><input type="checkbox" checked><span class="track"></span></label></div>
+      <button class="btn-secondary" style="margin-top:12px" onclick="exportAccountData()"><i class="ti ti-download"></i>Export all portfolio data (JSON)</button>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="settings-prefs">
+    <div class="card">
+      <div class="field-row">
+        <div class="field"><label class="field-label">Workspace language</label><select class="select"><option>English</option><option>Română</option><option>Français</option></select></div>
+        <div class="field"><label class="field-label">Default currency</label><select class="select"><option>EUR (€)</option><option>RON (lei)</option><option>USD ($)</option></select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Time zone</label><select class="select"><option>(GMT+3) Bucharest</option><option>(GMT+1) Paris</option><option>(GMT+4) Dubai</option></select></div>
+        <div class="field"><label class="field-label">Date format</label><select class="select"><option>DD/MM/YYYY</option><option>MM/DD/YYYY</option><option>YYYY-MM-DD</option></select></div>
+      </div>
+      <button class="btn-primary" onclick="toast('success','Saved','Your portfolio preferences have been updated.')"><i class="ti ti-device-floppy"></i>Save preferences</button>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<!-- ======================================================================
+     GUEST DETAIL DRAWER (Gmail-style slide-over reading pane)
+====================================================================== -->
+<div class="detail-drawer-backdrop" id="contactDrawerBackdrop" onclick="closeContactDrawer()"></div>
+<div class="detail-drawer" id="contactDrawer">
+  <div class="detail-drawer-head">
+    <h3 id="cdName">Guest</h3>
+    <button class="detail-drawer-close" onclick="closeContactDrawer()">&times;</button>
+  </div>
+  <div class="detail-drawer-body" id="cdBody"></div>
+  <div class="detail-drawer-foot">
+    <button class="btn-ghost spacer" onclick="closeContactDrawer()">Close</button>
+    <button class="btn-primary" onclick="saveContactDetail()"><i class="ti ti-device-floppy"></i>Save</button>
+  </div>
+</div>
+
+<!-- ======================================================================
+     MODALS
+====================================================================== -->
+
+<!-- Add room / unit wizard -->
+<div class="modal-overlay" id="modal-add-room">
+  <div class="modal wide">
+    <div class="modal-head"><h3>Add new room / unit</h3><button class="modal-close" onclick="closeModal('modal-add-room')">&times;</button></div>
+    <div class="modal-body">
+      <div class="wizard-steps" id="wizardDots"></div>
+      <div id="wizardStep1">
+        <div class="field-row">
+          <div class="field"><label class="field-label">Room / unit name *</label><input class="input" id="wTitle" placeholder="e.g. Executive Suite, park view"></div>
+          <div class="field"><label class="field-label">Unit type *</label><select class="select" id="wType"><option>Standard Room</option><option>Deluxe Room</option><option>Suite</option><option>Villa</option><option>Studio Apartment</option></select></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label class="field-label">Assign to property *</label><select class="select" id="wAgent"></select></div>
+          <div class="field"><label class="field-label">Size (m²) *</label><input class="input" type="number" id="wSize" placeholder="e.g. 32"></div>
+        </div>
+      </div>
+      <div id="wizardStep2" style="display:none">
+        <div class="field"><label class="field-label">City *</label><input class="input" id="wCity" placeholder="e.g. Bucharest"></div>
+        <div class="field"><label class="field-label">Floor / building area</label><input class="input" id="wZone" placeholder="e.g. 2nd floor, garden wing"></div>
+        <div class="note-box"><i class="ti ti-map-pin"></i> <strong>Map placement:</strong> in the live version, the property's exact location is inherited automatically from the parent property.</div>
+      </div>
+      <div id="wizardStep3" style="display:none">
+        <label class="field-label">Photos &amp; media</label>
+        <div class="empty-state" style="border:1.5px dashed var(--border-strong);border-radius:12px;cursor:pointer" onclick="simulateUpload()">
+          <i class="ti ti-cloud-upload"></i>
+          <p style="margin:0 0 4px;color:var(--text-secondary)">Drag photos here or click to upload</p>
+          <p style="margin:0;font-size:11px">JPG, PNG — up to 25 photos</p>
+        </div>
+        <div id="uploadedFilesList" style="margin-top:12px"></div>
+      </div>
+      <div id="wizardStep4" style="display:none">
+        <div class="field-row">
+          <div class="field"><label class="field-label">Price / night *</label><input class="input" type="number" id="wPrice" placeholder="e.g. 120"></div>
+          <div class="field"><label class="field-label">Max guests</label><input class="input" type="number" id="wBeds" placeholder="e.g. 2"></div>
+        </div>
+        <label class="field-label">Amenities</label>
+        <div class="pill-row" id="wTags">
+          <span class="pill clickable" onclick="this.classList.toggle('on')">Pool</span>
+          <span class="pill clickable" onclick="this.classList.toggle('on')">Parking</span>
+          <span class="pill clickable on" onclick="this.classList.toggle('on')">Sea / mountain view</span>
+          <span class="pill clickable" onclick="this.classList.toggle('on')">Pet friendly</span>
+          <span class="pill clickable on" onclick="this.classList.toggle('on')">Breakfast included</span>
+          <span class="pill clickable" onclick="this.classList.toggle('on')">Terrace</span>
+        </div>
+      </div>
+      <div id="wizardStep5" style="display:none">
+        <p class="ms" style="margin-bottom:10px">Fill in the basic details and let LuciHome AI write the final description — the team can edit it any time.</p>
+        <button class="btn-secondary" onclick="wizardGenerateDesc()"><i class="ti ti-sparkles"></i>Generate with AI</button>
+        <textarea class="textarea" id="wDesc" style="min-height:140px;margin-top:12px" placeholder="The generated description will appear here — fully editable..."></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-add-room')">Cancel</button>
+      <button class="btn-secondary" id="wizardBackBtn" onclick="wizardNav(-1)" style="display:none">Back</button>
+      <button class="btn-primary" id="wizardNextBtn" onclick="wizardNav(1)">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add property -->
+<div class="modal-overlay" id="modal-add-property">
+  <div class="modal">
+    <div class="modal-head"><h3>Add new property</h3><button class="modal-close" onclick="closeModal('modal-add-property')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Property name *</label><input class="input" id="pName" placeholder="e.g. Riverside Boutique Hotel"></div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Property type</label><select class="select" id="pType"><option>Hotel & Resort</option><option>Villas & Private Rentals</option><option>Serviced Apartments</option></select></div>
+        <div class="field"><label class="field-label">City</label><input class="input" id="pCity" placeholder="e.g. Sibiu"></div>
+      </div>
+      <div class="field"><label class="field-label">Number of rooms / units</label><input class="input" type="number" id="pRooms" placeholder="e.g. 20"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-add-property')">Cancel</button>
+      <button class="btn-primary" onclick="addProperty()"><i class="ti ti-check"></i>Add property</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add reservation -->
+<div class="modal-overlay" id="modal-add-reservation">
+  <div class="modal">
+    <div class="modal-head"><h3>New reservation</h3><button class="modal-close" onclick="closeModal('modal-add-reservation')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Guest name *</label><input class="input" id="resGuest" placeholder="e.g. Michael Turner"></div>
+      <div class="field"><label class="field-label">Room / unit *</label><select class="select" id="resRoom"></select></div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Check-in *</label><input class="input" type="date" id="resIn" value="2026-07-22"></div>
+        <div class="field"><label class="field-label">Check-out *</label><input class="input" type="date" id="resOut" value="2026-07-25"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-add-reservation')">Cancel</button>
+      <button class="btn-primary" onclick="addReservation()"><i class="ti ti-check"></i>Create reservation</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add guest lead -->
+<div class="modal-overlay" id="modal-add-guest">
+  <div class="modal">
+    <div class="modal-head"><h3>Add new guest lead</h3><button class="modal-close" onclick="closeModal('modal-add-guest')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Full name *</label><input class="input" id="cName" placeholder="e.g. Jane Whitfield"></div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Email</label><input class="input" id="cEmail" placeholder="jane@email.com"></div>
+        <div class="field"><label class="field-label">Phone</label><input class="input" id="cPhone" placeholder="+40 7xx xxx xxx"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Budget / night (€)</label><input class="input" type="number" id="cBudget" placeholder="e.g. 150"></div>
+        <div class="field"><label class="field-label">Guest type</label><select class="select" id="cType"><option>Leisure</option><option>Business</option><option>Group</option><option>Long-stay</option></select></div>
+      </div>
+      <div class="field"><label class="field-label">Assign to staff member</label><select class="select" id="cAgent"></select></div>
+      <div class="field"><label class="field-label">Notes</label><textarea class="textarea" id="cNotes" placeholder="Preferences, context, how they were contacted..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-add-guest')">Cancel</button>
+      <button class="btn-primary" onclick="addContact()"><i class="ti ti-check"></i>Add to CRM</button>
+    </div>
+  </div>
+</div>
+
+<!-- Send referral -->
+<div class="modal-overlay" id="modal-send-referral">
+  <div class="modal">
+    <div class="modal-head"><h3>Send a referral</h3><button class="modal-close" onclick="closeModal('modal-send-referral')">&times;</button></div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Select guest *</label>
+        <select class="select" id="rClient"></select>
+      </div>
+      <div class="field"><label class="field-label">Handling staff member</label>
+        <select class="select" id="rAgentHandling"></select>
+      </div>
+      <div class="field"><label class="field-label">Destination property *</label>
+        <select class="select" id="rMarket"><option>Golden Horizon Boutique Hotel, Bucharest</option><option>Carpathian Pines Villas, Brasov</option><option>Seaside Serviced Suites, Constanta</option></select>
+      </div>
+      <div class="field"><label class="field-label">Search partner agency</label><input class="input" id="rAgent" placeholder="e.g. Paris Prestige Immobilier" value="Paris Prestige Immobilier — Paris"></div>
+      <div class="field">
+        <label class="field-label">Referral commission: <span id="rPctVal">15</span>%</label>
+        <input type="range" min="5" max="25" value="15" id="rPct" style="width:100%;accent-color:var(--accent)" oninput="document.getElementById('rPctVal').textContent=this.value">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-send-referral')">Cancel</button>
+      <button class="btn-primary" onclick="sendReferral()"><i class="ti ti-send"></i>Send referral</button>
+    </div>
+  </div>
+</div>
+
+<!-- Invite staff -->
+<div class="modal-overlay" id="modal-invite-staff">
+  <div class="modal">
+    <div class="modal-head"><h3>Invite a staff member</h3><button class="modal-close" onclick="closeModal('modal-invite-staff')">&times;</button></div>
+    <div class="modal-body">
+      <p class="ms" style="margin-bottom:14px">An invitation link is sent by email — the staff member registers individually and is linked to your property account. You approve before they go live.</p>
+      <div class="field"><label class="field-label">Full name *</label><input class="input" id="iName" placeholder="e.g. Ioana Marinescu"></div>
+      <div class="field"><label class="field-label">Email *</label><input class="input" id="iEmail" placeholder="ioana@email.com"></div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Role</label><select class="select" id="iRole"><option>Reservations Manager</option><option>Front Desk Manager</option><option>Owner</option></select></div>
+        <div class="field"><label class="field-label">Primary property</label><input class="input" id="iMarket" placeholder="e.g. Golden Horizon Boutique Hotel"></div>
+      </div>
+      <div class="field"><label class="field-label">Access level</label>
+        <select class="select" id="iSplit"><option>Full reservations &amp; guest access</option><option>Front desk (check-in/out only)</option><option>Analytics only</option></select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-invite-staff')">Cancel</button>
+      <button class="btn-primary" onclick="inviteAgent()"><i class="ti ti-send"></i>Send invitation</button>
+    </div>
+  </div>
+</div>
+
+<!-- Property detail -->
+<div class="modal-overlay" id="modal-agent-detail">
+  <div class="modal">
+    <div class="modal-head"><h3 id="agentDetailName">Property</h3><button class="modal-close" onclick="closeModal('modal-agent-detail')">&times;</button></div>
+    <div class="modal-body" id="agentDetailBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ghost spacer" onclick="closeModal('modal-agent-detail')">Close</button>
+      <button class="btn-danger" id="agentSuspendBtn" onclick="toggleSuspendAgent()"><i class="ti ti-building-off"></i>Deactivate property</button>
+    </div>
+  </div>
+</div>
+
+<!-- Upgrade plans -->
+<div class="modal-overlay" id="modal-upgrade">
+  <div class="modal wide">
+    <div class="modal-head"><h3>Post-launch property plans</h3><button class="modal-close" onclick="closeModal('modal-upgrade')">&times;</button></div>
+    <div class="modal-body">
+      <div class="grid grid-3">
+        <div class="card"><p class="mt">Starter Host</p><p class="stat-card value" style="font-size:26px">€0</p><p class="ms">Up to 1 property, basic CRM features.</p></div>
+        <div class="card active"><p class="mt">Professional Host</p><p class="stat-card value" style="font-size:26px">€29/property/mo</p><p class="ms">Unlimited rooms, AI tools, international referrals, analytics.</p></div>
+        <div class="card"><p class="mt">Enterprise</p><p class="stat-card value" style="font-size:26px">Custom</p><p class="ms">Large portfolios, dedicated support, API access, custom integrations.</p></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-secondary spacer" onclick="closeModal('modal-upgrade')">Close</button><button class="btn-primary" onclick="closeModal('modal-upgrade');toast('info','Founding Member','You are already on the Founding Property plan — nothing is needed until launch.')">Got it</button></div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="hospitalitydemo.js"></script>
+</body>
+</html>
